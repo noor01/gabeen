@@ -24,6 +24,8 @@ from sklearn import linear_model
 from .microscope import Microscope
 sys.path.append('../data_processing')
 from data_processing import local_storage_manager as lsm
+sys.path.append('../telemetry')
+from telemetry import slack_notify
 
 sys.path.append('C:\\Program Files\\OxfordNanoimaging_1.18.3\\.venv\\Lib\\site-packages')
 sys.path.append('C:\\Program Files\\OxfordNanoimaging_1.18.3\\nim_python_core\\')
@@ -81,8 +83,10 @@ class ONI(Microscope):
             self.xy_start = 0
         self.logs_dir = os.path.dirname(self.preset['oni_json'])
         self.main_dataset_tag = self.preset['dataset_tag']
-        self.default_dir = 'C:/Data/DEFAULT_USER/' + self.main_dataset_tag + '/'
-        self.log_file_name = self.default_dir + 'positional_log.csv'
+        log_dir = os.path.join(f'../logs/{self.system_name}',self.main_dataset_tag)
+        if not os.path.exists(log_dir):
+            os.makedirs(log_dir)
+        self.log_file_name = os.path.join(log_dir, 'positional_log.csv')
         if os.path.exists(self.log_file_name):
             pass
         else:
@@ -133,19 +137,17 @@ class ONI(Microscope):
         with open(multi_acq_config) as json_file:
             self.oni_params = json.load(json_file)
         # save logs in the same folder that the acquisition json file was saved in
-        self.logs_dir = os.path.dirname(multi_acq_config)
+        self.logs_dir = os.path.dirname(self.preset['oni_json'])
         self.main_dataset_tag = self.preset['dataset_tag']
-        self.default_dir = 'C:/Data/DEFAULT_USER/' + self.main_dataset_tag + '/'
-        self.log_file_name = self.default_dir + 'positional_log.csv'
-        if os.path.isdir(self.default_dir):
-            pass
-        else:
-            os.mkdir(self.default_dir)
+        log_dir = os.path.join(f'../logs/{self.system_name}',self.main_dataset_tag)
+        if not os.path.exists(log_dir):
+            os.makedirs(log_dir)
+        self.log_file_name = os.path.join(log_dir, 'positional_log.csv')
         if os.path.exists(self.log_file_name):
             pass
         else:
             with open(self.log_file_name,'w+') as log_file:
-                log_file.write('filename, pos, x, y, z\n')
+                log_file.write('filename, pos, x, y, z\n')        
         self.start_z = self.preset['start_z']
         self.offset_z = self.preset['offset_z']
         self.offset_z_diff = self.start_z - self.offset_z
@@ -467,12 +469,20 @@ class ONI(Microscope):
         #self.light.GlobalOnStateStartac = False
         total_frames = len(self.positions) * len(self.light_program) * len(self.relative_zs)
         pbar = tqdm(total=total_frames)
-        if not os.path.isdir(f'{self.save_dir}/{filename}'):
-            os.makedirs(f'{self.save_dir}/{filename}')
+        
+        im_dim = (self.oni_params['movementOptions']['numberOfZSlices'],self.crop_params['height'],self.crop_params['width'])
+        filename = os.path.join(self.main_dataset_tag,filename)
+        # in case this is the first acquisition
+        lsm.create_folder_in_all_drives(filename)
+        self.save_dir = lsm.get_save_path(filename,len(self.positions),im_dim)
         for pos_n, pos in enumerate(self.positions):
             self.acquire_single_position(pos_n,pos,self.save_dir,filename,pbar=pbar)
         self.light.GlobalOnState = False
         pbar.close()
+        try:
+            slack_notify(f'Finished {filename}')
+        except:
+            pass
 
     def _camera_snapshot(self,image_source=None,light_step=0):
         if image_source is None:
@@ -526,10 +536,7 @@ class ONI(Microscope):
             image_stack.append(channel_stack)
         self.light.GlobalOnState = False
         self.move_z(offset_z)
-        save_name_prefix = f'{dirname}/{filename}'
-        if not os.path.isdir(save_name_prefix):
-            os.makedirs(save_name_prefix)
-        np.save(f'{save_name_prefix}/{pos_n}.npy',np.asarray(image_stack),allow_pickle=False)
+        lsm.save_image_stack(image_stack,self.save_dir,pos_n)
             
     def quick_crop(self,image,side):
         if side == 0:

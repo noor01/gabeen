@@ -1,6 +1,9 @@
 import os
 import psutil
 import numpy as np
+import sys
+sys.path.append('../telemetry')
+from telemetry import slack_notify
 
 def map_dir_memory():
     memory_dict = {}
@@ -19,21 +22,50 @@ def get_dir_mem_avail(path):
         if path.startswith(drive):
             return memory_info['free']
     return None
-    
-import numpy as np
 
-def save_image_stack(image_stack, target_dir, nested_dir_names, file_prefix):
+def save_image_stack(image_stack, target_dir, file_prefix):
     # check if target_dir exists
     if not os.path.exists(target_dir):
         os.mkdir(target_dir)
-    # check if nested_dir_names exists
-    for nested_dir_name in nested_dir_names:
-        target_dir = os.path.join(target_dir, nested_dir_name)
-        if not os.path.exists(target_dir):
-            os.mkdir(target_dir)
     # save image stack
     image_stack_3d = np.stack(image_stack, axis=0)
     np.save(f'{os.path.join(target_dir, file_prefix)}.npy', image_stack_3d)
 
 def estimate_mem_footprint(stack_dims, num_stacks, dtype=np.uint16):
     return np.prod(stack_dims) * num_stacks * np.dtype(dtype).itemsize
+
+def create_folder_in_all_drives(folder_name):
+    for partition in psutil.disk_partitions():
+        drive = partition.mountpoint
+        folder_path = os.path.join(drive, folder_name)
+        if not os.path.exists(folder_path):
+            os.mkdir(folder_path)
+            
+import time
+
+def get_save_path(folder_name,num_stacks, stack_dims, dtype=np.uint16,slack=True):
+    # Estimate memory footprint of the stack
+    mem_needed = estimate_mem_footprint(stack_dims, num_stacks, dtype)
+    
+    # Map available memory on all drives
+    memory_dict = map_dir_memory()
+    
+    # Check each drive for available memory
+    while True:
+        for drive, memory_info in memory_dict.items():
+            if memory_info['free'] >= mem_needed:
+                # Create folder in the selected drive
+                folder_path = os.path.join(drive, folder_name)
+                if not os.path.exists(folder_path):
+                    os.mkdir(folder_path)
+                return folder_path
+        
+        # If no drive has enough memory, wait for 5 minutes and retry
+        # This gives the user the opportunity to free up memory...also pauses experiment until memory is freed
+        print("No drive has enough memory. Waiting 5 minutes...")
+        if slack == True:
+            slack_notify.msg("No drive has enough memory. Waiting 5 minutes...")
+        time.sleep(300)
+        memory_dict = map_dir_memory()
+    
+

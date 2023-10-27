@@ -1,10 +1,12 @@
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
+from dotenv import load_dotenv
 
 
 def msg(chat_msg):
+    load_dotenv()
     # Create a slack client
-    client = WebClient(token='TOKEN HERE')
+    client = WebClient(token=os.environ.get('SLACK_TOKEN_SECRET'))
 
     # Post a message to a channel
     try:
