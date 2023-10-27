@@ -4,7 +4,7 @@ from slack_sdk.errors import SlackApiError
 
 def msg(chat_msg):
     # Create a slack client
-    client = WebClient(token='xoxb-858432683815-5396913670963-5XOO2e0RyNuJTaFzwCi58Zsv')
+    client = WebClient(token='TOKEN HERE')
 
     # Post a message to a channel
     try:
