@@ -14,14 +14,14 @@
 # Import
 # ----------------------------------------------------------------------------------------
 import serial
-from Library.dialog_options import dialog
 from tqdm import tqdm
 import time
+from .pump import Pump
 # ----------------------------------------------------------------------------------------
 # New Era Class Definition
 # ----------------------------------------------------------------------------------------
-class new_era_syringe():
-    def __init__(self,serial_port):
+class new_era_syringe(Pump):
+    def __init__(self,serial_port,diameter='8.585',syringe_limit=3):
         #serial port is the serial port that the pump is connected to
         self.ser = serial.Serial(port = serial_port,
                                  baudrate = 19200,
@@ -33,11 +33,14 @@ class new_era_syringe():
         self.syringe_limits = {'3 ml BD':3,
                             '10 ml BD':10,
                             '30ml BD':30}
+        
+        self.diameter = diameter
+        self.syringe_limit = syringe_limit
 
         self.find_pump()
-        self.dialog = dialog()
         self.prime_volume = 0.2
 
+    # legacy function
     def get_diameter_from_user(self):
         print("What syringe are you using?")
         syringe = self.dialog.multiple_choice(list(self.syringe_diams.keys()))
@@ -80,7 +83,7 @@ class new_era_syringe():
         if '?' in output:
             print(cmd.strip()+' from pause_pump not understood')
 
-    def stop_pump(self):
+    def stop(self):
         self.pause_pump()
 
     def set_rate(self,direction,rate):
@@ -127,7 +130,7 @@ class new_era_syringe():
             print(cmd.strip()+' from get_diameter not understood')
         return output
 
-    def start_pump(self):
+    def start(self):
         cmd = '%iRUN\x0D'%self.pump
         output = self.serial_cmd(cmd)
         if '?' in output:
@@ -137,34 +140,10 @@ class new_era_syringe():
         self.set_volume(self.prime_volume)
         # create small barrier of air to reduce risk of pump running with no room left during dispensing
         self.set_rate('WDR',2)
-        self.start_pump()
+        self.start()
         wait_time = int((self.prime_volume/2)*60)
         print("Priming pump")
         for i in tqdm(range(0,wait_time)):
             time.sleep(1)
     def close(self):
         self.ser.close()
-
-#
-# The MIT License
-#
-# Copyright (c) 2018 Yeo Lab, University of California, San Diego
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
-#
