@@ -1,2 +1,2 @@
-from skype_signals import *
-from slack_notify import *
+#from skype_signals import *
+from .slack_notify import *

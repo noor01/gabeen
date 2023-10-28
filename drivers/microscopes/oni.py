@@ -19,7 +19,6 @@ import numpy as np
 import json
 from tqdm.auto import tqdm
 from math import floor
-from scipy import ndimage
 from sklearn import linear_model
 from .microscope import Microscope
 sys.path.append('../data_processing')

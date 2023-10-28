@@ -38,7 +38,7 @@ class Microscope(ABC):
         pass
     
     @abstractmethod
-    def full_acquisition(self,nested_dir_names):
+    def full_acquisition(self,filename):
         pass
     
     @abstractmethod

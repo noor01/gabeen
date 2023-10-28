@@ -1,0 +1,35 @@
+{
+    "0": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "",
+            "volume": "",
+            "speed": ""
+        },
+        "slack_notify": true
+    },
+    "1": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": ""
+        },
+        "slack_notify": true
+    },
+    "2": {
+        "step_type": "incubate",
+        "step_metadata": {
+            "wait_time": ""
+        },
+        "slack_notify": true
+    },
+    "3": {
+        "step_type": "user_action",
+        "step_metadata": {},
+        "slack_notify": true
+    },
+    "4": {
+        "step_type": "compute",
+        "step_metadata": {},
+        "slack_notify": true
+    }
+}
