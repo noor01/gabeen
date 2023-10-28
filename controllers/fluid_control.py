@@ -94,8 +94,8 @@ class fluid_control():
 
     def run_protocol_step(self,protocol_step):
         fluid = protocol_step["fluid"]
-        volume = protocol_step["volume"]
-        speed = protocol_step["speed"]
+        volume = float(protocol_step["volume"])
+        speed = float(protocol_step["speed"])
         path_edges = self.get_path(fluid, 'waste')
         pumps = self.set_path(path_edges)
         for pump in pumps:

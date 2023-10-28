@@ -16,7 +16,7 @@
         "slack_notify": true
     },
     "2": {
-        "step_type": "incubate",
+        "step_type": "wait",
         "step_metadata": {
             "wait_time": ""
         },

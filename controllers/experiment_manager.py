@@ -1,4 +1,5 @@
 import pandas as pd
+import time
 import json
 import os
 from .fluid_control import fluid_control
@@ -20,16 +21,29 @@ class experiment_manager():
         if not os.path.exists(experiment_file):
             raise FileNotFoundError(f"{experiment_file} not found")
         self.experiment = json.load(open(experiment_file))
+        self.steps = list(self.experiment.keys())
         
     def run_experimental_step(self,step):
         step_type = self.experiment[step]["step_type"]
         if step_type == "image":
-            
-            
-            self.hardware.hardware["microscope"].acqufire_image()
+            filename = self.experiment[step]["filename"]
+            self.hardware.hardware["microscope"].full_acquisition(filename)
         elif step_type == "fluid":
-            self.fluid_control.run_fluid_step(step)
+            self.fluid_control.run_protocol_step(step)
         elif step_type == "wait":
-            self.hardware.hardware["ONI"].wait(self.experiment[step]["wait_time"])
+            time.sleep(int(self.experiment[step]["wait_time"]))
+        elif step_type == "user_action":
+            raise NotImplementedError("User action not implemented")
+        elif step_type == "compute":
+            raise NotImplementedError("Compute step not implemented")
         else:
-            raise ValueError(f"Step type {step_type} not recognized"
+            raise ValueError(f"Step type {step_type} not recognized")
+        
+        if self.experiment[step]["slack_notify"] == True:
+            self.slack_notify(f'Completed step #{step}')
+            
+    def execute_all(self):
+        for step in self.steps:
+            self.run_experimental_step(step)
+        
+        print("Experiment complete!")
