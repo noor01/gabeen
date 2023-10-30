@@ -1,1 +1,5 @@
 .env
+runs/*
+logs/*
+system-files/*
+.DS_Store
