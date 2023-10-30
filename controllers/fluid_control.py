@@ -64,6 +64,15 @@ class fluid_control():
         path_edges = list(zip(path_nodes[:-1], path_nodes[1:]))
         return path_edges
     
+    def draw_graph(self):
+        color_map = {
+    'type1': 'red',
+    'type2': 'blue',
+    'type3': 'green'
+}
+
+        nx.draw(self.graph, with_labels=True)
+    
     def set_path(self,path_edges):
         pumps = []
         for edge in path_edges:
