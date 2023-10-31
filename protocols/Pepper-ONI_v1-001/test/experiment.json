@@ -2,34 +2,35 @@
     "0": {
         "step_type": "fluid",
         "step_metadata": {
-            "fluid": "",
-            "volume": "",
-            "speed": ""
+            "fluid": "1",
+            "volume": "0.5",
+            "speed": "1"
         },
-        "slack_notify": true
+        "slack_notify": false
     },
     "1": {
-        "step_type": "image",
+        "step_type": "fluid",
         "step_metadata": {
-            "filename": ""
+            "fluid": "5",
+            "volume": "0.5",
+            "speed": "1"
         },
-        "slack_notify": true
+        "slack_notify": false
     },
     "2": {
         "step_type": "wait",
         "step_metadata": {
             "wait_time": ""
         },
-        "slack_notify": true
+        "slack_notify": false
     },
     "3": {
-        "step_type": "user_action",
-        "step_metadata": {},
-        "slack_notify": true
-    },
-    "4": {
-        "step_type": "compute",
-        "step_metadata": {},
-        "slack_notify": true
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "8",
+            "volume": "0.5",
+            "speed": "1"
+        },
+        "slack_notify": false
     }
 }

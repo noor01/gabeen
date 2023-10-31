@@ -40,22 +40,22 @@ class ONI(Microscope):
     # ----------------------------------------------------------------------------------------
     # Initialize and read callibration and configuration files
     # ----------------------------------------------------------------------------------------
-    def __init__(self,preset=None,system_name=None):
+    def __init__(self,dataset_tag,input_params=None,system_name=None):
         self.log_info = {}
-        self.initialize(preset,system_name)
-        if 'xy_start' in self.preset.keys():
-            self.xy_start = self.preset['xy_start']
+        self.initialize(input_params,system_name,dataset_tag)
+        if 'xy_start' in self.input_params['config'].keys():
+            self.xy_start = self.input_params['config']['xy_start']
         else:
             self.xy_start = 0
         
-    def initialize(self,params,system_name):
-        self.preset = params
+    def initialize(self,input_params,system_name,dataset_tag):
+        self.input_params = input_params
         self.system_name = system_name
         self.initialize_nimOS()
-        self.initialize_ONI()
+        self.initialize_ONI(dataset_tag)
     
-    def initialize_ONI(self):
-        self.preset_setup()
+    def initialize_ONI(self,dataset_tag):
+        self.input_params_setup(dataset_tag)
         while True:
             connection_status = self.connect_system()
             if connection_status == False:
@@ -74,25 +74,24 @@ class ONI(Microscope):
         self.initialize_crop()
         self.camera.SetBinning(self.camera.Binning().b1x1)
         
-    def reset_parameters(self,new_params):
-        self.preset = new_params
-        if 'xy_start' in self.preset.keys():
-            self.xy_start = self.preset['xy_start']
+    def reset_parameters(self,new_params,dataset_tag):
+        self.input_params = new_params
+        if 'xy_start' in self.input_params['config'].keys():
+            self.xy_start = self.input_params['config']['xy_start']
         else:
             self.xy_start = 0
-        self.logs_dir = os.path.dirname(self.preset['oni_json'])
-        self.main_dataset_tag = self.preset['dataset_tag']
-        log_dir = os.path.join(f'../logs/{self.system_name}',self.main_dataset_tag)
-        if not os.path.exists(log_dir):
-            os.makedirs(log_dir)
-        self.log_file_name = os.path.join(log_dir, 'positional_log.csv')
+        self.logs_dir = f'../runs/{self.system_name}/{dataset_tag}'
+        self.main_dataset_tag = dataset_tag
+        if not os.path.exists(self.logs_dir):
+            os.makedirs(self.logs_dir)
+        self.log_file_name = os.path.join(self.logs_dir, 'positional_log.csv')
         if os.path.exists(self.log_file_name):
             pass
         else:
             with open(self.log_file_name,'w+') as log_file:
                 log_file.write('filename, pos, x, y, z\n')
-        self.start_z = self.preset['start_z']
-        self.offset_z = self.preset['offset_z']
+        self.start_z = self.input_params['config']['start_z']
+        self.offset_z = self.input_params['config']['offset_z']
         self.offset_z_diff = self.start_z - self.offset_z
         self.first_start_z = self.start_z
         self.light.FocusLaser.Enabled = True
@@ -127,28 +126,27 @@ class ONI(Microscope):
         return desired
             
 
-    def preset_setup(self):
-        if 'instrument_name' in self.preset.keys():
-            self.instrument_name = self.preset['instrument_name']
+    def input_params_setup(self,dataset_tag):
+        if 'instrument_name' in self.input_params.keys():
+            self.instrument_name = self.input_params['config']['instrument_name']
         else:
             self.instrument_name = '0'
-        multi_acq_config = self.preset['oni_json']
+        multi_acq_config = self.input_params['config']['oni_json']
         with open(multi_acq_config) as json_file:
             self.oni_params = json.load(json_file)
         # save logs in the same folder that the acquisition json file was saved in
-        self.logs_dir = os.path.dirname(self.preset['oni_json'])
-        self.main_dataset_tag = self.preset['dataset_tag']
-        log_dir = os.path.join(f'../logs/{self.system_name}',self.main_dataset_tag)
-        if not os.path.exists(log_dir):
-            os.makedirs(log_dir)
-        self.log_file_name = os.path.join(log_dir, 'positional_log.csv')
+        self.logs_dir = f'../runs/{self.system_name}/{dataset_tag}'
+        self.main_dataset_tag = dataset_tag
+        if not os.path.exists(self.logs_dir):
+            os.makedirs(self.logs_dir)
+        self.log_file_name = os.path.join(self.logs_dir, 'positional_log.csv')
         if os.path.exists(self.log_file_name):
             pass
         else:
             with open(self.log_file_name,'w+') as log_file:
                 log_file.write('filename, pos, x, y, z\n')        
-        self.start_z = self.preset['start_z']
-        self.offset_z = self.preset['offset_z']
+        self.start_z = self.input_params['config']['start_z']
+        self.offset_z = self.input_params['config']['offset_z']
         self.offset_z_diff = self.start_z - self.offset_z
         self.first_start_z = self.start_z
         
@@ -406,10 +404,10 @@ class ONI(Microscope):
         return positions
     
     def init_xy_pos(self):
-        if 'fov_positions' in self.preset.keys():
-            self.starting_pos = {'x' : self.preset['fov_positions'][0][0],
-                                 'y' : self.preset['fov_positions'][0][1]}
-            self.positions = self.preset['fov_positions']
+        if self.input_params['picked_fovs'] == True:
+            self.starting_pos = {'x' : self.input_params['fov_positions'][0][0],
+                                 'y' : self.input_params['fov_positions'][0][1]}
+            self.positions = self.input_params['fov_positions']
         elif len(self.oni_params['movementOptions']['customXYPositions_mm']) == 1:
             self.acq_mode = 'tilescan'
             self.starting_pos = self._grab_starting_pos()
@@ -463,7 +461,7 @@ class ONI(Microscope):
         return bool_647
         # just remember to turn it off after
 
-    def full_acquisition(self,filename):
+    def full_acquisition(self,filename,skip_to=0):
         #self.autofocus.Stop()
         #self.light.GlobalOnStateStartac = False
         total_frames = len(self.positions) * len(self.light_program) * len(self.relative_zs)
@@ -474,7 +472,15 @@ class ONI(Microscope):
         # in case this is the first acquisition
         lsm.create_folder_in_all_drives(filename)
         self.save_dir = lsm.get_save_path(filename,len(self.positions),im_dim)
-        for pos_n, pos in enumerate(self.positions):
+        if skip_to > 0:
+            positions = self.positions[skip_to:]
+            add_to_pos = skip_to
+        else:
+            positions = self.positions
+            add_to_pos = 0
+        
+        for pos_n, pos in enumerate(positions):
+            pos_n += add_to_pos
             self.acquire_single_position(pos_n,pos,self.save_dir,filename,pbar=pbar)
         self.light.GlobalOnState = False
         pbar.close()

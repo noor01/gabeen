@@ -3,16 +3,18 @@ import os
 from drivers import *
 
 class hardware_control():
-    def __init__(self, system_name, protocol,imaging_params=None) -> None:
+    def __init__(self, system_name, dataset_tag=None, protocol,imaging_params=None,delay_microscope_init=False) -> None:
         self.system_name = system_name
         self.protocol = protocol
+        self.dataset_tag = dataset_tag
+        self.microscope_initialized = False
         if imaging_params is None:
             self.imaging_params = {}
         else:
             self.imaging_params = imaging_params
-        self.initialize_hardware()
+        self.initialize_hardware(delay_microscope_init)
 
-    def initialize_hardware(self):
+    def initialize_hardware(self,delay_microscope_init=False):
         # Define file paths
         experiment_file = f"../protocols/{self.system_name}/{self.protocol}/experiment.json"
         com_file = f"../system-files/{self.system_name}/comports.json"
@@ -56,14 +58,36 @@ class hardware_control():
                 else:
                     raise ValueError(f"Hardware manufacturer {hardware_info['hardware_manufacturer']} not recognized")
 
-            elif hardware_type == "microscope" and use_microscope:
+            elif hardware_type == "microscope" and use_microscope and not delay_microscope_init:
                 if hardware_info["hardware_manufacturer"] == "oni":
                     self.imaging_params['instrument_name'] = hardware_info['metadata']['instrument_name']
-                    self.hardware['microscope'] = ONI(self.imaging_params,self.system_name)
+                    if self.dataset_tag is None:
+                        raise ValueError("dataset_tag must be specified for ONI microscope")
+                    self.hardware['microscope'] = ONI(self.dataset_tag,self.imaging_params,self.system_name)
+                    self.microscope_initialized = True
                 
             elif hardware_type == "liquid_handler":
                 raise NotImplementedError("Liquid handler not implemented yet")
                 
             else:
                 raise ValueError(f"Hardware type {hardware_type} not recognized")
+            
+    def initialize_microscope(self):
+        config_json = f"../runs/{self.system_name}/{self.dataset_tag}/config.json"
+        if not os.path.exists(config_json):
+            raise FileNotFoundError(f"{config_json} not found")
+        config = json.load(open(config_json))
+        self.imaging_params['config'] = config
+        fov_path = f"../runs/{self.system_name}/{self.dataset_tag}/fov_positions.json"
+        if not os.path.exists(fov_path):
+            picked_fovs = False
+        else:
+            picked_fovs = True
+        self.imaging_params['picked_fovs'] = picked_fovs
+        if picked_fovs:
+            self.imaging_params['fov_positions'] = json.load(open(fov_path))
+        
+        
+        self.hardware['microscope'] = ONI(self.dataset_tag,self.imaging_params,self.system_name)
+        self.microscope_initialized = True
         

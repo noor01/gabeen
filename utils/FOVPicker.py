@@ -196,3 +196,12 @@ def FOVPicker(overview, viewer, dimensions, start_position, increments):
     final.show(final.image_dict['fov_overlay'], 'cividis')
     final.show(final.image_dict['array'], 'inferno')
     return labels, final
+
+import json
+
+def save_fovs(final, system_name, experiment_name):
+    fov_coords = final.coordinate_dict['pos_coordinates']
+    fovs = {i: coord for i, coord in enumerate(fov_coords)}
+    with open(f'runs/{system_name}/{experiment_name}/fov_positions.json', 'w') as f:
+        json.dump(fovs, f)
+    return fovs
