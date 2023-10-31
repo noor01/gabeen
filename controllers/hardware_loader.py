@@ -1,18 +1,21 @@
 import json
 import os
-from ..drivers import *
+from drivers import *
 
 class hardware_control():
     def __init__(self, system_name, protocol,imaging_params=None) -> None:
         self.system_name = system_name
         self.protocol = protocol
-        self.imaging_params = imaging_params
+        if imaging_params is None:
+            self.imaging_params = {}
+        else:
+            self.imaging_params = imaging_params
         self.initialize_hardware()
 
     def initialize_hardware(self):
         # Define file paths
-        experiment_file = f"protocols/{self.system_name}/{self.protocol}/experiment.json"
-        com_file = f"system-files/{self.system_name}/comports.json"
+        experiment_file = f"../protocols/{self.system_name}/{self.protocol}/experiment.json"
+        com_file = f"../system-files/{self.system_name}/comports.json"
 
         # Check if files exist
         if not os.path.exists(experiment_file):
@@ -38,23 +41,24 @@ class hardware_control():
                 continue
             hardware_type = hardware_info["hardware_type"]
             if hardware_type == "valve":
-                if hardware_info["hardware_manuracturer"] == "precigenome":
+                if hardware_info["hardware_manufacturer"] == "precigenome":
                     self.hardware[hardware_name] = precigenome(hardware_info["COM"])
-                elif hardware_info["hardware_manuracturer"] == "hamilton":
+                elif hardware_info["hardware_manufacturer"] == "hamilton":
                     self.hardware[hardware_name] = hamilton(hardware_info["COM"])
                 else:
-                    raise ValueError(f"Hardware manufacturer {hardware_info['hardware_manuracturer']} not recognized")
+                    raise ValueError(f"Hardware manufacturer {hardware_info['hardware_manufacturer']} not recognized")
 
             elif hardware_type == "pump":
-                if hardware_info["hardware_manuracturer"] == "new_era_peristaltic":
+                if hardware_info["hardware_manufacturer"] == "new_era_peristaltic":
                     self.hardware[hardware_name] = new_era_peristaltic(hardware_info["COM"])
-                elif hardware_info["hardware_manuracturer"] == "new_era_syringe":
+                elif hardware_info["hardware_manufacturer"] == "new_era_syringe":
                     self.hardware[hardware_name] = new_era_syringe(hardware_info["COM"])
                 else:
-                    raise ValueError(f"Hardware manufacturer {hardware_info['hardware_manuracturer']} not recognized")
+                    raise ValueError(f"Hardware manufacturer {hardware_info['hardware_manufacturer']} not recognized")
 
             elif hardware_type == "microscope" and use_microscope:
-                if hardware_info["hardware_manuracturer"] == "ONI":
+                if hardware_info["hardware_manufacturer"] == "oni":
+                    self.imaging_params['instrument_name'] = hardware_info['metadata']['instrument_name']
                     self.hardware['microscope'] = ONI(self.imaging_params,self.system_name)
                 
             elif hardware_type == "liquid_handler":

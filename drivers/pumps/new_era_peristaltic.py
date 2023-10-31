@@ -21,9 +21,13 @@ from .pump import Pump
 class new_era_peristaltic(Pump):
     def __init__(self,serial_port):
         #serial port is the serial port that the pump is connected to
+        self.initialize(serial_port)
+        
+    def initialize(self,serial_port):
         self.ser = serial.Serial(port = serial_port,
                                  baudrate = 19200,
                                  timeout = 0.1)
+    
     #quick function for sending serial commands
     def serial_cmd(self,cmd):
         self.ser.write(cmd.encode('ascii'))

@@ -2,10 +2,6 @@ from abc import ABC, abstractmethod
 
 class Valve(ABC):
     @abstractmethod
-    def open(self):
-        pass
-
-    @abstractmethod
     def close(self):
         pass
     

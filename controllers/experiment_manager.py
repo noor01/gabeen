@@ -4,14 +4,14 @@ import json
 import os
 from .fluid_control import fluid_control
 from .hardware_loader import hardware_control
-from ..utils import protocol_system_compiler
+from utils import protocol_system_compiler
 
 class experiment_manager():
     def __init__(self,system_name, protocol,imaging_params=None) -> None:
         self.system_name = system_name
         self.protocol = protocol
         self.imaging_params = imaging_params
-        protocol_system_compiler(system_name,protocol) # first make sure system is properly configured
+        protocol_system_compiler.compile_protocol(system_name,protocol) # first make sure system is properly configured
         self.hardware = hardware_control(self.system_name, self.protocol,self.imaging_params)
         self.fluid_control = fluid_control(self.hardware.hardware, self.system_name, self.protocol)
         self.read_protocol()

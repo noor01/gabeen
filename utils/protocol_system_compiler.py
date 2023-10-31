@@ -32,16 +32,20 @@ def compile_protocol(systemID, protocol_name):
     fluid_edges = pd.read_csv(fluid_edges_path)
     fluids = pd.read_csv(fluids_path)
 
-    # Check if all unique values in fluid_edges.csv column 'Target' and column 'Source' exist in the main keys of the dictionary in comport.json OR in the 'NodeID' column of fluids.csv
+    # Check if every value in the column "NodeID" in fluid_nodes.csv is a key in comport_keys
     node_ids = set(fluid_nodes["NodeID"])
     comport_keys = set(comports.keys())
+    if not node_ids.issubset(comport_keys):
+        raise Exception("Not every value in the column 'NodeID' in fluid_nodes.csv is a key in comport_keys")
+
+    # Check to see that every unique value in the "Source" and "Target" columns in fluid_edges is in either the "NodeID" column in fluid_nodes or in the "NodeID" column in fluids.csv
     fluid_ids = set(fluids["NodeID"])
     edge_targets = set(fluid_edges["Target"])
     edge_sources = set(fluid_edges["Source"])
-    if not edge_targets.issubset(node_ids.union(comport_keys).union(fluid_ids)):
-        raise Exception("Not all unique values in fluid_edges.csv column 'Target' exist in the main keys of the dictionary in comport.json OR in the 'NodeID' column of fluids.csv")
-    if not edge_sources.issubset(node_ids.union(comport_keys).union(fluid_ids)):
-        raise Exception("Not all unique values in fluid_edges.csv column 'Source' exist in the main keys of the dictionary in comport.json OR in the 'NodeID' column of fluids.csv")
+    if not edge_targets.issubset(node_ids.union(fluid_ids)):
+        raise Exception("Not all unique values in fluid_edges.csv column 'Target' exist in the 'NodeID' column of fluid_nodes.csv OR in the 'NodeID' column of fluids.csv")
+    if not edge_sources.issubset(node_ids.union(fluid_ids)):
+        raise Exception("Not all unique values in fluid_edges.csv column 'Source' exist in the 'NodeID' column of fluid_nodes.csv OR in the 'NodeID' column of fluids.csv")
 
     # Check if experiment.json has "step_type": "image" in any of the nested dictionaries
     if any(step.get("step_type") == "image" for step_num, step in experiment.items()):
@@ -54,3 +58,4 @@ def compile_protocol(systemID, protocol_name):
         if oni_microscope_comports and not os.path.exists(oni_params_path):
             raise Exception(f"ONI microscope comport found but oni_params.json not found at {oni_params_path}")
 
+    print("all checks passed!")

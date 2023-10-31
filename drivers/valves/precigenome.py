@@ -16,7 +16,7 @@
 # ----------------------------------------------------------------------------------------
 # Import
 # ----------------------------------------------------------------------------------------
-from Library.Hardware.Precigenome.PGValve import PGValve
+from .Precigenome.PGValve import PGValve
 from .valve import Valve
 
 class precigenome(Valve):

@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 import time
 """Module for communicating with selecting valves or switching valves"""
-# from . import control_c as controller
-from Library.Hardware.Precigenome.PGValve import control_c as controller
-
-# from . import utils
-from Library.Hardware.Precigenome.PGValve import utils
-from Library.Hardware.Precigenome.PGValve.exceptions import VALVES_Unknown, VALVES_AckError, VALVES_InvalidType
-
+from . import control_c as controller
+#from Library.Hardware.Precigenome.PGValve import control_c as controller
+from . import utils
+#from Library.Hardware.Precigenome.PGValve import utils
+#from Library.Hardware.Precigenome.PGValve.exceptions import VALVES_Unknown, VALVES_AckError, VALVES_InvalidType
+from .exceptions import VALVES_Unknown
 class PGValve(object):
     """Represents an valve device, allowing the user to operate or read settings"""
 

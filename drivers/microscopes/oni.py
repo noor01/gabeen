@@ -29,7 +29,7 @@ from telemetry import slack_notify
 sys.path.append('C:\\Program Files\\OxfordNanoimaging_1.18.3\\.venv\\Lib\\site-packages')
 sys.path.append('C:\\Program Files\\OxfordNanoimaging_1.18.3\\nim_python_core\\')
 from NimSetup import *
-nim_setup('C:\\Users\\ONI\\Dropbox\\Yeo lab\\Noor\\Code\\Army-of-the-Damned\\Library','C:\\Program Files\\OxfordNanoimaging_1.18.3')
+nim_setup(os.getcwd(),'C:\\Program Files\\OxfordNanoimaging_1.18.3')
 
 from NimPyHelpers import *
 
@@ -483,7 +483,7 @@ class ONI(Microscope):
         except:
             pass
 
-    def _camera_snapshot(self,image_source=None,light_step=0):
+    def camera_snapshot(self,image_source=None,light_step=0):
         if image_source is None:
             image_source = self.camera.CreateImageSource(1)
         return self._camera_snapshot(image_source,light_step)
