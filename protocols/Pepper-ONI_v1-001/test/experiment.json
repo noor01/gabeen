@@ -25,9 +25,16 @@
         "slack_notify": false
     },
     "3": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round1"
+        },
+        "slack_notify": false
+    },
+    "4": {
         "step_type": "fluid",
         "step_metadata": {
-            "fluid": "8",
+            "fluid": "18",
             "volume": "0.1",
             "speed": "1"
         },

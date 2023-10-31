@@ -4,3 +4,4 @@ logs/*
 system-files/*
 .DS_Store
 *.pyc
+*.cpython-36.pyc

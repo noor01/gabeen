@@ -1,15 +1,15 @@
-import pandas as pd
-import time
 import json
+import pandas as pd
 import os
 from .fluid_control import fluid_control
 from .hardware_loader import hardware_control
+from .microscope_control import microscope_control
 from telemetry import slack_notify
 from utils import protocol_system_compiler,loading_bar
 from tqdm.auto import tqdm
 
 class experiment_manager():
-    def __init__(self, system_name, protocol, experiment_name, imaging_params=None, delay_microscope_init=False, microscope_fov_start=0) -> None:
+    def __init__(self, system_name, protocol, experiment_name, delay_microscope_init=False, microscope_fov_start=0) -> None:
         """
         Initializes an ExperimentManager object.
 
@@ -20,12 +20,17 @@ class experiment_manager():
             delay_microscope_init (bool, optional): Whether to delay microscope initialization. Defaults to False.
             microscope_fov_start (int, optional): Starting fov to skip to just for the first round that is run. Useful for resuming from a crashed experiment. Defaults to 0.
         """
+        self.initialize(system_name, protocol, experiment_name, delay_microscope_init, microscope_fov_start, hardware_init=True)
+
+    def initialize(self, system_name, protocol, experiment_name, delay_microscope_init=False, microscope_fov_start=0, hardware_init=False):
         self.system_name = system_name
         self.protocol = protocol
-        self.imaging_params = imaging_params
         protocol_system_compiler.compile_protocol(system_name, protocol) # first make sure system is properly configured
-        self.hardware = hardware_control(self.system_name, self.protocol, self.imaging_params, delay_microscope_init)
-        self.fluid_control = fluid_control(self.hardware.hardware, self.system_name, self.protocol)
+        if hardware_init == True:
+            self.hardware = hardware_control(self.system_name, self.protocol, self.imaging_params, delay_microscope_init)
+            self.fluid_control = fluid_control(self.hardware.hardware, self.system_name, self.protocol)
+            if self.hardware.use_microscope:
+                self.initialize_microscope()
         self.experiment_name = experiment_name
         self.delay_microscope_init = delay_microscope_init
         self.microscope_fov_start = microscope_fov_start
@@ -34,8 +39,7 @@ class experiment_manager():
         self.create_experiment_folder()
         self.read_protocol()
         self.first_round = True
-        self.microscope_initialized = self.hardware.microscope_initialized
-
+    
     def create_experiment_folder(self):
         if not os.path.exists(self.runs_folder):
             os.mkdir(self.runs_folder)
@@ -57,8 +61,8 @@ class experiment_manager():
         # add some kind of massive double checking that all hardware and protocol configs are setup properly
         
     def initialize_microscope(self):
-        self.hardware.initialize_microscope()
-        self.microscope_initialized = True
+        self.microscope_control = microscope_control(self.system_name,self.experiment_name,self.delay_microscope_init)
+        self.microscope_initialized = self.microscope_control.microscope_initialized
         
     def run_experimental_step(self,step):
         step_type = self.experiment[step]["step_type"]
@@ -68,12 +72,12 @@ class experiment_manager():
                 raise ValueError("Microscope not initialized")
             else:
                 pass
-            filename = self.experiment[step]["filename"]
+            filename = self.experiment[step]['step_metadata']["filename"]
             if self.first_round and self.microscope_fov_start > 0:
                 self.first_round = False
-                self.hardware.hardware["microscope"].full_acquisition(filename,skip_to=self.microscope_fov_start)
+                self.microscope_control.microscope.full_acquisition(filename,skip_to=self.microscope_fov_start)
             else:
-                self.hardware.hardware["microscope"].full_acquisition(filename)
+                self.microscope_control.microscope.full_acquisition(filename)
         elif step_type == "fluid":
             self.fluid_control.run_protocol_step(self.experiment[step])
         elif step_type == "wait":
@@ -86,7 +90,10 @@ class experiment_manager():
             raise ValueError(f"Step type {step_type} not recognized")
         
         if self.experiment[step]["slack_notify"] == True:
-            slack_notify.slack_notify(f'Completed step #{step}')
+            try:
+                slack_notify.msg(f'Completed step #{step}')
+            except:
+                pass
         print(f"Completed step #{step}")
             
     def execute_all(self,skip_to_step=None):
@@ -95,4 +102,10 @@ class experiment_manager():
         for step in tqdm(self.steps):
             self.run_experimental_step(step)
         print("Experiment complete!")
+        
+    def display_experiment(self):
+        print(pd.DataFrame(self.experiment).T)
+        
+    def display_fluids(self):
+        print(self.fluid_control.fluids)
 

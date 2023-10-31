@@ -31,6 +31,7 @@ class fluid_control():
         # Read files
         self.experiment = json.load(open(experiment_file))
         fluids = pd.read_csv(fluids_file)
+        self.fluids = fluids
         fluid_edges = pd.read_csv(fluid_edges_file)
         fluid_nodes = pd.read_csv(fluid_nodes_file)
 
@@ -67,10 +68,10 @@ class fluid_control():
     
     def draw_graph(self):
         color_map = {
-    'type1': 'red',
-    'type2': 'blue',
-    'type3': 'green'
-}
+            'type1': 'red',
+            'type2': 'blue',
+            'type3': 'green',
+        }
 
         nx.draw(self.graph, with_labels=True)
     
@@ -117,3 +118,18 @@ class fluid_control():
                 self.hardware[pump].start()
                 loading_bar.loading_bar_wait(60*volume/speed)
 
+    def quick_valve(self, line_num):
+        path_edges = self.get_path(str(line_num), 'waste')
+        pumps = self.set_path(path_edges)
+        return pumps
+        
+    def quick_pump(self, volume, speed, pumps):
+        for pump in pumps:
+            self.hardware[pump].set_rate('INF', speed)
+            self.hardware[pump].set_volume(volume)
+            self.hardware[pump].start()
+            loading_bar.loading_bar_wait(60*volume/speed)
+            
+    def quick_run(self,line_num,volume,speed):
+        pumps = self.quick_valve(line_num)
+        self.quick_pump(volume,speed,pumps)
