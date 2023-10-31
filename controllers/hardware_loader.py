@@ -3,7 +3,7 @@ import os
 from drivers import *
 
 class hardware_control():
-    def __init__(self, system_name, dataset_tag=None, protocol,imaging_params=None,delay_microscope_init=False) -> None:
+    def __init__(self, system_name, protocol, dataset_tag=None, imaging_params=None,delay_microscope_init=False) -> None:
         self.system_name = system_name
         self.protocol = protocol
         self.dataset_tag = dataset_tag

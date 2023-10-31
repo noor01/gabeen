@@ -12,10 +12,10 @@ class fluid_control():
 
     def read_protocol(self):
         # Define file paths
-        experiment_file = f"protocols/{self.system_name}/{self.protocol}/experiment.json"
-        fluids_file = f"protocols/{self.system_name}/{self.protocol}/fluids.csv"
-        fluid_edges_file = f"protocols/{self.system_name}/{self.protocol}/fluid_edges.csv"
-        fluid_nodes_file = f"system-files/{self.system_name}/fluid_nodes.csv"
+        experiment_file = f"../protocols/{self.system_name}/{self.protocol}/experiment.json"
+        fluids_file = f"../protocols/{self.system_name}/{self.protocol}/fluids.csv"
+        fluid_edges_file = f"../protocols/{self.system_name}/{self.protocol}/fluid_edges.csv"
+        fluid_nodes_file = f"../system-files/{self.system_name}/fluid_nodes.csv"
 
         # Check if files exist
         if not os.path.exists(experiment_file):
