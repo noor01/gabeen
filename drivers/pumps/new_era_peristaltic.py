@@ -53,11 +53,10 @@ class new_era_peristaltic(Pump):
             if output != "b''":
                 pumps.append(i)
         #for use of singular pump, default address is 0, so just use that
-        self.pump = 0
         return pumps
 
     def pause_pump(self):
-        cmd = '%iSTP\x0D'%self.pump
+        cmd = '%iSTP\x0D'%0
         output = self.serial_cmd(cmd)
         if '?' in output:
             print(cmd.strip()+' from stop_pump not understood')
@@ -68,12 +67,12 @@ class new_era_peristaltic(Pump):
 
     def set_rate(self,direction,rate):
         #set direction of flow; direction = dispense or withdraw
-        cmd = '%iDIR%s\x0D'%(self.pump,direction)
+        cmd = '%iDIR%s\x0D'%(0,direction)
         output = self.serial_cmd(cmd)
         if '?' in output:
             print(cmd.strip()+' from set_rate not understood')
         #set rate; units are mL/min (MM)
-        cmd = str(self.pump) + 'RAT' + str(round(rate,2)) + 'MM\x0D'
+        cmd = str(0) + 'RAT' + str(round(rate,2)) + 'MM\x0D'
         output = self.serial_cmd(cmd)
         if '?' in output:
             print(cmd.strip()+' from set_rate not understood')
@@ -83,28 +82,28 @@ class new_era_peristaltic(Pump):
         cmd = '%iVOLML\x0D'
         output = self.serial_cmd(cmd)
         #set volume
-        cmd = str(self.pump) + 'VOL' + str(round(volume,2)) + '\x0D'
+        cmd = str(0) + 'VOL' + str(round(volume,2)) + '\x0D'
         output = self.serial_cmd(cmd)
         if '?' in output:
             print(cmd.strip()+' from set_volume not understood')
 
     def set_diameter(self,diameter):
         #diameter is a string such as '1/16' which is 1/16 inch which is default diameter on the New Era pump
-        cmd = '%iDIA%s\x0D'%(self.pump,diameter)
+        cmd = '%iDIA%s\x0D'%(0,diameter)
         output = self.serial_cmd(cmd)
         if '?' in output:
             print(cmd.strip()+' from set_diameter not understood')
 
     def get_diameter(self):
         #diameter is a string such as '1/16' which is 1/16 inch which is default diameter on the New Era pump
-        cmd = '%iDIA\x0D'%(self.pump)
+        cmd = '%iDIA\x0D'%(0)
         output = self.serial_cmd(cmd)
         if '?' in output:
             print(cmd.strip()+' from get_diameter not understood')
         return output
 
     def start(self):
-        cmd = '%iRUN\x0D'%self.pump
+        cmd = '%iRUN\x0D'%0
         output = self.serial_cmd(cmd)
         if '?' in output:
             print(cmd.strip()+' from start_pump not understood')

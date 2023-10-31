@@ -2,6 +2,7 @@ import pandas as pd
 import json
 import os
 import networkx as nx
+from utils import loading_bar
 
 class fluid_control():
     def __init__(self, hardware, system_name, protocol) -> None:
@@ -100,15 +101,19 @@ class fluid_control():
                     self.hardware[target].valve_switch(line_num)
             else:
                 pass
+        pumps = set(pumps)
+        return pumps
 
     def run_protocol_step(self,protocol_step):
-        fluid = protocol_step["fluid"]
-        volume = float(protocol_step["volume"])
-        speed = float(protocol_step["speed"])
+        fluid = protocol_step['step_metadata']["fluid"]
+        volume = float(protocol_step['step_metadata']["volume"])
+        speed = float(protocol_step['step_metadata']["speed"])
         path_edges = self.get_path(fluid, 'waste')
         pumps = self.set_path(path_edges)
-        for pump in pumps:
-            self.hardware[pump].set_rate('INF', speed)
-            self.hardware[pump].set_volume(volume)
-            self.hardware[pump].start()
+        if len(pumps) > 0:
+            for pump in pumps:
+                self.hardware[pump].set_rate('INF', speed)
+                self.hardware[pump].set_volume(volume)
+                self.hardware[pump].start()
+                loading_bar.loading_bar_wait(60*volume/speed)
 

@@ -4,7 +4,8 @@ import json
 import os
 from .fluid_control import fluid_control
 from .hardware_loader import hardware_control
-from utils import protocol_system_compiler
+from telemetry import slack_notify
+from utils import protocol_system_compiler,loading_bar
 from tqdm.auto import tqdm
 
 class experiment_manager():
@@ -61,6 +62,7 @@ class experiment_manager():
         
     def run_experimental_step(self,step):
         step_type = self.experiment[step]["step_type"]
+        print(str(self.experiment[step]))
         if step_type == "image":
             if self.microscope_initialized == False:
                 raise ValueError("Microscope not initialized")
@@ -73,9 +75,9 @@ class experiment_manager():
             else:
                 self.hardware.hardware["microscope"].full_acquisition(filename)
         elif step_type == "fluid":
-            self.fluid_control.run_protocol_step(step)
+            self.fluid_control.run_protocol_step(self.experiment[step])
         elif step_type == "wait":
-            time.sleep(int(self.experiment[step]["wait_time"]))
+            loading_bar.loading_bar_wait(int(self.experiment[step]['step_metadata']["wait_time"]))
         elif step_type == "user_action":
             raise NotImplementedError("User action not implemented")
         elif step_type == "compute":
@@ -84,7 +86,7 @@ class experiment_manager():
             raise ValueError(f"Step type {step_type} not recognized")
         
         if self.experiment[step]["slack_notify"] == True:
-            self.slack_notify(f'Completed step #{step}')
+            slack_notify.slack_notify(f'Completed step #{step}')
         print(f"Completed step #{step}")
             
     def execute_all(self,skip_to_step=None):

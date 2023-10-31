@@ -3,7 +3,7 @@
         "step_type": "fluid",
         "step_metadata": {
             "fluid": "1",
-            "volume": "0.5",
+            "volume": "0.1",
             "speed": "1"
         },
         "slack_notify": false
@@ -12,7 +12,7 @@
         "step_type": "fluid",
         "step_metadata": {
             "fluid": "5",
-            "volume": "0.5",
+            "volume": "0.1",
             "speed": "1"
         },
         "slack_notify": false
@@ -20,7 +20,7 @@
     "2": {
         "step_type": "wait",
         "step_metadata": {
-            "wait_time": ""
+            "wait_time": "15"
         },
         "slack_notify": false
     },
@@ -28,7 +28,7 @@
         "step_type": "fluid",
         "step_metadata": {
             "fluid": "8",
-            "volume": "0.5",
+            "volume": "0.1",
             "speed": "1"
         },
         "slack_notify": false
