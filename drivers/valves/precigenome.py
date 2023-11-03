@@ -18,6 +18,7 @@
 # ----------------------------------------------------------------------------------------
 from .Precigenome.PGValve import PGValve
 from .valve import Valve
+import time
 
 class precigenome(Valve):
     def __init__(self,serial_port):
@@ -34,7 +35,8 @@ class precigenome(Valve):
             return False
     
     def initialize(self):
-        self.valve.reset()
+        self.valve.switchto(1)
+        time.sleep(2) # for some reason precigenome releases code lock too early
         
     # ------------------------------------------------------------------------------------
     # Quick function for changing valve position: automatically determines shortest

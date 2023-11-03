@@ -7,6 +7,7 @@ class hardware_control():
         self.system_name = system_name
         self.protocol = protocol
         self.dataset_tag = dataset_tag
+        self.initialize_hardware()
 
     def initialize_hardware(self,delay_microscope_init=False):
         # Define file paths
@@ -32,9 +33,8 @@ class hardware_control():
         
         # Initialize hardware
         self.hardware = {}
+        self.pump_types = {}
         for hardware_name, hardware_info in self.comports.items():
-            if hardware_info['hardware_type'] == "microscope":
-                continue
             hardware_type = hardware_info["hardware_type"]
             if hardware_type == "valve":
                 if hardware_info["hardware_manufacturer"] == "precigenome":
@@ -46,8 +46,10 @@ class hardware_control():
 
             elif hardware_type == "pump":
                 if hardware_info["hardware_manufacturer"] == "new_era_peristaltic":
+                    self.pump_types[hardware_name] = "new_era_peristaltic"
                     self.hardware[hardware_name] = new_era_peristaltic(hardware_info["COM"])
                 elif hardware_info["hardware_manufacturer"] == "new_era_syringe":
+                    self.pump_types[hardware_name] = "new_era_syringe"
                     self.hardware[hardware_name] = new_era_syringe(hardware_info["COM"])
                 else:
                     raise ValueError(f"Hardware manufacturer {hardware_info['hardware_manufacturer']} not recognized")
@@ -56,5 +58,5 @@ class hardware_control():
                 raise NotImplementedError("Liquid handler not implemented yet")
                 
             else:
-                raise ValueError(f"Hardware type {hardware_type} not recognized")
+                pass
         

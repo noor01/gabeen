@@ -25,7 +25,7 @@ from .valve import Valve
 class hamilton(Valve):
     def __init__(self,serial_port):
         
-        self.valve = serial.Serial(port = port,
+        self.valve = serial.Serial(port = serial_port,
                                 baudrate = 9600,
                                 bytesize = serial.SEVENBITS,
                                 parity = serial.PARITY_ODD,
@@ -144,6 +144,7 @@ class hamilton(Valve):
         else:
             print("Unknown internal error has occured")
             turn_stat = False
+        time.sleep(2)
         return turn_stat
 
     def close(self):

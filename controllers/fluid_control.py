@@ -3,10 +3,12 @@ import json
 import os
 import networkx as nx
 from utils import loading_bar
+import time
 
 class fluid_control():
-    def __init__(self, hardware, system_name, protocol) -> None:
+    def __init__(self, hardware, pump_types, system_name, protocol) -> None:
         self.hardware = hardware # hardware is a dictionary of hardware names and their instantiated objects
+        self.pump_types = pump_types
         self.system_name = system_name
         self.protocol = protocol
         self.graph = self.create_graph()
@@ -15,7 +17,7 @@ class fluid_control():
         # Define file paths
         experiment_file = f"../protocols/{self.system_name}/{self.protocol}/experiment.json"
         fluids_file = f"../protocols/{self.system_name}/{self.protocol}/fluids.csv"
-        fluid_edges_file = f"../protocols/{self.system_name}/{self.protocol}/fluid_edges.csv"
+        fluid_edges_file = f"../system-files/{self.system_name}/fluid_edges.csv"
         fluid_nodes_file = f"../system-files/{self.system_name}/fluid_nodes.csv"
 
         # Check if files exist
@@ -56,6 +58,11 @@ class fluid_control():
             graph.add_edge(source, target, **row.to_dict())
 
         self.graph = graph
+        
+        self.path_mode = 'linear'
+        if 'new_era_syringe' in self.pump_types.values():
+            self.path_mode = 'bifurcated'
+        
 
     def create_graph(self):
         self.read_protocol()
@@ -109,7 +116,16 @@ class fluid_control():
         fluid = protocol_step['step_metadata']["fluid"]
         volume = float(protocol_step['step_metadata']["volume"])
         speed = float(protocol_step['step_metadata']["speed"])
-        path_edges = self.get_path(fluid, 'waste')
+        if self.path_mode == 'linear':
+            path_edges = self.get_path(fluid, 'waste')
+            self.linear_pump_action(path_edges,volume,speed)
+            
+        elif self.path_mode == 'bifurcated':
+            path_edges = [self.get_path(fluid,'pump1'),
+                          self.get_path('pump1','waste')]
+            self.bifurcated_pump_action(path_edges,volume,speed)
+                
+    def linear_pump_action(self,path_edges,volume,speed):
         pumps = self.set_path(path_edges)
         if len(pumps) > 0:
             for pump in pumps:
@@ -117,6 +133,32 @@ class fluid_control():
                 self.hardware[pump].set_volume(volume)
                 self.hardware[pump].start()
                 loading_bar.loading_bar_wait(60*volume/speed)
+                
+    def bifurcated_pump_action(self,path_edges,volume,speed):
+        pump = 'pump1' # hardcoded for the timebeing
+        switch_latency = 2 # wait for pressure to equalize before switching
+        vol_limit = self.hardware[pump].syringe_limit # this should break the code in case you're doing this with peristaltic...not supported
+        if volume > vol_limit:
+            num_splits = volume // vol_limit
+            remainder = volume % vol_limit
+            volumes = [vol_limit] * num_splits
+            if remainder > 0:
+                volumes.append(remainder)
+        else:
+            volumes = [volume]
+            
+        for vol in volumes:
+            _ = self.set_path(path_edges[0])
+            self.hardware[pump].set_rate('WDR', speed)
+            self.hardware[pump].set_volume(vol)
+            self.hardware[pump].start()
+            time.sleep(60*vol/speed + switch_latency) # loading bar would get out of hand
+            _ = self.set_path(path_edges[1])
+            self.hardware[pump].set_rate('INF', speed)
+            self.hardware[pump].set_volume(vol)
+            self.hardware[pump].start()
+            time.sleep(60*vol/speed + switch_latency)
+        
 
     def quick_valve(self, line_num):
         path_edges = self.get_path(str(line_num), 'waste')
@@ -131,5 +173,10 @@ class fluid_control():
             loading_bar.loading_bar_wait(60*volume/speed)
             
     def quick_run(self,line_num,volume,speed):
-        pumps = self.quick_valve(line_num)
-        self.quick_pump(volume,speed,pumps)
+        if self.path_mode == 'linear':
+            pumps = self.quick_valve(line_num)
+            self.quick_pump(volume,speed,pumps)
+        elif self.path_mode == 'bifurcated':
+            path_edges = [self.get_path(str(line_num),'pump1'),
+                          self.get_path('pump1','waste')]
+            self.bifurcated_pump_action(path_edges,volume,speed)

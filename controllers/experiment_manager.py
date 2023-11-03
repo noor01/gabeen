@@ -25,15 +25,18 @@ class experiment_manager():
     def initialize(self, system_name, protocol, experiment_name, delay_microscope_init=False, microscope_fov_start=0, hardware_init=False):
         self.system_name = system_name
         self.protocol = protocol
-        protocol_system_compiler.compile_protocol(system_name, protocol) # first make sure system is properly configured
-        if hardware_init == True:
-            self.hardware = hardware_control(self.system_name, self.protocol, self.imaging_params, delay_microscope_init)
-            self.fluid_control = fluid_control(self.hardware.hardware, self.system_name, self.protocol)
-            if self.hardware.use_microscope:
-                self.initialize_microscope()
         self.experiment_name = experiment_name
         self.delay_microscope_init = delay_microscope_init
         self.microscope_fov_start = microscope_fov_start
+        protocol_system_compiler.compile_protocol(system_name, protocol) # first make sure system is properly configured
+        if hardware_init == True:
+            self.hardware_loader = hardware_control(self.system_name, self.protocol)
+            self.fluid_control = fluid_control(self.hardware_loader.hardware,
+                                               self.hardware_loader.pump_types,
+                                               self.system_name,
+                                               self.protocol)
+            if self.hardware_loader.use_microscope:
+                self.initialize_microscope()
         self.runs_folder = f"../runs/{self.system_name}"
         self.experiment_folder = f"{self.runs_folder}/{self.experiment_name}"
         self.create_experiment_folder()
@@ -97,6 +100,7 @@ class experiment_manager():
         print(f"Completed step #{step}")
             
     def execute_all(self,skip_to_step=None):
+        print(f'Total estimated runtime: {self.estimate_total_time()}')
         if skip_to_step is not None:
             self.steps = self.steps[self.steps.index(skip_to_step):]
         for step in tqdm(self.steps):
@@ -109,3 +113,38 @@ class experiment_manager():
     def display_fluids(self):
         print(self.fluid_control.fluids)
 
+
+    def estimate_fluidics_time(self):
+        time = 0 # in seconds
+        for step in self.steps:
+            if self.experiment[step]["step_type"] == "fluid":
+                volume = float(self.experiment[step]['step_metadata']["volume"])
+                speed = float(self.experiment[step]['step_metadata']["speed"])
+                if self.fluidic_control.path_mode == 'linear':
+                    time += 60*volume/speed
+                elif self.fluidic_control.path_mode == 'bifurcated':
+                    time += (60*volume/speed)*2
+            elif self.experiment[step]["step_type"] == 'wait':
+                time += int(self.experiment[step]['step_metadata']["wait_time"])
+        return time / 60 # in minutes
+    
+    def estimate_imaging_time(self):
+        time = 0
+        for step in self.steps:
+            if self.experiment[step]["step_type"] == "image":
+                time += self.microscope_control.microscope.estimate_acquisition_time()
+        return time / 60 # in minutes
+    
+    def estimate_total_time(self):
+        time = 0
+        if self.hardware_loader.use_microscope:
+            time += self.estimate_imaging_time()
+        time += self.estimate_fluidics_time()
+        units = 'minutes'
+        if time > 60:
+            time = time / 60 # convert to hours
+            units = 'hours'
+        if time > 24:
+            time = time / 24 # convert to days
+            units = 'days'
+        return f'{time} {units}'

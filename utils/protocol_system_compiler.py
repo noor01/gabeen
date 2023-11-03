@@ -8,7 +8,7 @@ def compile_protocol(systemID, protocol_name):
     comports_path = f"../system-files/{systemID}/comports.json"
     fluid_nodes_path = f"../system-files/{systemID}/fluid_nodes.csv"
     experiment_path = f"../protocols/{systemID}/{protocol_name}/experiment.json"
-    fluid_edges_path = f"../protocols/{systemID}/{protocol_name}/fluid_edges.csv"
+    fluid_edges_path = f"../system-files/{systemID}/fluid_edges.csv"
     fluids_path = f"../protocols/{systemID}/{protocol_name}/fluids.csv"
     oni_params_path = f"../system-files/{systemID}/oni_params.json"
 

@@ -23,9 +23,7 @@ from .pump import Pump
 class new_era_syringe(Pump):
     def __init__(self,serial_port,diameter='8.585',syringe_limit=3):
         #serial port is the serial port that the pump is connected to
-        self.ser = serial.Serial(port = serial_port,
-                                 baudrate = 19200,
-                                 timeout = 0.1)
+        self.serial_port = serial_port
 
         self.syringe_diams = {'3 ml BD':'8.585',
                             '10 ml BD':'14.60',
@@ -36,17 +34,14 @@ class new_era_syringe(Pump):
         
         self.diameter = diameter
         self.syringe_limit = syringe_limit
-
+        self.initialize()
+        
+    def initialize(self):
+        self.ser = serial.Serial(port = self.serial_port,
+                                 baudrate = 19200,
+                                 timeout = 0.1)
         self.find_pump()
         self.prime_volume = 0.2
-
-    # legacy function
-    def get_diameter_from_user(self):
-        print("What syringe are you using?")
-        syringe = self.dialog.multiple_choice(list(self.syringe_diams.keys()))
-        self.diameter = self.syringe_diams[syringe]
-        self.syringe = syringe
-        self.set_diameter(self.diameter)
     
     def serial_cmd(self,cmd):
         self.ser.write(cmd.encode('ascii'))

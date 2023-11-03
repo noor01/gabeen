@@ -43,8 +43,8 @@ class ONI(Microscope):
     def __init__(self,dataset_tag,input_params=None,system_name=None):
         self.log_info = {}
         self.initialize(input_params,system_name,dataset_tag)
-        if 'xy_start' in self.input_params['config'].keys():
-            self.xy_start = self.input_params['config']['xy_start']
+        if 'xy_start' in self.input_params.keys():
+            self.xy_start = self.input_params['xy_start']
         else:
             self.xy_start = 0
         
@@ -76,8 +76,8 @@ class ONI(Microscope):
         
     def reset_parameters(self,new_params,dataset_tag):
         self.input_params = new_params
-        if 'xy_start' in self.input_params['config'].keys():
-            self.xy_start = self.input_params['config']['xy_start']
+        if 'xy_start' in self.input_params.keys():
+            self.xy_start = self.input_params['xy_start']
         else:
             self.xy_start = 0
         self.logs_dir = f'../runs/{self.system_name}/{dataset_tag}'
@@ -90,8 +90,8 @@ class ONI(Microscope):
         else:
             with open(self.log_file_name,'w+') as log_file:
                 log_file.write('filename, pos, x, y, z\n')
-        self.start_z = self.input_params['config']['start_z']
-        self.offset_z = self.input_params['config']['offset_z']
+        self.start_z = self.input_params['start_z']
+        self.offset_z = self.input_params['offset_z']
         self.offset_z_diff = self.start_z - self.offset_z
         self.first_start_z = self.start_z
         self.light.FocusLaser.Enabled = True
@@ -104,9 +104,7 @@ class ONI(Microscope):
         self.init_z_pos()
     
     def initialize_crop(self):
-        with open(f'../system_files/{self.system_name}/oni_params.json') as json_file:
-            self.oni_system_params = json.load(json_file)
-            self.crop_params = self.oni_system_params['cropping']
+        self.crop_params = self.oni_system_params['cropping']
     
     def safe_focus_range(self,desired):
         upper_thresh = 2000
@@ -127,13 +125,8 @@ class ONI(Microscope):
             
 
     def input_params_setup(self,dataset_tag):
-        if 'instrument_name' in self.input_params.keys():
-            self.instrument_name = self.input_params['config']['instrument_name']
-        else:
-            self.instrument_name = '0'
-        multi_acq_config = self.input_params['config']['oni_json']
-        with open(multi_acq_config) as json_file:
-            self.oni_params = json.load(json_file)
+        self.oni_system_params = self.input_params['oni_json']
+        self.instrument_name = self.oni_system_params['microscope_name']
         # save logs in the same folder that the acquisition json file was saved in
         self.logs_dir = f'../runs/{self.system_name}/{dataset_tag}'
         self.main_dataset_tag = dataset_tag
@@ -145,8 +138,8 @@ class ONI(Microscope):
         else:
             with open(self.log_file_name,'w+') as log_file:
                 log_file.write('filename, pos, x, y, z\n')        
-        self.start_z = self.input_params['config']['start_z']
-        self.offset_z = self.input_params['config']['offset_z']
+        self.start_z = self.input_params['start_z']
+        self.offset_z = self.input_params['offset_z']
         self.offset_z_diff = self.start_z - self.offset_z
         self.first_start_z = self.start_z
         
@@ -213,7 +206,7 @@ class ONI(Microscope):
             print("Instrument connecting....")
             self.instrument.Connect()
             if not self.instrument.IsConnected:
-                print("Failed to coßnnect to microscope")
+                print("Failed to connect to microscope")
                 return False
             else:
                 print("Connected Successfully!")
@@ -292,9 +285,10 @@ class ONI(Microscope):
         self.corner_vals = {}
         print("Gathering best focus z-positions")
         for n in tqdm(range(len(corners))):
-            self._move_xy(corners[n][0],corners[n][1])
+            self.move_xy(corners[n][0],corners[n][1])
             z = self.get_best_focus_dapi((zmin,zmax),resolution)
             self.corner_vals[n] = [corners[n],z]
+        print(self.corner_vals)
         print("Training z-model")
         self.train_z_model()
         print(f'Model score: {self.z_model.score(np.asarray([i[0] for i in self.corner_vals.values()]),np.asarray([i[1] for i in self.corner_vals.values()]))}')
@@ -303,12 +297,14 @@ class ONI(Microscope):
         self.lightGlobalOnState = False
         self.light[0].Enabled = True
         self.camera.SetTargetExposureMilliseconds(self.exposure_program[0])
-        zs = list(np.arange(z_range[0],z_range[1],resolution))
+        z1 = min(z_range)
+        z2 = max(z_range)
+        zs = list(np.arange(z1,z2,resolution))
         image_stack = []
         n_Frames = len(zs)
         image_source = self.camera.CreateImageSource(n_Frames)
         for z in zs:
-            self._move_z(z)
+            self.move_z(z)
             self.lightGlobalOnState = True
             focus_dapi_im = self.quick_crop((image_source.GetNextImage().ImageData()),side=0)
             image_stack.append(focus_dapi_im)
@@ -316,7 +312,8 @@ class ONI(Microscope):
         # determine which image is most in focus
         scores = []
         for im in image_stack:
-            scores.append(self.variance_of_laplacian(im))
+            #scores.append(self.variance_of_laplacian(im))
+            scores.append(self.LAPM(im))
         best_focus_z = zs[scores.index(max(scores))]
         return best_focus_z
     
@@ -325,16 +322,26 @@ class ONI(Microscope):
         measure, which is simply the variance of the Laplacian."""
         return cv2.Laplacian(image, cv2.CV_64F).var()
     
+    def LAPM(self,img):
+        """Implements the Modified Laplacian (LAP2) focus measure
+        operator. Measures the amount of edges present in the image."""
+        # borrowed from: https://github.com/antonio490/Autofocus
+        kernel = np.array([-1, 2, -1])
+        laplacianX = np.abs(cv2.filter2D(img, -1, kernel))
+        laplacianY = np.abs(cv2.filter2D(img, -1, kernel.T))
+        return np.mean(laplacianX + laplacianY)
+    
     def train_z_model(self):
         X = np.asarray([i[0] for i in self.corner_vals.values()])
         Y = np.asarray([i[1] for i in self.corner_vals.values()])
         self.z_model = linear_model.LinearRegression()
         self.z_model.fit(X,Y)
         #also callibrate autofocus at the current position
-        curr_z = self.get_z()
-        self.cal_ONI_AF(curr_z)
+        curr_pos = self.get_stage_pos()
+        callib_z = self.z_model.predict(np.asarray((curr_pos[0],curr_pos[1])).reshape(1,-1))[0]
+        self.cal_ONI_AF(callib_z)
              
-    def move_xy_autofocus(self,x,y,move=True,oni_auto=True):
+    def move_xy_autofocus(self,x,y,move=True,oni_auto=False):
         #z = float(self.z_function(x,y))
         z = self.z_model.predict(np.asarray((x,y)).reshape(1,-1))[0]
         if move == True:
@@ -350,7 +357,7 @@ class ONI(Microscope):
         
     def init_light_program(self):
         self.light.GloablOnState = False
-        json_light_program = self.oni_params['steps']
+        json_light_program = self.input_params['config']['steps']
         exposure = json_light_program[0]['exposure_ms'] # just use whatever exposure is on the first light program
         self.camera.SetTargetExposureMilliseconds(exposure)
         self.light_program = []
@@ -371,7 +378,7 @@ class ONI(Microscope):
             self.light[n].Enabled = False
         
     def _grab_starting_pos(self):
-        pos = self.oni_params['movementOptions']['customXYPositions_mm'][0]['position']
+        pos = self.input_params['config']['movementOptions']['customXYPositions_mm'][0]['position']
         pos['x'] = pos['x'] * 1000
         pos['y'] = pos['y'] * 1000
         pos['z'] = pos['z'] * 1000
@@ -379,7 +386,7 @@ class ONI(Microscope):
            
     def _grab_custom_fovs(self):
         positions = []
-        for n in self.oni_params['movementOptions']['customXYPositions_mm']:
+        for n in self.input_params['config']['movementOptions']['customXYPositions_mm']:
             positions.append(n['position'])
         return positions
     
@@ -408,18 +415,18 @@ class ONI(Microscope):
             self.starting_pos = {'x' : self.input_params['fov_positions'][0][0],
                                  'y' : self.input_params['fov_positions'][0][1]}
             self.positions = self.input_params['fov_positions']
-        elif len(self.oni_params['movementOptions']['customXYPositions_mm']) == 1:
+        elif len(self.input_params['config']['movementOptions']['customXYPositions_mm']) == 1:
             self.acq_mode = 'tilescan'
             self.starting_pos = self._grab_starting_pos()
             #self.start_z = self.starting_pos['z']*1000
             print("Starting position [um]: ")
             print(self.starting_pos)
-            n_x = self.oni_params['movementOptions']['numberOfStepsInXY']['x']
-            n_y = self.oni_params['movementOptions']['numberOfStepsInXY']['y']
-            x_inc_um = self.oni_params['movementOptions']['fovIncrement_mm']['x']*1000
-            y_inc_um = self.oni_params['movementOptions']['fovIncrement_mm']['y']*1000
+            n_x = self.input_params['config']['movementOptions']['numberOfStepsInXY']['x']
+            n_y = self.input_params['config']['movementOptions']['numberOfStepsInXY']['y']
+            x_inc_um = self.input_params['config']['movementOptions']['fovIncrement_mm']['x']*1000
+            y_inc_um = self.input_params['config']['movementOptions']['fovIncrement_mm']['y']*1000
             self.positions = self._make_tiles(self.starting_pos,n_x,n_y,x_inc_um,y_inc_um)
-        elif len(self.oni_params['movementOptions']['customXYPositions_mm']) > 1:
+        elif len(self.input_params['config']['movementOptions']['customXYPositions_mm']) > 1:
             self.acq_mode = 'custom'
             positions_raw = self._grab_custom_fovs()
             self.positions = []
@@ -427,9 +434,9 @@ class ONI(Microscope):
                 self.positions.append([n['x'],n['y']])
                 
     def init_z_pos(self):
-        top = self.oni_params['movementOptions']['zStackStartPosition_um']
-        num_slices = self.oni_params['movementOptions']['numberOfZSlices']
-        dz = self.oni_params['movementOptions']['spacingBetweenZSlices_um']
+        top = self.input_params['config']['movementOptions']['zStackStartPosition_um']
+        num_slices = self.input_params['config']['movementOptions']['numberOfZSlices']
+        dz = self.input_params['config']['movementOptions']['spacingBetweenZSlices_um']
         zs = []
         for n in range(num_slices):
             zs.append(top-(n*dz))
@@ -467,7 +474,7 @@ class ONI(Microscope):
         total_frames = len(self.positions) * len(self.light_program) * len(self.relative_zs)
         pbar = tqdm(total=total_frames)
         
-        im_dim = (self.oni_params['movementOptions']['numberOfZSlices'],self.crop_params['height'],self.crop_params['width'])
+        im_dim = (self.input_params['config']['movementOptions']['numberOfZSlices'],self.crop_params['height'],self.crop_params['width'])
         filename = os.path.join(self.main_dataset_tag,filename)
         # in case this is the first acquisition
         lsm.create_folder_in_all_drives(filename)
@@ -489,9 +496,10 @@ class ONI(Microscope):
         except:
             pass
 
-    def camera_snapshot(self,image_source=None,light_step=0):
+    def camera_snapshot(self,image_source=None,light_step_num=0):
         if image_source is None:
             image_source = self.camera.CreateImageSource(1)
+        light_step = self.light_program[light_step_num]
         return self._camera_snapshot(image_source,light_step)
     
     def _camera_snapshot(self,image_source,light_step):
