@@ -120,9 +120,9 @@ class experiment_manager():
             if self.experiment[step]["step_type"] == "fluid":
                 volume = float(self.experiment[step]['step_metadata']["volume"])
                 speed = float(self.experiment[step]['step_metadata']["speed"])
-                if self.fluidic_control.path_mode == 'linear':
+                if self.fluid_control.path_mode == 'linear':
                     time += 60*volume/speed
-                elif self.fluidic_control.path_mode == 'bifurcated':
+                elif self.fluid_control.path_mode == 'bifurcated':
                     time += (60*volume/speed)*2
             elif self.experiment[step]["step_type"] == 'wait':
                 time += int(self.experiment[step]['step_metadata']["wait_time"])
@@ -132,7 +132,7 @@ class experiment_manager():
         time = 0
         for step in self.steps:
             if self.experiment[step]["step_type"] == "image":
-                time += self.microscope_control.microscope.estimate_acquisition_time()
+                time += self.microscope_control.estimate_acquisition_time()
         return time / 60 # in minutes
     
     def estimate_total_time(self):

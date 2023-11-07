@@ -26,10 +26,10 @@ def get_dir_mem_avail(path):
 def save_image_stack(image_stack, target_dir, file_prefix):
     # check if target_dir exists
     if not os.path.exists(target_dir):
-        os.mkdir(target_dir)
+        os.makedirs(target_dir)
     # save image stack
     image_stack_3d = np.stack(image_stack, axis=0)
-    np.save(f'{os.path.join(target_dir, file_prefix)}.npy', image_stack_3d)
+    np.save(f'{os.path.join(target_dir, str(file_prefix))}.npy', image_stack_3d)
 
 def estimate_mem_footprint(stack_dims, num_stacks, dtype=np.uint16):
     return np.prod(stack_dims) * num_stacks * np.dtype(dtype).itemsize
@@ -39,7 +39,7 @@ def create_folder_in_all_drives(folder_name):
         drive = partition.mountpoint
         folder_path = os.path.join(drive, folder_name)
         if not os.path.exists(folder_path):
-            os.mkdir(folder_path)
+            os.makedirs(folder_path)
             
 import time
 
@@ -57,7 +57,7 @@ def get_save_path(folder_name,num_stacks, stack_dims, dtype=np.uint16,slack=True
                 # Create folder in the selected drive
                 folder_path = os.path.join(drive, folder_name)
                 if not os.path.exists(folder_path):
-                    os.mkdir(folder_path)
+                    os.makedirs(folder_path)
                 return folder_path
         
         # If no drive has enough memory, wait for 5 minutes and retry

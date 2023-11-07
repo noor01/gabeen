@@ -33,15 +33,15 @@ class microscope_control():
             
         
         
-    def initialize_oni(self):
+    def initialize_oni(self,callib_af=True):
         config_json = f"../runs/{self.system_name}/{self.dataset_tag}/config.json"
         if self.delay_microscope_init:
             print(f"Please add config.json, overview.tiff and optional files [fov_positions.json, auxiliary_oni_config.json] to {config_json}")
             return
         else:
-            self._initialize_oni(config_json)
+            self._initialize_oni(config_json,callib_af)
         
-    def _initialize_oni(self,config_json):
+    def _initialize_oni(self,config_json,callib_af=True):
         self.imaging_params = {}
         # check and load config.json
         if not os.path.exists(config_json):
@@ -68,11 +68,13 @@ class microscope_control():
             raise FileNotFoundError(f"{oni_json} not found")
         oni_json_params = json.load(open(oni_json))
         self.imaging_params['oni_json'] = oni_json_params
-            
+        
         self.microscope = ONI(self.dataset_tag,self.imaging_params,self.system_name)
         self.microscope_initialized = True
+        if callib_af == True:
+            self.microscope.callibrate_autofocus()
         
-    def estimate_imaging_time(self,buffer=50):
+    def estimate_acquisition_time(self,buffer=50):
         zs = len(self.microscope.relative_zs)
         positions = len(self.microscope.positions)
         raw_nFrames = zs*positions

@@ -25,6 +25,8 @@ sys.path.append('../data_processing')
 from data_processing import local_storage_manager as lsm
 sys.path.append('../telemetry')
 from telemetry import slack_notify
+from scipy.signal import find_peaks
+from utils import *
 
 sys.path.append('C:\\Program Files\\OxfordNanoimaging_1.18.3\\.venv\\Lib\\site-packages')
 sys.path.append('C:\\Program Files\\OxfordNanoimaging_1.18.3\\nim_python_core\\')
@@ -272,7 +274,7 @@ class ONI(Microscope):
         indices = [int(i * (len(lst) - 1) / (N - 1)) for i in range(N)]
         return [lst[i] for i in indices]
     
-    def callibrate_autofocus(self,force_z=0,num_points = 5,range_max=10,resolution=0.1):
+    def callibrate_autofocus(self,force_z=0,num_points = 5,range_max=10,resolution=0.1, search_window=10):
         self.global_on_lights_off()
         self.light.FocusLaser.Enabled = True
         # corners = self.find_extreme_points(self.positions)
@@ -284,16 +286,20 @@ class ONI(Microscope):
         zmin = self.start_z-range_max
         self.corner_vals = {}
         print("Gathering best focus z-positions")
+        self.callib_images = {}
+        self.af_images = {}
         for n in tqdm(range(len(corners))):
             self.move_xy(corners[n][0],corners[n][1])
-            z = self.get_best_focus_dapi((zmin,zmax),resolution)
+            z,ims,afimgs = self.get_best_focus_dapi((zmin,zmax),resolution,search_window=search_window)
             self.corner_vals[n] = [corners[n],z]
+            self.callib_images[n] = ims
+            self.af_images[n] = afimgs
         print(self.corner_vals)
         print("Training z-model")
         self.train_z_model()
         print(f'Model score: {self.z_model.score(np.asarray([i[0] for i in self.corner_vals.values()]),np.asarray([i[1] for i in self.corner_vals.values()]))}')
     
-    def get_best_focus_dapi(self,z_range,resolution):
+    def get_best_focus_dapi(self,z_range,resolution, search_window=10):
         self.lightGlobalOnState = False
         self.light[0].Enabled = True
         self.camera.SetTargetExposureMilliseconds(self.exposure_program[0])
@@ -301,21 +307,60 @@ class ONI(Microscope):
         z2 = max(z_range)
         zs = list(np.arange(z1,z2,resolution))
         image_stack = []
+        af_stack = []
+        im_intensities = []
+        af_intensities = []
         n_Frames = len(zs)
         image_source = self.camera.CreateImageSource(n_Frames)
         for z in zs:
             self.move_z(z)
             self.lightGlobalOnState = True
             focus_dapi_im = self.quick_crop((image_source.GetNextImage().ImageData()),side=0)
+            af_im = self._focus_cam_snapshot()
+            im_intensities.append(np.max(focus_dapi_im)/np.std(focus_dapi_im))
+            af_intensities.append(np.std(af_im))
+            
             image_stack.append(focus_dapi_im)
+            af_stack.append(self._focus_cam_snapshot())
         self.lightGlobalOnState = False
+        """
         # determine which image is most in focus
         scores = []
         for im in image_stack:
             #scores.append(self.variance_of_laplacian(im))
             scores.append(self.LAPM(im))
         best_focus_z = zs[scores.index(max(scores))]
-        return best_focus_z
+        """
+        #best_focus_z = self.peak_finding_focus(zs,image_stack)
+        im_intensities = normalize(np.asarray(im_intensities))
+        af_intensities = normalize(np.asarray(af_intensities))
+        best_focus_z = self.get_best_focus(zs,im_intensities,af_intensities,search_window=search_window)
+        return best_focus_z, image_stack, af_stack
+    
+    def get_best_focus(self,zs,im_is, af_is, search_window=10):
+        best_af_zidx = np.argmax(af_is)
+        best_z = zs[best_af_zidx]
+        """
+        z1 = np.argmin(np.abs(zs-(best_af_z-search_window)))
+        z2 = np.argmin(np.abs(zs-(best_af_z+search_window)))
+        search_zs = zs[best_af_zidx:z2]
+        masked_is = im_is[best_af_zidx:z2]
+        i_z_idx = np.argmax(masked_is)
+        best_z = search_zs[i_z_idx]
+        print(best_z)
+        """
+        return best_z
+    
+    def peak_finding_focus(self,zs,image_stack):
+        intensities = []
+        for i in range(len(image_stack)):
+            intensities.append(np.max(image_stack[i])/np.std(image_stack[i]))
+        peaks, _ = find_peaks(intensities, height=np.mean(intensities))
+        peak_z_vals = [zs[i] for i in peaks]
+        if len(peak_z_vals) > 1:
+            return np.mean(peak_z_vals) # best focus is between two layers of cells
+        else:
+            return peak_z_vals[0]
     
     def variance_of_laplacian(self,image):
         """Compute the Laplacian of the image and then return the focus
@@ -471,6 +516,11 @@ class ONI(Microscope):
     def full_acquisition(self,filename,skip_to=0):
         #self.autofocus.Stop()
         #self.light.GlobalOnStateStartac = False
+        try:
+            del(self.callib_images) # free up some RAM
+            del(self.af_images)
+        except:
+            pass
         total_frames = len(self.positions) * len(self.light_program) * len(self.relative_zs)
         pbar = tqdm(total=total_frames)
         
@@ -556,7 +606,7 @@ class ONI(Microscope):
             corner = self.crop_params['top-left']
         else:
             corner = self.crop_params['top-right']
-        im = image[corner[0]:corner[0] + self.crop_params['height'],corner[1]:corner[1] + self.crop_params['width']]
+        im = image[corner[0]*2:(corner[0] + self.crop_params['height'])*2,corner[1]*2:(corner[1] + self.crop_params['width'])*2]
         return im
         
     def shutdown(self):
