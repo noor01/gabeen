@@ -1,0 +1,16 @@
+Reagent,Fluid_num,Wash_vol,Wash_speed
+wash buffer,1,2,1
+imaging buffer,2,1.5,0.5
+tcep,3,2,0.5
+2x-SSC,4,5,1
+universal_fluors,5,1.5,0.5
+round_1,6,1.5,0.5
+round_2,16,1.5,0.5
+round_3,8,1.5,0.5
+round_4,9,1.5,0.5
+round_5,10,1.5,0.5
+round_6,11,1.5,0.5
+round_7,12,1.5,0.5
+round_8,13,1.5,0.5
+round_9,14,1.5,0.5
+round_10,15,1.5,0.5

@@ -11,6 +11,14 @@ def compile_protocol(systemID, protocol_name):
     fluid_edges_path = f"../system-files/{systemID}/fluid_edges.csv"
     fluids_path = f"../protocols/{systemID}/{protocol_name}/fluids.csv"
     oni_params_path = f"../system-files/{systemID}/oni_params.json"
+    
+    print("Checking for:")
+    print(comports_path)
+    print(fluid_nodes_path)
+    print(experiment_path)
+    print(fluid_edges_path)
+    print(fluids_path)
+    print(oni_params_path)
 
     # Check if files exist
     if not os.path.exists(comports_path):

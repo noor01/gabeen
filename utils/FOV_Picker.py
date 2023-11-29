@@ -7,6 +7,7 @@ from skimage.io import imread
 from skimage.transform import resize
 from skimage.filters import threshold_otsu
 from collections import defaultdict
+from .FOVPicker.Image import *
 
 def concatonate_image(image1, image2, direction):
     concatonated_image = []
@@ -192,9 +193,9 @@ def FOVPicker(overview, viewer, dimensions, start_position, increments):
     #sections = get_sections(labels, overview.shape)
     labels = get_image_windows(overview, labels, dimensions)
     final = get_positions(overview, labels, dimensions=dimensions, start_position=start_position, increments=increments)
-    final.show(final.image_dict['label_overlay'], 'cividis')
-    final.show(final.image_dict['fov_overlay'], 'cividis')
-    final.show(final.image_dict['array'], 'inferno')
+    #final.show(final.image_dict['label_overlay'], 'cividis')
+    #final.show(final.image_dict['fov_overlay'], 'cividis')
+    #final.show(final.image_dict['array'], 'inferno')
     return labels, final
 
 import json

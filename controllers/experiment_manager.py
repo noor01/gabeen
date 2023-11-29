@@ -68,6 +68,7 @@ class experiment_manager():
         self.microscope_initialized = self.microscope_control.microscope_initialized
         
     def run_experimental_step(self,step):
+        step = int(step) # in case reading json file turned ints
         step_type = self.experiment[step]["step_type"]
         print(str(self.experiment[step]))
         if step_type == "image":

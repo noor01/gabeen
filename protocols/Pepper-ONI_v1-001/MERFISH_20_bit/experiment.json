@@ -2,34 +2,981 @@
     "0": {
         "step_type": "fluid",
         "step_metadata": {
-            "fluid": "",
-            "volume": "",
-            "speed": ""
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
         },
-        "slack_notify": true
+        "slack_notify": false
     },
     "1": {
-        "step_type": "image",
-        "step_metadata": {
-            "filename": ""
-        },
-        "slack_notify": true
-    },
-    "2": {
         "step_type": "wait",
         "step_metadata": {
-            "wait_time": ""
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "2": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "3": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "4": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "5": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "6": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "7": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "8": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_1"
         },
         "slack_notify": true
     },
-    "3": {
-        "step_type": "user_action",
-        "step_metadata": {},
+    "9": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "10": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "11": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "12": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "15",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "13": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "14": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "15": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "16": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "17": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "18": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "19": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "20": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_2"
+        },
         "slack_notify": true
     },
-    "4": {
-        "step_type": "compute",
-        "step_metadata": {},
+    "21": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "22": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "23": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "24": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "16",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "25": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "26": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "27": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "28": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "29": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "30": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "31": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "32": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_3"
+        },
         "slack_notify": true
+    },
+    "33": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "34": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "35": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "36": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "17",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "37": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "38": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "39": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "40": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "41": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "42": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "43": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "44": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_4"
+        },
+        "slack_notify": true
+    },
+    "45": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "46": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "47": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "48": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "18",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "49": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "50": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "51": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "52": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "53": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "54": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "55": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "56": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_5"
+        },
+        "slack_notify": true
+    },
+    "57": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "58": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "59": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "60": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "19",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "61": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "62": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "63": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "64": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "65": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "66": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "67": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "68": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_6"
+        },
+        "slack_notify": true
+    },
+    "69": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "70": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "71": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "72": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "20",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "73": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "74": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "75": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "76": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "77": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "78": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "79": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "80": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_7"
+        },
+        "slack_notify": true
+    },
+    "81": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "82": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "83": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "84": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "21",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "85": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "86": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "87": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "88": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "89": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "90": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "91": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "92": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_8"
+        },
+        "slack_notify": true
+    },
+    "93": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "94": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "95": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "96": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "22",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "97": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "98": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "99": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "100": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "101": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "102": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "103": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "104": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_9"
+        },
+        "slack_notify": true
+    },
+    "105": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "106": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "107": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "108": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "23",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "109": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "110": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "111": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "112": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "113": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "1",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "114": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "115": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "116": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_10"
+        },
+        "slack_notify": true
+    },
+    "117": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "118": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "119": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
     }
 }

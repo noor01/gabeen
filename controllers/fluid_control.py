@@ -138,10 +138,13 @@ class fluid_control():
         pump = 'pump1' # hardcoded for the timebeing
         switch_latency = 2 # wait for pressure to equalize before switching
         vol_limit = self.hardware[pump].syringe_limit # this should break the code in case you're doing this with peristaltic...not supported
+        vol_limit = float(vol_limit)
+        volume = float(volume)
+        speed = float(speed)
         if volume > vol_limit:
             num_splits = volume // vol_limit
             remainder = volume % vol_limit
-            volumes = [vol_limit] * num_splits
+            volumes = [vol_limit] * int(num_splits)
             if remainder > 0:
                 volumes.append(remainder)
         else:

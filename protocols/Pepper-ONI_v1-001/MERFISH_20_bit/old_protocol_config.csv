@@ -1,0 +1,121 @@
+Step,Time/filename,Temp
+round_1,0,0
+INCUBATE,15,0
+wash buffer,0,0
+universal_fluors,0,0
+INCUBATE,15,0
+wash buffer,0,0
+imaging buffer,0,0
+INCUBATE,5,0
+IMAGE,r1,0
+INCUBATE,180,0
+tcep,0,0
+INCUBATE,5,0
+2x-SSC,0,0
+round_2,0,0
+INCUBATE,15,0
+wash buffer,0,0
+universal_fluors,0,0
+INCUBATE,15,0
+wash buffer,0,0
+imaging buffer,0,0
+INCUBATE,5,0
+IMAGE,r2,0
+tcep,0,0
+INCUBATE,5,0
+2x-SSC,0,0
+round_3,0,0
+INCUBATE,15,0
+wash buffer,0,0
+universal_fluors,0,0
+INCUBATE,15,0
+wash buffer,0,0
+imaging buffer,0,0
+INCUBATE,5,0
+IMAGE,r3,0
+tcep,0,0
+INCUBATE,5,0
+2x-SSC,0,0
+round_4,0,0
+INCUBATE,15,0
+wash buffer,0,0
+universal_fluors,0,0
+INCUBATE,15,0
+wash buffer,0,0
+imaging buffer,0,0
+INCUBATE,5,0
+IMAGE,r4,0
+tcep,0,0
+INCUBATE,5,0
+2x-SSC,0,0
+round_5,0,0
+INCUBATE,15,0
+wash buffer,0,0
+universal_fluors,0,0
+INCUBATE,15,0
+wash buffer,0,0
+imaging buffer,0,0
+INCUBATE,5,0
+IMAGE,r5,0
+tcep,0,0
+INCUBATE,5,0
+2x-SSC,0,0
+round_6,0,0
+INCUBATE,15,0
+wash buffer,0,0
+universal_fluors,0,0
+INCUBATE,15,0
+wash buffer,0,0
+imaging buffer,0,0
+INCUBATE,5,0
+IMAGE,r6,0
+tcep,0,0
+INCUBATE,5,0
+2x-SSC,0,0
+round_7,0,0
+INCUBATE,15,0
+wash buffer,0,0
+universal_fluors,0,0
+INCUBATE,15,0
+wash buffer,0,0
+imaging buffer,0,0
+INCUBATE,5,0
+IMAGE,r7,0
+tcep,0,0
+INCUBATE,5,0
+2x-SSC,0,0
+round_8,0,0
+INCUBATE,15,0
+wash buffer,0,0
+universal_fluors,0,0
+INCUBATE,15,0
+wash buffer,0,0
+imaging buffer,0,0
+INCUBATE,5,0
+IMAGE,r8,0
+tcep,0,0
+INCUBATE,5,0
+2x-SSC,0,0
+round_9,0,0
+INCUBATE,15,0
+wash buffer,0,0
+universal_fluors,0,0
+INCUBATE,15,0
+wash buffer,0,0
+imaging buffer,0,0
+INCUBATE,5,0
+IMAGE,r9,0
+tcep,0,0
+INCUBATE,5,0
+2x-SSC,0,0
+round_10,0,0
+INCUBATE,15,0
+wash buffer,0,0
+universal_fluors,0,0
+INCUBATE,15,0
+wash buffer,0,0
+imaging buffer,0,0
+INCUBATE,5,0
+IMAGE,r10,0
+INCUBATE,5,0
+HOLD,0,23
