@@ -13,6 +13,14 @@
 # ----------------------------------------------------------------------------------------
 import os
 import sys
+
+sys.path.append('C:\\Program Files\\OxfordNanoimaging_1.18.3\\.venv\\Lib\\site-packages')
+sys.path.append('C:\\Program Files\\OxfordNanoimaging_1.18.3\\nim_python_core\\')
+from NimSetup import *
+nim_setup(os.getcwd(),'C:\\Program Files\\OxfordNanoimaging_1.18.3')
+
+from NimPyHelpers import *
+
 import time
 import cv2
 import numpy as np
@@ -28,12 +36,7 @@ from telemetry import slack_notify
 from scipy.signal import find_peaks
 from utils import *
 
-sys.path.append('C:\\Program Files\\OxfordNanoimaging_1.18.3\\.venv\\Lib\\site-packages')
-sys.path.append('C:\\Program Files\\OxfordNanoimaging_1.18.3\\nim_python_core\\')
-from NimSetup import *
-nim_setup(os.getcwd(),'C:\\Program Files\\OxfordNanoimaging_1.18.3')
 
-from NimPyHelpers import *
 
 # ----------------------------------------------------------------------------------------
 # ONI Nanoimager ghost class definition

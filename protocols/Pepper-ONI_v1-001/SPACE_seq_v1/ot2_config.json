@@ -1,0 +1,51 @@
+{
+    "labware": {
+        "tips_200": {
+            "api_name": "opentrons_96_filtertiprack_200ul",
+            "location": "1"
+        },
+        "tips_1000": {
+            "api_name": "opentrons_96_filtertiprack_1000ul",
+            "location": "2"
+        },
+        "reservoir1": {
+            "api_name": "nest_12_reservoir_15ml",
+            "location": "3"
+        },
+        "wellplate1": {
+            "api_name": "nest_96_wellplate_2ml_deep",
+            "location": "4"
+        },
+        "tuberack_50ml_1": {
+            "api_name": "opentrons_6_tuberack_falcon_50ml_conical",
+            "location": "5"
+        },
+        "tuberack_15ml_1": {
+            "api_name": "opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical",
+            "location": "6"
+        },
+        "syringe_adapter": {
+            "api_name": "yeolab_1_bd_syringe_adap_3000ul",
+            "location": "10"
+        }
+    },
+    "hardware": {
+        "p300": {
+            "api_name": "p300_single_gen2",
+            "mount": "left",
+            "tip_racks": [
+                "tips_200"
+            ]
+        },
+        "p1000": {
+            "api_name": "p1000_single_gen2",
+            "mount": "right",
+            "tip_racks": [
+                "tips_1000"
+            ]
+        }
+    },
+    "metadata": {
+        "apiLevel": "2.14"
+    }
+}

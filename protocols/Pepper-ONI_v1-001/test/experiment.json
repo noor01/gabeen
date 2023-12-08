@@ -1,42 +1,63 @@
 {
     "0": {
-        "step_type": "fluid",
+        "step_type": "liquid_handler",
         "step_metadata": {
-            "fluid": "1",
-            "volume": "0.1",
-            "speed": "1"
+            "reagent": "round1",
+            "info": {
+                "labware": "wellplate1",
+                "location": "A2",
+                "volume": 150,
+                "hardware": "p300",
+                "repeat": 2
+            },
+            "destination": "reservoir1"
         },
         "slack_notify": false
     },
     "1": {
         "step_type": "fluid",
         "step_metadata": {
-            "fluid": "5",
-            "volume": "0.1",
-            "speed": "1"
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
         },
         "slack_notify": false
     },
     "2": {
         "step_type": "wait",
         "step_metadata": {
-            "wait_time": "15"
+            "wait_time": 900
         },
         "slack_notify": false
     },
     "3": {
-        "step_type": "image",
+        "step_type": "liquid_handler",
         "step_metadata": {
-            "filename": "round1"
+            "reagent": "round2",
+            "info": {
+                "labware": "wellplate1",
+                "location": "A3",
+                "volume": 150,
+                "hardware": "p300",
+                "repeat": 2
+            },
+            "destination": "reservoir1"
         },
         "slack_notify": false
     },
     "4": {
         "step_type": "fluid",
         "step_metadata": {
-            "fluid": "18",
-            "volume": "0.1",
-            "speed": "1"
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "5": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
         },
         "slack_notify": false
     }

@@ -1,0 +1,5702 @@
+{
+    "0": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round1",
+            "info": {
+                "labware": "wellplate1",
+                "location": "A1",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "1": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "2": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "3": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "4": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "5": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "6": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "7": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "8": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "9": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_1",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "10": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "11": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "12": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "13": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round2",
+            "info": {
+                "labware": "wellplate1",
+                "location": "A2",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "14": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "15": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "16": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "17": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "18": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "19": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "20": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "21": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "22": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_2",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "23": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "24": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "25": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "26": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round3",
+            "info": {
+                "labware": "wellplate1",
+                "location": "A3",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "27": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "28": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "29": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "30": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "31": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "32": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "33": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "34": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "35": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_3",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "36": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "37": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "38": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "39": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round4",
+            "info": {
+                "labware": "wellplate1",
+                "location": "A4",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "40": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "41": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "42": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "43": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "44": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "45": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "46": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "47": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "48": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_4",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "49": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "50": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "51": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "52": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round5",
+            "info": {
+                "labware": "wellplate1",
+                "location": "A5",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "53": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "54": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "55": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "56": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "57": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "58": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "59": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "60": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "61": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_5",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "62": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "63": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "64": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "65": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round6",
+            "info": {
+                "labware": "wellplate1",
+                "location": "A6",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "66": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "67": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "68": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "69": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "70": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "71": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "72": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "73": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "74": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_6",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "75": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "76": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "77": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "78": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round7",
+            "info": {
+                "labware": "wellplate1",
+                "location": "A7",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "79": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "80": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "81": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "82": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "83": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "84": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "85": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "86": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "87": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_7",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "88": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "89": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "90": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "91": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round8",
+            "info": {
+                "labware": "wellplate1",
+                "location": "A8",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "92": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "93": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "94": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "95": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "96": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "97": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "98": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "99": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "100": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_8",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "101": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "102": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "103": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "104": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round9",
+            "info": {
+                "labware": "wellplate1",
+                "location": "A9",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "105": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "106": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "107": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "108": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "109": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "110": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "111": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "112": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "113": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_9",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "114": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "115": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "116": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "117": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round10",
+            "info": {
+                "labware": "wellplate1",
+                "location": "A10",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "118": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "119": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "120": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "121": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "122": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "123": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "124": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "125": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "126": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_10",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "127": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "128": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "129": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "130": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round11",
+            "info": {
+                "labware": "wellplate1",
+                "location": "A11",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "131": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "132": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "133": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "134": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "135": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "136": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "137": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "138": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "139": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_11",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "140": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "141": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "142": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "143": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round12",
+            "info": {
+                "labware": "wellplate1",
+                "location": "A12",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "144": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "145": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "146": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "147": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "148": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "149": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "150": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "151": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "152": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_12",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "153": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "154": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "155": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "156": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round13",
+            "info": {
+                "labware": "wellplate1",
+                "location": "B1",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "157": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "158": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "159": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "160": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "161": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "162": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "163": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "164": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "165": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_13",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "166": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "167": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "168": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "169": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round14",
+            "info": {
+                "labware": "wellplate1",
+                "location": "B2",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "170": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "171": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "172": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "173": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "174": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "175": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "176": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "177": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "178": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_14",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "179": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "180": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "181": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "182": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round15",
+            "info": {
+                "labware": "wellplate1",
+                "location": "B3",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "183": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "184": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "185": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "186": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "187": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "188": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "189": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "190": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "191": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_15",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "192": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "193": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "194": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "195": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round16",
+            "info": {
+                "labware": "wellplate1",
+                "location": "B4",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "196": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "197": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "198": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "199": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "200": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "201": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "202": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "203": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "204": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_16",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "205": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "206": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "207": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "208": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round17",
+            "info": {
+                "labware": "wellplate1",
+                "location": "B5",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "209": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "210": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "211": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "212": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "213": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "214": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "215": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "216": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "217": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_17",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "218": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "219": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "220": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "221": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round18",
+            "info": {
+                "labware": "wellplate1",
+                "location": "B6",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "222": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "223": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "224": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "225": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "226": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "227": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "228": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "229": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "230": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_18",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "231": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "232": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "233": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "234": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round19",
+            "info": {
+                "labware": "wellplate1",
+                "location": "B7",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "235": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "236": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "237": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "238": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "239": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "240": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "241": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "242": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "243": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_19",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "244": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "245": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "246": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "247": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round20",
+            "info": {
+                "labware": "wellplate1",
+                "location": "B8",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "248": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "249": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "250": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "251": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "252": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "253": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "254": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "255": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "256": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_20",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "257": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "258": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "259": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "260": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round21",
+            "info": {
+                "labware": "wellplate1",
+                "location": "B9",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "261": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "262": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "263": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "264": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "265": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "266": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "267": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "268": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "269": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_21",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "270": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "271": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "272": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "273": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round22",
+            "info": {
+                "labware": "wellplate1",
+                "location": "B10",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "274": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "275": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "276": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "277": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "278": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "279": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "280": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "281": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "282": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_22",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "283": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "284": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "285": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "286": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round23",
+            "info": {
+                "labware": "wellplate1",
+                "location": "B11",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "287": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "288": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "289": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "290": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "291": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "292": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "293": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "294": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "295": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_23",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "296": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "297": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "298": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "299": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round24",
+            "info": {
+                "labware": "wellplate1",
+                "location": "B12",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "300": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "301": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "302": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "303": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "304": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "305": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "306": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "307": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "308": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_24",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "309": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "310": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "311": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "312": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round25",
+            "info": {
+                "labware": "wellplate1",
+                "location": "C1",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "313": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "314": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "315": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "316": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "317": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "318": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "319": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "320": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "321": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_25",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "322": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "323": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "324": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "325": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round26",
+            "info": {
+                "labware": "wellplate1",
+                "location": "C2",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "326": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "327": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "328": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "329": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "330": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "331": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "332": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "333": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "334": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_26",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "335": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "336": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "337": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "338": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round27",
+            "info": {
+                "labware": "wellplate1",
+                "location": "C3",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "339": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "340": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "341": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "342": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "343": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "344": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "345": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "346": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "347": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_27",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "348": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "349": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "350": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "351": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round28",
+            "info": {
+                "labware": "wellplate1",
+                "location": "C4",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "352": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "353": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "354": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "355": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "356": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "357": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "358": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "359": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "360": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_28",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "361": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "362": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "363": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "364": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round29",
+            "info": {
+                "labware": "wellplate1",
+                "location": "C5",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "365": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "366": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "367": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "368": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "369": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "370": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "371": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "372": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "373": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_29",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "374": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "375": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "376": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "377": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round30",
+            "info": {
+                "labware": "wellplate1",
+                "location": "C6",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "378": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "379": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "380": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "381": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "382": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "383": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "384": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "385": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "386": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_30",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "387": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "388": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "389": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "390": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round31",
+            "info": {
+                "labware": "wellplate1",
+                "location": "C7",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "391": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "392": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "393": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "394": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "395": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "396": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "397": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "398": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "399": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_31",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "400": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "401": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "402": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "403": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round32",
+            "info": {
+                "labware": "wellplate1",
+                "location": "C8",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "404": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "405": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "406": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "407": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "408": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "409": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "410": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "411": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "412": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_32",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "413": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "414": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "415": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "416": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round33",
+            "info": {
+                "labware": "wellplate1",
+                "location": "C9",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "417": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "418": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "419": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "420": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "421": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "422": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "423": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "424": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "425": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_33",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "426": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "427": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "428": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "429": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round34",
+            "info": {
+                "labware": "wellplate1",
+                "location": "C10",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "430": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "431": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "432": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "433": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "434": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "435": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "436": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "437": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "438": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_34",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "439": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "440": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "441": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "442": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round35",
+            "info": {
+                "labware": "wellplate1",
+                "location": "C11",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "443": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "444": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "445": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "446": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "447": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "448": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "449": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "450": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "451": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_35",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "452": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "453": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "454": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "455": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round36",
+            "info": {
+                "labware": "wellplate1",
+                "location": "C12",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "456": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "457": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "458": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "459": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "460": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "461": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "462": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "463": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "464": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_36",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "465": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "466": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "467": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "468": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round37",
+            "info": {
+                "labware": "wellplate1",
+                "location": "D1",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "469": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "470": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "471": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "472": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "473": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "474": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "475": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "476": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "477": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_37",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "478": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "479": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "480": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "481": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round38",
+            "info": {
+                "labware": "wellplate1",
+                "location": "D2",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "482": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "483": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "484": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "485": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "486": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "487": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "488": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "489": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "490": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_38",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "491": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "492": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "493": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "494": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round39",
+            "info": {
+                "labware": "wellplate1",
+                "location": "D3",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "495": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "496": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "497": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "498": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "499": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "500": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "501": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "502": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "503": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_39",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "504": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "505": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "506": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "507": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round40",
+            "info": {
+                "labware": "wellplate1",
+                "location": "D4",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "508": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "509": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "510": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "511": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "512": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "513": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "514": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "515": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "516": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_40",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "517": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "518": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "519": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "520": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round41",
+            "info": {
+                "labware": "wellplate1",
+                "location": "D5",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "521": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "522": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "523": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "524": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "525": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "526": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "527": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "528": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "529": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_41",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "530": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "531": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "532": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "533": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round42",
+            "info": {
+                "labware": "wellplate1",
+                "location": "D6",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "534": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "535": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "536": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "537": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "538": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "539": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "540": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "541": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "542": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_42",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "543": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "544": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "545": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "546": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round43",
+            "info": {
+                "labware": "wellplate1",
+                "location": "D7",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "547": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "548": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "549": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "550": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "551": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "552": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "553": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "554": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "555": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_43",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "556": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "557": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "558": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "559": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round44",
+            "info": {
+                "labware": "wellplate1",
+                "location": "D8",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "560": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "561": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "562": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "563": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "564": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "565": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "566": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "567": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "568": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_44",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "569": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "570": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "571": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "572": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round45",
+            "info": {
+                "labware": "wellplate1",
+                "location": "D9",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "573": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "574": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "575": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "576": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "577": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "578": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "579": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "580": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "581": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_45",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "582": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "583": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "584": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "585": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round46",
+            "info": {
+                "labware": "wellplate1",
+                "location": "D10",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "586": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "587": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "588": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "589": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "590": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "591": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "592": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "593": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "594": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_46",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "595": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "596": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "597": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "598": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round47",
+            "info": {
+                "labware": "wellplate1",
+                "location": "D11",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "599": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "600": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "601": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "602": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "603": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "604": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "605": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "606": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "607": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_47",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "608": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "609": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "610": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "611": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round48",
+            "info": {
+                "labware": "wellplate1",
+                "location": "D12",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "612": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "613": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "614": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "615": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "616": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "617": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "618": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "619": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "620": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_48",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "621": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "622": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "623": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "624": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round49",
+            "info": {
+                "labware": "wellplate1",
+                "location": "E1",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "625": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "626": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "627": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "628": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "629": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "630": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "631": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "632": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "633": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_49",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "634": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "635": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "636": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "637": {
+        "step_type": "liquid_handler",
+        "step_metadata": {
+            "reagent": "round50",
+            "info": {
+                "labware": "wellplate1",
+                "location": "E2",
+                "volume": 750,
+                "hardware;": "p1000",
+                "repeat": 2
+            },
+            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+        },
+        "slack_notify": false
+    },
+    "638": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "ot2",
+            "volume": 1.5,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "639": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "640": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "641": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "6",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "642": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 900
+        },
+        "slack_notify": false
+    },
+    "643": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "2",
+            "volume": 2,
+            "speed": 1
+        },
+        "slack_notify": false
+    },
+    "644": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "3",
+            "volume": 1.5,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "645": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "646": {
+        "step_type": "image",
+        "step_metadata": {
+            "filename": "round_50",
+            "callibrate_af": true
+        },
+        "slack_notify": true
+    },
+    "647": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "4",
+            "volume": 2,
+            "speed": 0.5
+        },
+        "slack_notify": false
+    },
+    "648": {
+        "step_type": "wait",
+        "step_metadata": {
+            "wait_time": 300
+        },
+        "slack_notify": false
+    },
+    "649": {
+        "step_type": "fluid",
+        "step_metadata": {
+            "fluid": "5",
+            "volume": 5,
+            "speed": 1
+        },
+        "slack_notify": false
+    }
+}
