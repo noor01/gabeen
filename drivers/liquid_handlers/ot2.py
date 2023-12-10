@@ -16,7 +16,8 @@ class OT2(Handler):
         self.ROBOT_USERNAME = os.environ.get('ROBOT_USERNAME')
         self.init_ssh()
         self.init_scp()
-        self.init_protocol()      
+        self.init_protocol()   
+        self.upload_custom_labware()   
         
     def init_protocol(self):
         # Upload executer script
@@ -44,6 +45,7 @@ class OT2(Handler):
         self.scp_path = os.path.join(system32, 'OpenSSH/scp.exe')
     
     def ssh_command(self,command):
+        #print(command)
         ssh = subprocess.Popen([self.ssh_path, '-i', self.ROBOT_KEY, "{}@{}".format(self.ROBOT_USERNAME, self.ROBOT_IP)],
                        stdin=subprocess.PIPE,
                        stdout=subprocess.PIPE,
@@ -54,6 +56,7 @@ class OT2(Handler):
         return decoded
     
     def upload_file(self,local_path,remote_path):
+        #print(f'uploading {local_path} to {remote_path}')
         scp = subprocess.Popen([self.scp_path, '-i', self.ROBOT_KEY, local_path, f'{self.ROBOT_USERNAME}@{self.ROBOT_IP}:{remote_path}'],
                                 stdin=subprocess.PIPE,
                                 stdout=subprocess.PIPE,
@@ -64,7 +67,20 @@ class OT2(Handler):
         command = "rm {}".format(remote_path)
         self.ssh_command(command)
         
-    def run_protocol_step(self,step_num):
-        command = "python3 /data/user_storage/gabeen/executer.py --step_num {}".format(step_num)
+    def upload_custom_labware(self):
+        local_dir = os.path.abspath('../drivers/liquid_handlers/ot2_templates/custom_labware')
+        files = os.listdir(local_dir)
+        for f in files:
+            #remote_path = '/usr/lib/python3.7/site-packages/opentrons_shared_data/data/labware/definitions/2/'
+            remote_path = '/data/user_storage/gabeen/custom_labware/'
+            #file_name = f.split('.')[0]
+            #self.ssh_command(f'mkdir {remote_path}{file_name}')
+            remote_path = os.path.join(remote_path,f)
+            self.remove_remote_file(remote_path)
+            self.upload_file(os.path.join(local_dir,f), remote_path)
+            #self.ssh_command(f'mv {remote_path2} {remote_path}{file_name}/1.json')
+        
+    def run_protocol_step(self,step_num,tip_num=0):
+        command = "python3 /data/user_storage/gabeen/executer.py --step_num {} --start_tip {}".format(step_num,tip_num)
         res = self.ssh_command(command)
         return res

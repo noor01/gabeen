@@ -2,15 +2,23 @@
     "labware": {
         "tips_200": {
             "api_name": "opentrons_96_filtertiprack_200ul",
-            "location": "1"
+            "location": "1",
+            "creator": "opentrons"
         },
         "reservoir1": {
             "api_name": "nest_12_reservoir_15ml",
-            "location": "5"
+            "location": "5",
+            "creator": "opentrons"
         },
         "wellplate1": {
             "api_name": "nest_96_wellplate_2ml_deep",
-            "location": "7"
+            "location": "7",
+            "creator": "opentrons"
+        },
+        "syringe_adapter": {
+            "api_name": "yeolab_1_bd_syringe_adap_3000ul",
+            "location": "10",
+            "creator": "custom"
         }
     },
     "hardware": {
