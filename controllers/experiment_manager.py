@@ -86,6 +86,8 @@ class experiment_manager():
             self.fluid_control.run_protocol_step(self.experiment[step])
         elif step_type == "wait":
             loading_bar.loading_bar_wait(int(self.experiment[step]['step_metadata']["wait_time"]))
+        elif step_type == 'liquid_handler':
+            self.hardware_loader.hardware['liquid_handler'].run_protocol_step(step)
         elif step_type == "user_action":
             raise NotImplementedError("User action not implemented")
         elif step_type == "compute":

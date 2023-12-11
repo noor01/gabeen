@@ -55,7 +55,12 @@ class hardware_control():
                     raise ValueError(f"Hardware manufacturer {hardware_info['hardware_manufacturer']} not recognized")
                 
             elif hardware_type == "liquid_handler":
-                raise NotImplementedError("Liquid handler not implemented yet")
+                if hardware_info["hardware_manufacturer"] == "opentrons":
+                    experiment_file
+                    ot2_config_file = f"../protocols/{self.system_name}/{self.protocol}/ot2_config.json"
+                    self.hardware[hardware_name] = OT2(experiment_file, ot2_config_file)
+                else:
+                    raise ValueError(f"Hardware manufacturer {hardware_info['hardware_manufacturer']} not recognized")
                 
             else:
                 pass
