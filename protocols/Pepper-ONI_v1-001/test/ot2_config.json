@@ -5,6 +5,11 @@
             "location": "1",
             "creator": "opentrons"
         },
+        "tips_1000": {
+            "api_name": "opentrons_96_filtertiprack_1000ul",
+            "location": "3",
+            "creator": "opentrons"
+        },
         "reservoir1": {
             "api_name": "nest_12_reservoir_15ml",
             "location": "5",
@@ -27,6 +32,13 @@
             "mount": "left",
             "tip_racks": [
                 "tips_200"
+            ]
+        },
+        "p1000": {
+            "api_name": "p1000_single_gen2",
+            "mount": "right",
+            "tip_racks": [
+                "tips_1000"
             ]
         }
     },

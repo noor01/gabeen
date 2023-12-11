@@ -67,7 +67,7 @@ class experiment_manager():
         self.microscope_control = microscope_control(self.system_name,self.experiment_name,self.delay_microscope_init)
         self.microscope_initialized = self.microscope_control.microscope_initialized
         
-    def run_experimental_step(self,step):
+    def run_experimental_step(self,step,pipet_tip={'p200':0,'p1000':0}):
         step = int(step) # in case reading json file turned ints
         step_type = self.experiment[step]["step_type"]
         print(str(self.experiment[step]))
@@ -87,7 +87,7 @@ class experiment_manager():
         elif step_type == "wait":
             loading_bar.loading_bar_wait(int(self.experiment[step]['step_metadata']["wait_time"]))
         elif step_type == 'liquid_handler':
-            self.hardware_loader.hardware['liquid_handler'].run_protocol_step(step)
+            self.hardware_loader.hardware['liquid_handler'].run_protocol_step(step,tip_num=pipet_tip)
         elif step_type == "user_action":
             raise NotImplementedError("User action not implemented")
         elif step_type == "compute":
@@ -102,12 +102,12 @@ class experiment_manager():
                 pass
         print(f"Completed step #{step}")
             
-    def execute_all(self,skip_to_step=None):
+    def execute_all(self,skip_to_step=None,pipet_tip={'p200':0,'p1000':0}):
         print(f'Total estimated runtime: {self.estimate_total_time()}')
         if skip_to_step is not None:
             self.steps = self.steps[self.steps.index(skip_to_step):]
         for step in tqdm(self.steps):
-            self.run_experimental_step(step)
+            self.run_experimental_step(step,pipet_tip=pipet_tip)
         print("Experiment complete!")
         
     def display_experiment(self):
@@ -138,11 +138,19 @@ class experiment_manager():
                 time += self.microscope_control.estimate_acquisition_time()
         return time / 60 # in minutes
     
+    def liquid_handler_time(self):
+        time = 0
+        for step in self.steps:
+            if self.experiment[step]["step_type"] == "liquid_handler":
+                time += 90 # seconds
+        return time / 60
+    
     def estimate_total_time(self):
         time = 0
         if self.hardware_loader.use_microscope:
             time += self.estimate_imaging_time()
         time += self.estimate_fluidics_time()
+        time += self.liquid_handler_time()
         units = 'minutes'
         if time > 60:
             time = time / 60 # convert to hours

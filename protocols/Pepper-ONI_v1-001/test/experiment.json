@@ -6,40 +6,11 @@
             "info": {
                 "labware": "wellplate1",
                 "location": "A1",
-                "volume": 75,
-                "hardware": "p300",
+                "volume": 750,
+                "hardware": "p1000",
                 "repeat": 2
             },
             "destination": "syringe_adapter"
-        },
-        "slack_notify": false
-    },
-    "1": {
-        "step_type": "wait",
-        "step_metadata": {
-            "wait_time": 10
-        },
-        "slack_notify": false
-    },
-    "2": {
-        "step_type": "liquid_handler",
-        "step_metadata": {
-            "reagent": "round2",
-            "info": {
-                "labware": "wellplate1",
-                "location": "A2",
-                "volume": 75,
-                "hardware": "p300",
-                "repeat": 2
-            },
-            "destination": "syringe_adapter"
-        },
-        "slack_notify": false
-    },
-    "3": {
-        "step_type": "wait",
-        "step_metadata": {
-            "wait_time": 10
         },
         "slack_notify": false
     }

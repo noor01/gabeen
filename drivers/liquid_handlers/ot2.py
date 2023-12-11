@@ -80,7 +80,7 @@ class OT2(Handler):
             self.upload_file(os.path.join(local_dir,f), remote_path)
             #self.ssh_command(f'mv {remote_path2} {remote_path}{file_name}/1.json')
         
-    def run_protocol_step(self,step_num,tip_num=0):
-        command = "python3 /data/user_storage/gabeen/executer.py --step_num {} --start_tip {}".format(step_num,tip_num)
+    def run_protocol_step(self,step_num,tip_num={'p200':0,'p1000':0}):
+        command = "python3 /data/user_storage/gabeen/executer.py --step_num {} --start_tip_p200 {} --start_tip_p1000 {}".format(step_num,tip_num['p200'],tip_num['p1000'])
         res = self.ssh_command(command)
         return res

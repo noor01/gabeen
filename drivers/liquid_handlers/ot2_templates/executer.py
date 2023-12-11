@@ -6,13 +6,14 @@ import json
 
 metadata = {'apiLevel': '2.5'}
 
-def get_tip_num(experiment,step_num):
+def get_tip_num(experiment,step_num,start_tip,pipet_type):
     # figure out which steps are liquid handling rounds
     liquid_handling_steps = []
     for step, value in experiment.items():
         if value['step_type'] == 'liquid_handler':
-            liquid_handling_steps.append(step)
-    tip_num = liquid_handling_steps.index(step_num)
+            if value['step_metadata']['info']['hardware'] == pipet_type:
+                liquid_handling_steps.append(step)
+    tip_num = liquid_handling_steps.index(step_num) + start_tip[pipet_type]
     return tip_num
 
 def load_custom_labware(labware_name,location):
@@ -23,7 +24,7 @@ def load_custom_labware(labware_name,location):
         well_plate = protocol.load_labware_from_definition(labware_def, location)
     return well_plate
 
-def run(protocol: protocol_api.ProtocolContext,step_num,start_tip_num=1):
+def run(protocol: protocol_api.ProtocolContext,step_num,start_tip={'p200':0,'p1000':0}):
     with open('/data/user_storage/gabeen/ot2_config.json') as f:
         ot2_config = json.load(f)
     with open('/data/user_storage/gabeen/experiment.json') as f:
@@ -48,7 +49,8 @@ def run(protocol: protocol_api.ProtocolContext,step_num,start_tip_num=1):
     pipet_type = reagent_metadata['hardware']
     tip_type = ot2_config['hardware'][pipet_type]['tip_racks'][0]
     tip_rack = labware[tip_type]
-    tip_num = get_tip_num(experiment,step_num) + start_tip_num
+    #start_tip_num = start_tip[pipet_type]
+    tip_num = get_tip_num(experiment,step_num,start_tip,pipet_type)
     pipet.pick_up_tip(tip_rack.wells()[tip_num])
     repeat = int(reagent_metadata['repeat'])
     for i in range(repeat):
@@ -61,9 +63,12 @@ if __name__ == '__main__':
     protocol.home()
     parser = argparse.ArgumentParser()
     parser.add_argument('--step_num', type=int, help='Step number')
-    parser.add_argument('--start_tip', type=int, help='Start tip number',default=0)
-
+    parser.add_argument('--start_tip_p200', type=int, help='Start tip number',default=0)
+    parser.add_argument('--start_tip_p1000', type=int, help='Start tip number',default=0)
+    
     args = parser.parse_args()
     step_num = str(args.step_num)
-    start_tip_num = args.start_tip
-    run(protocol, step_num, start_tip_num)
+    start_tip_num_p200 = args.start_tip_p200
+    start_tip_num_p1000 = args.start_tip_p1000
+    start_tip = {'p200':start_tip_num_p200,'p1000':start_tip_num_p1000}
+    run(protocol, step_num, start_tip)
