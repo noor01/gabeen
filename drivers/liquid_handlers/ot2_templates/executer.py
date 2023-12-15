@@ -43,7 +43,8 @@ def run(protocol: protocol_api.ProtocolContext,step_num,start_tip={'p200':0,'p10
         tip_racks = []
         for rack in value['tip_racks']:
             tip_racks.append(labware[rack])
-        instruments[key] = protocol.load_instrument(value['api_name'], mount=value['mount'], tip_racks=tip_racks)        
+        instruments[key] = protocol.load_instrument(value['api_name'], mount=value['mount'], tip_racks=tip_racks)
+        instruments[key].default_speed = 100         
     reagent_metadata = experimental_step['step_metadata']['info']
     pipet = instruments[reagent_metadata['hardware']]
     pipet_type = reagent_metadata['hardware']

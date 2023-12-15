@@ -2,6 +2,7 @@
 runs/*
 logs/*
 system-files/*
+protocols/*
 .DS_Store
 *.pyc
 *.cpython-36.pyc

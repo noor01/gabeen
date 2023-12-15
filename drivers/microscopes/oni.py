@@ -45,16 +45,14 @@ class ONI(Microscope):
     # ----------------------------------------------------------------------------------------
     # Initialize and read callibration and configuration files
     # ----------------------------------------------------------------------------------------
-    def __init__(self,dataset_tag,input_params=None,system_name=None):
+    def __init__(self,dataset_tag,oni_config=None,system_name=None):
         self.log_info = {}
-        self.initialize(input_params,system_name,dataset_tag)
-        if 'xy_start' in self.input_params.keys():
-            self.xy_start = self.input_params['xy_start']
-        else:
-            self.xy_start = 0
+        self.initialize(oni_config,system_name,dataset_tag)
+        #self.positions = self.oni_config['xy_positions_mm']
+        self.xy_start = 0
         
-    def initialize(self,input_params,system_name,dataset_tag):
-        self.input_params = input_params
+    def initialize(self,oni_config,system_name,dataset_tag):
+        self.oni_config = oni_config
         self.system_name = system_name
         self.initialize_nimOS()
         self.initialize_ONI(dataset_tag)
@@ -79,12 +77,9 @@ class ONI(Microscope):
         self.initialize_crop()
         self.camera.SetBinning(self.camera.Binning().b1x1)
         
-    def reset_parameters(self,new_params,dataset_tag):
-        self.input_params = new_params
-        if 'xy_start' in self.input_params.keys():
-            self.xy_start = self.input_params['xy_start']
-        else:
-            self.xy_start = 0
+    def reset_parameters(self,oni_config,dataset_tag):
+        self.oni_config = oni_config
+        self.xy_start = 0
         self.logs_dir = f'../runs/{self.system_name}/{dataset_tag}'
         self.main_dataset_tag = dataset_tag
         if not os.path.exists(self.logs_dir):
@@ -95,9 +90,7 @@ class ONI(Microscope):
         else:
             with open(self.log_file_name,'w+') as log_file:
                 log_file.write('filename, pos, x, y, z\n')
-        self.start_z = self.input_params['start_z']
-        self.offset_z = self.input_params['offset_z']
-        self.offset_z_diff = self.start_z - self.offset_z
+        self.start_z = self.oni_config['start_z']
         self.first_start_z = self.start_z
         self.light.FocusLaser.Enabled = True
         self.turn_lights_off()
@@ -109,7 +102,7 @@ class ONI(Microscope):
         self.init_z_pos()
     
     def initialize_crop(self):
-        self.crop_params = self.oni_system_params['cropping']
+        self.crop_params = self.oni_config['cropping']
     
     def safe_focus_range(self,desired):
         upper_thresh = 2000
@@ -130,8 +123,7 @@ class ONI(Microscope):
             
 
     def input_params_setup(self,dataset_tag):
-        self.oni_system_params = self.input_params['oni_json']
-        self.instrument_name = self.oni_system_params['microscope_name']
+        self.instrument_name = self.oni_config['microscope_name']
         # save logs in the same folder that the acquisition json file was saved in
         self.logs_dir = f'../runs/{self.system_name}/{dataset_tag}'
         self.main_dataset_tag = dataset_tag
@@ -143,9 +135,7 @@ class ONI(Microscope):
         else:
             with open(self.log_file_name,'w+') as log_file:
                 log_file.write('filename, pos, x, y, z\n')        
-        self.start_z = self.input_params['start_z']
-        self.offset_z = self.input_params['offset_z']
-        self.offset_z_diff = self.start_z - self.offset_z
+        self.start_z = self.oni_config['start_z']
         self.first_start_z = self.start_z
         
     def position_logger(self,pos, filename):
@@ -277,11 +267,12 @@ class ONI(Microscope):
         indices = [int(i * (len(lst) - 1) / (N - 1)) for i in range(N)]
         return [lst[i] for i in indices]
     
-    def callibrate_autofocus(self,force_z=0,num_points = 5,range_max=10,resolution=0.1, search_window=10):
+    def callibrate_autofocus(self,force_z=0,num_points_fraction = 0.1,range_max=10,resolution=0.1, search_window=10):
         self.global_on_lights_off()
         self.light.FocusLaser.Enabled = True
         # corners = self.find_extreme_points(self.positions)
         #corners = random.sample(self.positions,num_points)
+        num_points = int(len(self.positions)*num_points_fraction)
         corners = self._get_n_points(self.positions,num_points)
         if force_z != 0:
             self.start_z = force_z
@@ -405,7 +396,7 @@ class ONI(Microscope):
         
     def init_light_program(self):
         self.light.GloablOnState = False
-        json_light_program = self.input_params['config']['steps']
+        json_light_program = self.oni_config['light_program']
         exposure = json_light_program[0]['exposure_ms'] # just use whatever exposure is on the first light program
         self.camera.SetTargetExposureMilliseconds(exposure)
         self.light_program = []
@@ -413,11 +404,8 @@ class ONI(Microscope):
         for step in json_light_program:
             _lasers = []
             self.exposure_program.append(step['exposure_ms'])
-            for item in step['lightStates']:
-                if item['on'] == False:
-                    _lasers.append(0.0)
-                else:
-                    _lasers.append(item['value'])
+            for item in step['laser_power']:
+                _lasers.append(item)
             self.light_program.append(_lasers)
         self.summed_light_program = list(np.asarray(self.light_program).sum(axis=0))
         # prime the lasers to be ready to go
@@ -426,16 +414,11 @@ class ONI(Microscope):
             self.light[n].Enabled = False
         
     def _grab_starting_pos(self):
-        pos = self.input_params['config']['movementOptions']['customXYPositions_mm'][0]['position']
-        pos['x'] = pos['x'] * 1000
-        pos['y'] = pos['y'] * 1000
-        pos['z'] = pos['z'] * 1000
+        pos = self.oni_config['xy_positions_mm'][0]
         return pos
            
     def _grab_custom_fovs(self):
-        positions = []
-        for n in self.input_params['config']['movementOptions']['customXYPositions_mm']:
-            positions.append(n['position'])
+        positions = self.oni_config['xy_positions_mm']
         return positions
     
     def _make_tiles(self,starting_pos,n_x,n_y,x_inc_um,y_inc_um):
@@ -459,36 +442,29 @@ class ONI(Microscope):
         return positions
     
     def init_xy_pos(self):
-        if self.input_params['picked_fovs'] == True:
-            self.starting_pos = {'x' : self.input_params['fov_positions'][0][0],
-                                 'y' : self.input_params['fov_positions'][0][1]}
-            self.positions = self.input_params['fov_positions']
-        elif len(self.input_params['config']['movementOptions']['customXYPositions_mm']) == 1:
+        self.starting_pos = {'x' : self.oni_config['xy_positions_mm'][0][0],
+                                 'y' : self.oni_config['xy_positions_mm'][0][1]}
+        self.positions = self.oni_config['xy_positions_mm']
+        """elif len(self.oni_config['config']['movementOptions']['customXYPositions_mm']) == 1:
             self.acq_mode = 'tilescan'
             self.starting_pos = self._grab_starting_pos()
             #self.start_z = self.starting_pos['z']*1000
             print("Starting position [um]: ")
             print(self.starting_pos)
-            n_x = self.input_params['config']['movementOptions']['numberOfStepsInXY']['x']
-            n_y = self.input_params['config']['movementOptions']['numberOfStepsInXY']['y']
-            x_inc_um = self.input_params['config']['movementOptions']['fovIncrement_mm']['x']*1000
-            y_inc_um = self.input_params['config']['movementOptions']['fovIncrement_mm']['y']*1000
+            n_x = self.oni_config['config']['movementOptions']['numberOfStepsInXY']['x']
+            n_y = self.oni_config['config']['movementOptions']['numberOfStepsInXY']['y']
+            x_inc_um = self.oni_config['config']['movementOptions']['fovIncrement_mm']['x']*1000
+            y_inc_um = self.oni_config['config']['movementOptions']['fovIncrement_mm']['y']*1000
             self.positions = self._make_tiles(self.starting_pos,n_x,n_y,x_inc_um,y_inc_um)
-        elif len(self.input_params['config']['movementOptions']['customXYPositions_mm']) > 1:
+        elif len(self.oni_config['config']['movementOptions']['customXYPositions_mm']) > 1:
             self.acq_mode = 'custom'
             positions_raw = self._grab_custom_fovs()
             self.positions = []
             for n in positions_raw:
-                self.positions.append([n['x'],n['y']])
+                self.positions.append([n['x'],n['y']])"""
                 
     def init_z_pos(self):
-        top = self.input_params['config']['movementOptions']['zStackStartPosition_um']
-        num_slices = self.input_params['config']['movementOptions']['numberOfZSlices']
-        dz = self.input_params['config']['movementOptions']['spacingBetweenZSlices_um']
-        zs = []
-        for n in range(num_slices):
-            zs.append(top-(n*dz))
-        self.relative_zs = np.asarray(zs)
+        self.relative_zs = np.asarray(self.oni_config['z_relative_positions_um'])
         
     def _generate_real_zs(self,z_start):
         return list(self.relative_zs + np.array(z_start))
@@ -527,7 +503,7 @@ class ONI(Microscope):
         total_frames = len(self.positions) * len(self.light_program) * len(self.relative_zs)
         pbar = tqdm(total=total_frames)
         
-        im_dim = (self.input_params['config']['movementOptions']['numberOfZSlices'],self.crop_params['height'],self.crop_params['width'])
+        im_dim = (self.oni_config['num_z_slices'],self.crop_params['height'],self.crop_params['width'])
         filename = os.path.join(self.main_dataset_tag,filename)
         # in case this is the first acquisition
         lsm.create_folder_in_all_drives(filename)
@@ -577,13 +553,13 @@ class ONI(Microscope):
         curr_z = self.move_xy_autofocus(x,y,oni_auto=True)
         # log position
         self.position_logger(self.xy_start + pos_n, filename)
-        offset_z = curr_z - self.offset_z_diff
-        zs = self._generate_real_zs(offset_z)
+        #offset_z = curr_z - self.offset_z_diff
+        zs = self._generate_real_zs(curr_z)
         #image_stack = [] # should organize to TZCYX axes
         image_stack = []
         #image_source = self.camera.CreateImageSource(n_Frames)
         cam_temp = self.camera.GetSensorTemperatureCelsius()
-        self.log_info = {'fov': self.xy_start + pos_n, 'x' : x, 'y' : y, 'best_z' : offset_z, 'cam_temp' : cam_temp}
+        self.log_info = {'fov': self.xy_start + pos_n, 'x' : x, 'y' : y, 'best_z' : curr_z, 'cam_temp' : cam_temp}
         nframes = len(self.light_program) * len(zs)
         source = self.camera.CreateImageSource(nframes)
         for c, program in enumerate (self.light_program):
@@ -601,7 +577,7 @@ class ONI(Microscope):
             self.lightGlobalOnState = False
             image_stack.append(channel_stack)
         self.light.GlobalOnState = False
-        self.move_z(offset_z)
+        self.move_z(curr_z)
         lsm.save_image_stack(image_stack,self.save_dir,pos_n)
             
     def quick_crop(self,image,side):

@@ -64,7 +64,7 @@ class experiment_manager():
         # add some kind of massive double checking that all hardware and protocol configs are setup properly
         
     def initialize_microscope(self):
-        self.microscope_control = microscope_control(self.system_name,self.experiment_name,self.delay_microscope_init)
+        self.microscope_control = microscope_control(self.system_name,self.experiment_name,self.protocol,self.delay_microscope_init)
         self.microscope_initialized = self.microscope_control.microscope_initialized
         
     def run_experimental_step(self,step,pipet_tip={'p200':0,'p1000':0}):
@@ -77,6 +77,11 @@ class experiment_manager():
             else:
                 pass
             filename = self.experiment[step]['step_metadata']["filename"]
+            callib_af = self.experiment[step]['step_metadata']["callibrate_af"]
+            if callib_af == True:
+                self.microscope_control.callibrate_autofocus()
+            else:
+                pass
             if self.first_round and self.microscope_fov_start > 0:
                 self.first_round = False
                 self.microscope_control.microscope.full_acquisition(filename,skip_to=self.microscope_fov_start)

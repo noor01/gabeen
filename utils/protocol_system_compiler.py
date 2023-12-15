@@ -3,14 +3,22 @@ import sys
 import json
 import pandas as pd
 
-def compile_protocol(systemID, protocol_name):
+def compile_protocol(systemID, protocol_name, parent_dir = None):
     # Define file paths
-    comports_path = f"../system-files/{systemID}/comports.json"
-    fluid_nodes_path = f"../system-files/{systemID}/fluid_nodes.csv"
-    experiment_path = f"../protocols/{systemID}/{protocol_name}/experiment.json"
-    fluid_edges_path = f"../system-files/{systemID}/fluid_edges.csv"
-    fluids_path = f"../protocols/{systemID}/{protocol_name}/fluids.csv"
-    oni_params_path = f"../system-files/{systemID}/oni_params.json"
+    if parent_dir is None:
+        comports_path = f"../system-files/{systemID}/comports.json"
+        fluid_nodes_path = f"../system-files/{systemID}/fluid_nodes.csv"
+        experiment_path = f"../protocols/{systemID}/{protocol_name}/experiment.json"
+        fluid_edges_path = f"../system-files/{systemID}/fluid_edges.csv"
+        fluids_path = f"../protocols/{systemID}/{protocol_name}/fluids.csv"
+        oni_params_path = f"../system-files/{systemID}/oni_params.json"
+    else:
+        comports_path = f"{parent_dir}/system-files/{systemID}/comports.json"
+        fluid_nodes_path = f"{parent_dir}/system-files/{systemID}/fluid_nodes.csv"
+        experiment_path = f"{parent_dir}/protocols/{systemID}/{protocol_name}/experiment.json"
+        fluid_edges_path = f"{parent_dir}/system-files/{systemID}/fluid_edges.csv"
+        fluids_path = f"{parent_dir}/protocols/{systemID}/{protocol_name}/fluids.csv"
+        oni_params_path = f"{parent_dir}/system-files/{systemID}/oni_params.json" 
     
     print("Checking for:")
     print(comports_path)

@@ -5,4 +5,6 @@ ot2,source,ot2,3
 4,source,tcep,20
 5,source,2x-SSC,50
 6,source,universal_fluors,15
+7,source,NA,0
+8,source,NA,0
 waste,destination,waste_tank,0

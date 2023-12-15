@@ -20,6 +20,7 @@ class OT2(Handler):
         self.upload_custom_labware()   
         
     def init_protocol(self):
+        parent_dir = executer_path = os.path.abspath("../drivers/liquid_handlers/ot2_templates/")
         # Upload executer script
         executer_path = os.path.abspath("../drivers/liquid_handlers/ot2_templates/executer.py")
         remote_path = '/data/user_storage/gabeen/executer.py'
@@ -35,6 +36,14 @@ class OT2(Handler):
         remote_path = '/data/user_storage/gabeen/ot2_config.json'
         self.remove_remote_file(remote_path)
         self.upload_file(self.ot2_config_path, remote_path)
+        
+        # Upload custom labware
+        remote_path_parent = '/data/user_storage/gabeen/custom_labware/'
+        labware_dir = f'{parent_dir}/custom_labware/'
+        for f in os.listdir(labware_dir):
+            remote_path = os.path.join(remote_path_parent,f)
+            self.remove_remote_file(remote_path)
+            self.upload_file(os.path.join(labware_dir,f), remote_path)
     
     def init_ssh(self):
         system32 = os.path.join(os.environ['SystemRoot'], 'SysNative' if platform.architecture()[0] == '32bit' else 'System32')
@@ -51,7 +60,9 @@ class OT2(Handler):
                        stdout=subprocess.PIPE,
                        stderr=subprocess.PIPE)
         res = ssh.communicate(command.encode())
+        
         decoded = [x.decode() for x in res]
+        print(decoded[-1])
         ssh.terminate()
         return decoded
     

@@ -27,7 +27,7 @@
         }
     },
     "hardware": {
-        "p300": {
+        "p200": {
             "api_name": "p300_single_gen2",
             "mount": "left",
             "tip_racks": [

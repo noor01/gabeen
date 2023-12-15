@@ -7,10 +7,10 @@
                 "labware": "wellplate1",
                 "location": "A1",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -121,10 +121,10 @@
                 "labware": "wellplate1",
                 "location": "A2",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -235,10 +235,10 @@
                 "labware": "wellplate1",
                 "location": "A3",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -349,10 +349,10 @@
                 "labware": "wellplate1",
                 "location": "A4",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -463,10 +463,10 @@
                 "labware": "wellplate1",
                 "location": "A5",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -577,10 +577,10 @@
                 "labware": "wellplate1",
                 "location": "A6",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -691,10 +691,10 @@
                 "labware": "wellplate1",
                 "location": "A7",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -805,10 +805,10 @@
                 "labware": "wellplate1",
                 "location": "A8",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -919,10 +919,10 @@
                 "labware": "wellplate1",
                 "location": "A9",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -1033,10 +1033,10 @@
                 "labware": "wellplate1",
                 "location": "A10",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -1147,10 +1147,10 @@
                 "labware": "wellplate1",
                 "location": "A11",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -1261,10 +1261,10 @@
                 "labware": "wellplate1",
                 "location": "A12",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -1375,10 +1375,10 @@
                 "labware": "wellplate1",
                 "location": "B1",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -1489,10 +1489,10 @@
                 "labware": "wellplate1",
                 "location": "B2",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -1603,10 +1603,10 @@
                 "labware": "wellplate1",
                 "location": "B3",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -1717,10 +1717,10 @@
                 "labware": "wellplate1",
                 "location": "B4",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -1831,10 +1831,10 @@
                 "labware": "wellplate1",
                 "location": "B5",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -1945,10 +1945,10 @@
                 "labware": "wellplate1",
                 "location": "B6",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -2059,10 +2059,10 @@
                 "labware": "wellplate1",
                 "location": "B7",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -2173,10 +2173,10 @@
                 "labware": "wellplate1",
                 "location": "B8",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -2287,10 +2287,10 @@
                 "labware": "wellplate1",
                 "location": "B9",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -2401,10 +2401,10 @@
                 "labware": "wellplate1",
                 "location": "B10",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -2515,10 +2515,10 @@
                 "labware": "wellplate1",
                 "location": "B11",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -2629,10 +2629,10 @@
                 "labware": "wellplate1",
                 "location": "B12",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -2743,10 +2743,10 @@
                 "labware": "wellplate1",
                 "location": "C1",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -2857,10 +2857,10 @@
                 "labware": "wellplate1",
                 "location": "C2",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -2971,10 +2971,10 @@
                 "labware": "wellplate1",
                 "location": "C3",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -3085,10 +3085,10 @@
                 "labware": "wellplate1",
                 "location": "C4",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -3199,10 +3199,10 @@
                 "labware": "wellplate1",
                 "location": "C5",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -3313,10 +3313,10 @@
                 "labware": "wellplate1",
                 "location": "C6",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -3427,10 +3427,10 @@
                 "labware": "wellplate1",
                 "location": "C7",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -3541,10 +3541,10 @@
                 "labware": "wellplate1",
                 "location": "C8",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -3655,10 +3655,10 @@
                 "labware": "wellplate1",
                 "location": "C9",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -3769,10 +3769,10 @@
                 "labware": "wellplate1",
                 "location": "C10",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -3883,10 +3883,10 @@
                 "labware": "wellplate1",
                 "location": "C11",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -3997,10 +3997,10 @@
                 "labware": "wellplate1",
                 "location": "C12",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -4111,10 +4111,10 @@
                 "labware": "wellplate1",
                 "location": "D1",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -4225,10 +4225,10 @@
                 "labware": "wellplate1",
                 "location": "D2",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -4339,10 +4339,10 @@
                 "labware": "wellplate1",
                 "location": "D3",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -4453,10 +4453,10 @@
                 "labware": "wellplate1",
                 "location": "D4",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -4567,10 +4567,10 @@
                 "labware": "wellplate1",
                 "location": "D5",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -4681,10 +4681,10 @@
                 "labware": "wellplate1",
                 "location": "D6",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -4795,10 +4795,10 @@
                 "labware": "wellplate1",
                 "location": "D7",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -4909,10 +4909,10 @@
                 "labware": "wellplate1",
                 "location": "D8",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -5023,10 +5023,10 @@
                 "labware": "wellplate1",
                 "location": "D9",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -5137,10 +5137,10 @@
                 "labware": "wellplate1",
                 "location": "D10",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -5251,10 +5251,10 @@
                 "labware": "wellplate1",
                 "location": "D11",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -5365,10 +5365,10 @@
                 "labware": "wellplate1",
                 "location": "D12",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -5479,10 +5479,10 @@
                 "labware": "wellplate1",
                 "location": "E1",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -5593,10 +5593,10 @@
                 "labware": "wellplate1",
                 "location": "E2",
                 "volume": 750,
-                "hardware;": "p1000",
+                "hardware": "p1000",
                 "repeat": 2
             },
-            "destination": "yeolab_1_bd_syringe_adap_3000ul"
+            "destination": "syringe_adapter"
         },
         "slack_notify": false
     },
@@ -5675,22 +5675,6 @@
         "slack_notify": true
     },
     "647": {
-        "step_type": "fluid",
-        "step_metadata": {
-            "fluid": "4",
-            "volume": 2,
-            "speed": 0.5
-        },
-        "slack_notify": false
-    },
-    "648": {
-        "step_type": "wait",
-        "step_metadata": {
-            "wait_time": 300
-        },
-        "slack_notify": false
-    },
-    "649": {
         "step_type": "fluid",
         "step_metadata": {
             "fluid": "5",

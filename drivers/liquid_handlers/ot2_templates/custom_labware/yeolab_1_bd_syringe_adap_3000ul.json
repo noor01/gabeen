@@ -11,7 +11,7 @@
         ]
     },
     "metadata": {
-        "displayName": "YeoLab BDSyringe Adapter 3ml",
+        "displayName": "YeoLab 1 Well Plate 3000 µL",
         "displayCategory": "wellPlate",
         "displayVolumeUnits": "µL",
         "tags": []
@@ -23,13 +23,13 @@
     },
     "wells": {
         "A1": {
-            "depth": 80,
+            "depth": 5,
             "totalLiquidVolume": 3000,
             "shape": "circular",
             "diameter": 10,
             "x": 63.8,
             "y": 42.73,
-            "z": 40
+            "z": 115
         }
     },
     "groups": [
@@ -47,7 +47,7 @@
         "quirks": [],
         "isTiprack": false,
         "isMagneticModuleCompatible": false,
-        "loadName": "yeolab_1_bd_syringe_adap_3000ul"
+        "loadName": "yeolab_1_wellplate_3000ul"
     },
     "namespace": "custom_beta",
     "version": 1,

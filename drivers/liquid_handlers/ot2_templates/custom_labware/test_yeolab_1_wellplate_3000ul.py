@@ -7,11 +7,11 @@ TEST_LABWARE_SLOT = '5'
 RATE = 0.25  # % of default speeds
 
 PIPETTE_MOUNT = 'right'
-PIPETTE_NAME = 'p1000_single_gen2'
+PIPETTE_NAME = 'p300_single_gen2'
 
 TIPRACK_SLOT = '11'
-TIPRACK_LOADNAME = 'opentrons_96_tiprack_1000ul'
-LABWARE_DEF_JSON = """{"ordering":[["A1"]],"brand":{"brand":"YeoLab","brandId":["001"]},"metadata":{"displayName":"YeoLab BDSyringe Adapter 3ml","displayCategory":"wellPlate","displayVolumeUnits":"µL","tags":[]},"dimensions":{"xDimension":127.6,"yDimension":85.47,"zDimension":120},"wells":{"A1":{"depth":80,"totalLiquidVolume":3000,"shape":"circular","diameter":10,"x":63.8,"y":42.73,"z":40}},"groups":[{"metadata":{"wellBottomShape":"flat"},"wells":["A1"]}],"parameters":{"format":"irregular","quirks":[],"isTiprack":false,"isMagneticModuleCompatible":false,"loadName":"yeolab_1_bd_syringe_adap_3000ul"},"namespace":"custom_beta","version":1,"schemaVersion":2,"cornerOffsetFromSlot":{"x":0,"y":0,"z":0}}"""
+TIPRACK_LOADNAME = 'opentrons_96_tiprack_300ul'
+LABWARE_DEF_JSON = """{"ordering":[["A1"]],"brand":{"brand":"YeoLab","brandId":["001"]},"metadata":{"displayName":"YeoLab 1 Well Plate 3000 µL","displayCategory":"wellPlate","displayVolumeUnits":"µL","tags":[]},"dimensions":{"xDimension":127.6,"yDimension":85.47,"zDimension":120},"wells":{"A1":{"depth":5,"totalLiquidVolume":3000,"shape":"circular","diameter":10,"x":63.8,"y":42.73,"z":115}},"groups":[{"metadata":{"wellBottomShape":"flat"},"wells":["A1"]}],"parameters":{"format":"irregular","quirks":[],"isTiprack":false,"isMagneticModuleCompatible":false,"loadName":"yeolab_1_wellplate_3000ul"},"namespace":"custom_beta","version":1,"schemaVersion":2,"cornerOffsetFromSlot":{"x":0,"y":0,"z":0}}"""
 LABWARE_DEF = json.loads(LABWARE_DEF_JSON)
 LABWARE_LABEL = LABWARE_DEF.get('metadata', {}).get(
     'displayName', 'test labware')
