@@ -3,6 +3,6 @@ ot2,source,ot2,3
 2,source,wash buffer,40
 3,source,imaging buffer,21
 4,source,tcep,20
-5,source,2x-SSC,50
-6,source,universal_fluors,15
+6,source,2x-SSC,50
+7,source,universal_fluors,15
 waste,destination,waste_tank,0

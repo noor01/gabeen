@@ -267,12 +267,38 @@ class ONI(Microscope):
         indices = [int(i * (len(lst) - 1) / (N - 1)) for i in range(N)]
         return [lst[i] for i in indices]
     
-    def callibrate_autofocus(self,force_z=0,num_points_fraction = 0.1,range_max=10,resolution=0.1, search_window=10):
+    def callibrate_autofocus(self,force_z=0,num_points_fraction = 0.025,range_max=10,resolution=0.1, search_window=10):
         self.global_on_lights_off()
         self.light.FocusLaser.Enabled = True
         # corners = self.find_extreme_points(self.positions)
         #corners = random.sample(self.positions,num_points)
-        num_points = int(len(self.positions)*num_points_fraction)
+        #num_points = int(len(self.positions)*num_points_fraction)
+        num_points = 25
+        corners = self._get_n_points(self.positions,num_points)
+        if force_z != 0:
+            self.start_z = force_z
+        zmax = self.start_z+range_max
+        zmin = self.start_z-range_max
+        self.corner_vals = {}
+        print("Gathering best focus z-positions")
+        #self.callib_images = {}
+        self.af_images = {}
+        for n in tqdm(range(len(corners))):
+            self.move_xy(corners[n][0],corners[n][1])
+            z = self.get_best_focus_af((zmin,zmax),resolution,search_window=search_window)
+            self.corner_vals[n] = [corners[n],z]
+        print(self.corner_vals)
+        print("Training z-model")
+        self.train_z_model()
+        print(f'Model score: {self.z_model.score(np.asarray([i[0] for i in self.corner_vals.values()]),np.asarray([i[1] for i in self.corner_vals.values()]))}')
+    
+    def callibrate_autofocus_debug_version(self,force_z=0,num_points_fraction = 0.025,range_max=10,resolution=0.5, search_window=10):
+        self.global_on_lights_off()
+        self.light.FocusLaser.Enabled = True
+        # corners = self.find_extreme_points(self.positions)
+        #corners = random.sample(self.positions,num_points)
+        #num_points = int(len(self.positions)*num_points_fraction)
+        num_points = 5
         corners = self._get_n_points(self.positions,num_points)
         if force_z != 0:
             self.start_z = force_z
@@ -293,6 +319,24 @@ class ONI(Microscope):
         self.train_z_model()
         print(f'Model score: {self.z_model.score(np.asarray([i[0] for i in self.corner_vals.values()]),np.asarray([i[1] for i in self.corner_vals.values()]))}')
     
+    def get_best_focus_af(self,z_range,resolution, search_window=10):
+        self.lightGlobalOnState = False
+        z1 = min(z_range)
+        z2 = max(z_range)
+        zs = list(np.arange(z1,z2,resolution))
+        af_intensities = []
+        af_aux_vals = []
+        for z in zs:
+            self.move_z(z)
+            self.lightGlobalOnState = True
+            af_im = self._focus_cam_snapshot()
+            af_intensities.append(np.std(af_im))
+            af_aux_vals.append(np.max(af_im))
+        self.lightGlobalOnState = False
+        af_intensities = normalize(np.asarray(af_intensities))
+        best_focus_z = self.get_best_focus(zs,af_aux_vals,search_window=search_window)
+        return best_focus_z
+    
     def get_best_focus_dapi(self,z_range,resolution, search_window=10):
         self.lightGlobalOnState = False
         self.light[0].Enabled = True
@@ -304,6 +348,7 @@ class ONI(Microscope):
         af_stack = []
         im_intensities = []
         af_intensities = []
+        af_aux_vals = []
         n_Frames = len(zs)
         image_source = self.camera.CreateImageSource(n_Frames)
         for z in zs:
@@ -313,6 +358,7 @@ class ONI(Microscope):
             af_im = self._focus_cam_snapshot()
             im_intensities.append(np.max(focus_dapi_im)/np.std(focus_dapi_im))
             af_intensities.append(np.std(af_im))
+            af_aux_vals.append(np.max(af_im))
             
             image_stack.append(focus_dapi_im)
             af_stack.append(self._focus_cam_snapshot())
@@ -328,11 +374,11 @@ class ONI(Microscope):
         #best_focus_z = self.peak_finding_focus(zs,image_stack)
         im_intensities = normalize(np.asarray(im_intensities))
         af_intensities = normalize(np.asarray(af_intensities))
-        best_focus_z = self.get_best_focus(zs,im_intensities,af_intensities,search_window=search_window)
+        best_focus_z = self.get_best_focus(zs,im_intensities,af_intensities,af_aux_vals,search_window=search_window)
         return best_focus_z, image_stack, af_stack
     
-    def get_best_focus(self,zs,im_is, af_is, search_window=10):
-        best_af_zidx = np.argmax(af_is)
+    def get_best_focus(self,zs,af_aux_vals, search_window=10):
+        best_af_zidx = np.argmax(af_aux_vals)
         best_z = zs[best_af_zidx]
         """
         z1 = np.argmin(np.abs(zs-(best_af_z-search_window)))
@@ -507,7 +553,9 @@ class ONI(Microscope):
         filename = os.path.join(self.main_dataset_tag,filename)
         # in case this is the first acquisition
         lsm.create_folder_in_all_drives(filename)
-        self.save_dir = lsm.get_save_path(filename,len(self.positions),im_dim)
+        #self.save_dir = lsm.get_save_path(filename,len(self.positions),im_dim)
+        # NOTE: this is a hardcoded hack to temporarily get SQ-001 going
+        self.save_dir = 'D:\\SQ-001\\' + filename
         if skip_to > 0:
             positions = self.positions[skip_to:]
             add_to_pos = skip_to
@@ -525,13 +573,13 @@ class ONI(Microscope):
         except:
             pass
 
-    def camera_snapshot(self,image_source=None,light_step_num=0):
+    def camera_snapshot(self,image_source=None,light_step_num=0,control_shutter=False):
         if image_source is None:
             image_source = self.camera.CreateImageSource(1)
         light_step = self.light_program[light_step_num]
-        return self._camera_snapshot(image_source,light_step)
+        return self._camera_snapshot(image_source,light_step,control_shutter=control_shutter)
     
-    def _camera_snapshot(self,image_source,light_step):
+    def _camera_snapshot(self,image_source,light_step,control_shutter=False):
         #self.lightGlobalOnState = False
         #self.camera.SetTargetExposureMilliseconds(exposure)
         bool647 = self.activate_light_program(light_step)
@@ -541,7 +589,11 @@ class ONI(Microscope):
             side = 0
         #image_source = self.camera.CreateImageSource(1)
         #self.lightGlobalOnState = True
+        if control_shutter == True:
+            self.lightGlobalOnState = True
         im = image_source.GetNextImage().ImageData()
+        if control_shutter == True:
+            self.lightGlobalOnState = False
         im = self.quick_crop(im,side=side)
         return im
     
@@ -562,6 +614,7 @@ class ONI(Microscope):
         self.log_info = {'fov': self.xy_start + pos_n, 'x' : x, 'y' : y, 'best_z' : curr_z, 'cam_temp' : cam_temp}
         nframes = len(self.light_program) * len(zs)
         source = self.camera.CreateImageSource(nframes)
+        """
         for c, program in enumerate (self.light_program):
             self.lightGlobalOnState = False
             self.camera.SetTargetExposureMilliseconds(self.exposure_program[c])
@@ -578,6 +631,22 @@ class ONI(Microscope):
             image_stack.append(channel_stack)
         self.light.GlobalOnState = False
         self.move_z(curr_z)
+        """
+        # nest channels inside of z
+        self.move_z(zs[0])
+        for z in zs:
+            self.move_z(z)
+            channel_stack = []
+            for c, program in enumerate (self.light_program):
+                self.lightGlobalOnState = False
+                self.camera.SetTargetExposureMilliseconds(self.exposure_program[c])
+                self.lightGlobalOnState = True
+                im = self._camera_snapshot(source,program)
+                self.lightGlobalOnState = False
+                channel_stack.append(im)
+                if pbar is not None:
+                    pbar.update(1)
+            image_stack.append(channel_stack)
         lsm.save_image_stack(image_stack,self.save_dir,pos_n)
             
     def quick_crop(self,image,side):
