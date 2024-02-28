@@ -4,6 +4,8 @@ import numpy as np
 import sys
 sys.path.append('../telemetry')
 from telemetry import slack_notify
+import time
+import tifffile
 
 def map_dir_memory():
     memory_dict = {}
@@ -28,6 +30,23 @@ def save_image_stack(image_stack, target_dir, file_prefix):
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
     # save image stack
+    #image_stack_3d = np.stack(image_stack, axis=0)
+    file_str = f'{os.path.join(target_dir, str(file_prefix))}.ome.tiff'
+    with tifffile.TiffWriter(file_str, append=False) as tif:
+        tif.save(image_stack,
+                 photometric='minisblack',
+                 metadata={'axes':'ZCYX',
+                           "SizeX":image_stack.shape[3],
+                           "SizeY": image_stack.shape[2],
+                            "SizeC": image_stack.shape[1],
+                            "SizeZ": image_stack.shape[0],
+                            })
+
+def save_image_stack_npy(image_stack, target_dir, file_prefix):
+    # check if target_dir exists
+    if not os.path.exists(target_dir):
+        os.makedirs(target_dir)
+    # save image stack
     image_stack_3d = np.stack(image_stack, axis=0)
     np.save(f'{os.path.join(target_dir, str(file_prefix))}.npy', image_stack_3d)
 
@@ -41,7 +60,9 @@ def create_folder_in_all_drives(folder_name):
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
             
-import time
+def create_folder_in_drive(folder_name):
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
 
 def get_save_path(folder_name,num_stacks, stack_dims, dtype=np.uint16,slack=True):
     # Estimate memory footprint of the stack

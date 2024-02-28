@@ -1,79 +1,9 @@
 {
-    "0": {
-        "step_type": "liquid_handler",
-        "step_metadata": {
-            "reagent": "round1",
-            "info": {
-                "labware": "wellplate1",
-                "location": "A3",
-                "volume": 750,
-                "hardware": "p1000",
-                "repeat": 2
-            },
-            "destination": "syringe_adapter"
-        },
-        "slack_notify": false
-    },
     "1": {
-        "step_type": "fluid",
-        "step_metadata": {
-            "fluid": "ot2",
-            "volume": 1.5,
-            "speed": 1
-        },
-        "slack_notify": false
-    },
-    "2": {
-        "step_type": "wait",
-        "step_metadata": {
-            "wait_time": 30
-        },
-        "slack_notify": false
-    },
-    "3": {
         "step_type": "image",
         "step_metadata": {
-            "filename": "round_1",
-            "callibrate_af": true
-        },
-        "slack_notify": true
-    },
-    "4": {
-        "step_type": "liquid_handler",
-        "step_metadata": {
-            "reagent": "round2",
-            "info": {
-                "labware": "wellplate1",
-                "location": "A4",
-                "volume": 750,
-                "hardware": "p1000",
-                "repeat": 2
-            },
-            "destination": "syringe_adapter"
-        },
-        "slack_notify": false
-    },
-    "5": {
-        "step_type": "fluid",
-        "step_metadata": {
-            "fluid": "ot2",
-            "volume": 1.5,
-            "speed": 1
-        },
-        "slack_notify": false
-    },
-    "6": {
-        "step_type": "wait",
-        "step_metadata": {
-            "wait_time": 30
-        },
-        "slack_notify": false
-    },
-    "7": {
-        "step_type": "image",
-        "step_metadata": {
-            "filename": "round_2",
-            "callibrate_af": true
+            "filename": "round_10",
+            "callibrate_af": false
         },
         "slack_notify": true
     }

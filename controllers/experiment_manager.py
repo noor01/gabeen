@@ -31,7 +31,7 @@ class experiment_manager():
         protocol_system_compiler.compile_protocol(system_name, protocol) # first make sure system is properly configured
         if hardware_init == True:
             self.hardware_loader = hardware_control(self.system_name, self.protocol)
-            self.fluid_control = fluid_control(self.hardware_loader.hardware,
+            self.fluid_control = fluid_control(self.hardware_loader.hardware, 
                                                self.hardware_loader.pump_types,
                                                self.system_name,
                                                self.protocol)
@@ -78,10 +78,10 @@ class experiment_manager():
                 pass
             filename = self.experiment[step]['step_metadata']["filename"]
             callib_af = self.experiment[step]['step_metadata']["callibrate_af"]
-            if callib_af == True:
+            """if callib_af == True:
                 self.microscope_control.callibrate_autofocus()
             else:
-                pass
+                pass"""
             if self.first_round and self.microscope_fov_start > 0:
                 self.first_round = False
                 self.microscope_control.microscope.full_acquisition(filename,skip_to=self.microscope_fov_start)
@@ -164,3 +164,7 @@ class experiment_manager():
             time = time / 24 # convert to days
             units = 'days'
         return f'{time} {units}'
+    
+    def flow_cell_prime(self,line_num,volume,speed):
+        self.fluid_control.quick_run(line_num,volume,speed)
+        

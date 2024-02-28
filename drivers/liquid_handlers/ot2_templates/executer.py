@@ -1,6 +1,6 @@
 from opentrons import protocol_api
 import opentrons.execute
-import subprocess
+import time
 import argparse
 import json
 
@@ -55,8 +55,16 @@ def run(protocol: protocol_api.ProtocolContext,step_num,start_tip={'p200':0,'p10
     pipet.pick_up_tip(tip_rack.wells()[tip_num])
     repeat = int(reagent_metadata['repeat'])
     for i in range(repeat):
-        pipet.aspirate(reagent_metadata['volume'], labware[reagent_metadata['labware']][reagent_metadata['location']])
-        pipet.dispense(reagent_metadata['volume'], labware[experimental_step['step_metadata']['destination']]['A1'])
+        pipet.aspirate(reagent_metadata['volume'],
+                       labware[reagent_metadata['labware']][reagent_metadata['location']],
+                       rate=reagent_metadata['rate'])
+        if 'wait' in reagent_metadata.keys():
+            time.sleep(reagent_metadata['wait'])
+        pipet.dispense(reagent_metadata['volume'], labware[experimental_step['step_metadata']['destination']]['A1'],
+                       rate=reagent_metadata['rate'])
+        if 'wait' in reagent_metadata.keys():
+            time.sleep(reagent_metadata['wait'])
+            
     pipet.drop_tip()
     
 if __name__ == '__main__':

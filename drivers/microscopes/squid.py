@@ -13,14 +13,6 @@
 # ----------------------------------------------------------------------------------------
 import os
 import sys
-
-sys.path.append('C:\\Program Files\\OxfordNanoimaging_1.18.3\\.venv\\Lib\\site-packages')
-sys.path.append('C:\\Program Files\\OxfordNanoimaging_1.18.3\\nim_python_core\\')
-from NimSetup import *
-nim_setup(os.getcwd(),'C:\\Program Files\\OxfordNanoimaging_1.18.3')
-
-from NimPyHelpers import *
-
 import time
 import cv2
 import numpy as np
@@ -33,132 +25,97 @@ sys.path.append('../data_processing')
 from data_processing import local_storage_manager as lsm
 sys.path.append('../telemetry')
 from telemetry import slack_notify
+sys.path.append('../utils')
+from utils.squid_utils import *
 from scipy.signal import find_peaks
 from scipy.ndimage.measurements import center_of_mass
 from utils import *
 import pprint
 from sklearn.linear_model import LinearRegression
-
-
+# Below are imports for Squid
+import control.widgets as widgets
+import control.camera as camera
+import control.core as core
+import control.microcontroller as microcontroller
+from control._def import *
+from squid_control import *
 
 
 # ----------------------------------------------------------------------------------------
 # ONI Nanoimager ghost class definition
 # ----------------------------------------------------------------------------------------
-class ONI(Microscope):
+class Squid(Microscope):
     # ----------------------------------------------------------------------------------------
     # Initialize and read callibration and configuration files
     # ----------------------------------------------------------------------------------------
-    def __init__(self,dataset_tag,oni_config=None,system_name=None):
+    def __init__(self,dataset_tag,config=None,system_name=None, is_simulation = False, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.log_info = {}
-        self.camera_attempts = 0
-        self.camera_max_attempts = 5
         self.dataset_tag = dataset_tag
-        self.initialize(oni_config,system_name,dataset_tag)
+        self.initialize(is_simulation)
         #self.positions = self.oni_config['xy_positions_mm']
         self.xy_start = 0
         self.pp = pprint.PrettyPrinter(indent=4)
+        self.control = squid_control()
         
-        # dynamic focus parameters
-        self.step_size = 2.0
-        self.min_step_size = 0.1
-        self.max_iterations = 10
-        self.focus_callib_state = False
-        
-    def initialize(self,oni_config,system_name,dataset_tag):
-        self.oni_config = oni_config
-        self.system_name = system_name
-        self.initialize_nimOS()
-        self.initialize_ONI(dataset_tag)
-        # drop exposure time on focus cam for 60x objective
-        self.focus_cam.SetTargetExposureMilliseconds(9.938)
-    
-    def initialize_ONI(self,dataset_tag):
-        self.input_params_setup(dataset_tag)
-        while True:
-            connection_status = self.connect_system()
-            if connection_status == False:
-                print("Please shutdown nimOS before continuing")
-                x = input("Press any key to try again >> ")
-            else:
-                break
-        # Make sure camera initialized properly
-        if str(self.camera.GetDeviceState) == 'DeviceState.UNINITIALIZED':
-            if self.camera_attempts > self.camera_max_attempts:
-                raise Exception("Could not connect to camera")
-            else:
-                self.camera_attempts += 1
-                print(f'Could not connect to camera... trying again. Attempt {self.camera_attempts}')
-                self.shutdown()
-                self.initialize(self.oni_config,self.system_name,self.dataset_tag)
-                
-        self.light.FocusLaser.Enabled = True
-        self.turn_lights_off()
-        self.light.GlobalOnState = True
-        self.acquisition.SaveTiffFiles = True
-        self.acquisition.RealTimeLocalization= False
-        self.init_light_program()
-        self.init_xy_pos()
-        self.init_z_pos()
-        self.initialize_crop()
-        self.z_upper_thresh = self.oni_config['safe_focus']['upper_thresh']
-        self.z_lower_thresh = self.oni_config['safe_focus']['lower_thresh']
-        self.camera.SetBinning(self.camera.Binning().b1x1)
-        # Turn on camera
-        s = self.camera.BeginView()
-        if s == False:
-            print("Hint: after setting camera binning failure")
-            self.camera_attempts += 1
-            print(f'Could not connect to camera... trying again. Attempt {self.camera_attempts}')
-            self.shutdown()
-            self.initialize(self.oni_config,self.system_name,self.dataset_tag)
-    def reset_parameters(self,oni_config,dataset_tag):
-        self.oni_config = oni_config
-        self.xy_start = 0
-        self.logs_dir = f'../runs/{self.system_name}/{dataset_tag}'
-        self.main_dataset_tag = dataset_tag
-        if not os.path.exists(self.logs_dir):
-            os.makedirs(self.logs_dir)
-        self.log_file_name = os.path.join(self.logs_dir, 'positional_log.csv')
-        if os.path.exists(self.log_file_name):
-            pass
+    def initialize(self,is_simulation):
+        # load objects
+        if is_simulation:
+            self.camera = camera.Camera_Simulation(rotate_image_angle=ROTATE_IMAGE_ANGLE,flip_image=FLIP_IMAGE)
+            self.microcontroller = microcontroller.Microcontroller_Simulation()
         else:
-            with open(self.log_file_name,'w+') as log_file:
-                log_file.write('filename, pos, x, y, z\n')
-        self.start_z = self.oni_config['start_z']
-        self.first_start_z = self.start_z
-        self.z_upper_thresh = self.oni_config['safe_focus']['upper_thresh']
-        self.z_lower_thresh = self.oni_config['safe_focus']['lower_thresh']
-        self.light.FocusLaser.Enabled = True
-        self.turn_lights_off()
-        self.light.GlobalOnState = True
-        self.acquisition.SaveTiffFiles = True
-        self.acquisition.RealTimeLocalization= False
-        self.init_light_program()
-        self.init_xy_pos()
-        self.init_z_pos()
+            try:
+                self.camera = camera.Camera(rotate_image_angle=ROTATE_IMAGE_ANGLE,flip_image=FLIP_IMAGE)
+                self.camera.open()
+            except:
+                self.camera = camera.Camera_Simulation(rotate_image_angle=ROTATE_IMAGE_ANGLE,flip_image=FLIP_IMAGE)
+                self.camera.open()
+                print('! camera not detected, using simulated camera !')
+            try:
+                self.microcontroller = microcontroller.Microcontroller(version=CONTROLLER_VERSION)
+            except:
+                print('! Microcontroller not detected, using simulated microcontroller !')
+                self.microcontroller = microcontroller.Microcontroller_Simulation()
+
+        # reset the MCU
+        self.microcontroller.reset()
+
+        # configure the actuators
+        self.microcontroller.configure_actuators()
+
+        self.objectiveStore = ObjectiveStore()
+        self.configurationManager = ConfigurationManager('./channel_configurations.xml')
+        #self.streamHandler = StreamHandler(display_resolution_scaling=DEFAULT_DISPLAY_CROP/100)
+        self.liveController = LiveController(self.camera,self.microcontroller,self.configurationManager)
+        self.navigationController = NavigationController(self.microcontroller)
+        self.autofocusController = AutoFocusController(self.camera,self.navigationController,self.liveController)
+
+        # set up the camera		
+        # self.camera.set_reverse_x(CAMERA_REVERSE_X) # these are not implemented for the cameras in use
+        # self.camera.set_reverse_y(CAMERA_REVERSE_Y) # these are not implemented for the cameras in use
+        self.camera.set_software_triggered_acquisition() #self.camera.set_continuous_acquisition()
+        self.camera.set_callback(self.streamHandler.on_new_frame)
+        self.camera.enable_callback()
+        if ENABLE_STROBE_OUTPUT:
+            self.camera.set_line3_to_exposure_active()
+            
+
+        
+    def shutdown(self):
+        self.navigationController.home()
+        self.liveController.stop_live()
+        self.camera.close()
+        self.microcontroller.close()
+    
+######################################################
+# Below is from oni.py for templating. Not modified
+######################################################
+    
+    
     
     def initialize_crop(self):
         self.crop_params = self.oni_config['cropping']
         self.im_dim = (self.crop_params['height']*2,self.crop_params['width']*2)
-    
-    def safe_focus_range(self,desired):
-        upper_thresh = self.z_upper_thresh
-        lower_thresh = self.z_lower_thresh
-        if desired[0] < lower_thresh:
-            desired[0] = lower_thresh
-        elif desired[0] > upper_thresh:
-            desired[0] = upper_thresh
-        else:
-            pass
-        if desired[1] > upper_thresh:
-            desired[1] = upper_thresh
-        elif desired[1] < lower_thresh:
-            desired[1] = lower_thresh
-        else:
-            pass
-        return desired
-            
 
     def input_params_setup(self,dataset_tag):
         self.instrument_name = self.oni_config['microscope_name']
@@ -182,69 +139,6 @@ class ONI(Microscope):
         z = self.stage.GetPositionInMicrons(self.stage.Axis.Z)
         with open(self.log_file_name,mode='a') as log_file:
             log_file.write(filename + ',' + str(pos) + ',' + str(x) + ',' + str(y) + ',' + str(z) + '\n')
-    
-    def initialize_nimOS(self):
-        self.instrument = get_nim_control()
-        self.data_manager = get_nim_data_manager()
-        self.profiles = get_user_profile_manager()
-        self.user_settings = get_user_settings()
-        self.acquisition = create_nim_acq_manager(self.instrument, self.data_manager, self.profiles)
-        self.calibration = get_calibration_control()
-        self.stage = self.instrument.StageControl
-        self.light = self.instrument.LightControl
-        self.camera = self.instrument.CameraControl
-        self.illum_angle = self.instrument.IlluminationAngleControl
-        self.focus_cam = self.instrument.FocusCameraControl
-        self.autofocus = self.instrument.AutoFocusControl
-        self.temperature = self.instrument.TemperatureControl
-        self.stageX = self.stage.Axis.X
-        self.stageY = self.stage.Axis.Y
-        self.stageZ = self.stage.Axis.Z
-
-        
-    def select_instrument(self):
-        instruments = self.instrument.GetAvailableInstruments()
-        for instr in instruments:
-            print(instr)
-        # Select the first instrument
-        if self.instrument_name in instruments:
-            print("Connecting to %s..." % self.instrument_name)
-            self.instrument.SelectInstrument(self.instrument_name)
-            return True
-        elif len(instruments)>0:
-            print("Connecting to %s..." % instruments[0])
-            self.instrument.SelectInstrument(instruments[0])
-            return True
-        else:
-            print('No instrument available')
-            return False
-        
-    def cal_ONI_AF(self,start_z=0):
-        self.global_on_lights_off()
-        self.move_z(start_z)
-        print('autofocusing')
-        self.autofocus.StartReferenceCalibration()
-        while self.autofocus.CurrentStatus == self.autofocus.Status.CALIBRATING:
-            time.sleep(0.1)
-        if self.autofocus.LastCalibrationCode is not self.autofocus.CalibrationCompleteCode.SUCCESS:
-            raise Exception('Focus not able to calibrate')
-        else:
-            pass
-            #print('autofocus complete')
-        
-    def connect_system(self):
-        if not self.instrument.IsConnected:
-            if not self.select_instrument():
-                print("Could not select instrument")
-                return False
-            print("Instrument connecting....")
-            self.instrument.Connect()
-            if not self.instrument.IsConnected:
-                print("Failed to connect to microscope")
-                return False
-            else:
-                print("Connected Successfully!")
-                return True
 
     def get_stage_pos(self):
         x = self.stage.GetPositionInMicrons(self.stage.Axis.X)
@@ -287,10 +181,6 @@ class ONI(Microscope):
     def _focus_cam_snapshot(self):
         return nim_image_to_array(self.focus_cam.GetLatestImage())
     
-    def _oni_quick_focus(self,timeout=5000):
-        self.autofocus.Stop()
-        self.autofocus.StartSingleShotAutoFocus(timeout)
-    
     def coarse_z(self,fast_res,reset_z=True):
         print("Coarse Z focus")
         self.lightGlobalOnState = False
@@ -308,47 +198,6 @@ class ONI(Microscope):
             self.move_z(best_z)
         return best_z
         
-        """z1 = self.z_upper_thresh
-        z2 = self.z_lower_thresh
-        # fast scan till af detection thresh reached
-        move_z = z1
-        while True:
-            self.move_z(move_z)
-            af_im = self._focus_cam_snapshot()
-            if np.max(af_im) > self.oni_config['safe_focus']['af_intensity_thresh']:
-                break
-            else:
-                move_z -= fast_res
-            if move_z < z2:
-                return [0,0,0]
-                #raise Exception("Could not find AF spot in safe range")
-            
-        af_ints = [0]
-        #af_stds = []
-        af_cms = [(0,0)]
-        z = move_z
-        while True:
-            z -= slow_res
-            self.move_z(z)
-            af_im = self._focus_cam_snapshot()
-            af_max = np.max(af_im)
-            if af_max >= af_ints[-1]:
-                af_ints.append(af_max)
-                af_cms.append(self._focus_centerofmass(af_im))
-            else:
-                break
-        best_z = z
-        af_int = af_ints[-1]
-        af_cm = af_cms[-1]
-        if reset_z == True:
-            self.move_z(best_z)
-        
-        # double check once more
-        if af_int < self.oni_config['safe_focus']['af_intensity_thresh']:
-            return [0,0,0]
-        
-        return [best_z, af_int, af_cm]"""
-    
     def train_focus_model(self):
         # assume you are approx close to perfect z
         # scan +/- 30 microns at 0.25 micron res
@@ -638,3 +487,4 @@ class ONI(Microscope):
         self.initialize_ONI()
         if move_to is not None:
             self.move_xy_autofocus(move_to[0],move_to[1])
+            

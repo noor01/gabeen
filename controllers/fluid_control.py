@@ -116,6 +116,10 @@ class fluid_control():
         fluid = protocol_step['step_metadata']["fluid"]
         volume = float(protocol_step['step_metadata']["volume"])
         speed = float(protocol_step['step_metadata']["speed"])
+        if 'pump_wait' in protocol_step['step_metadata'].keys():
+            pump_wait = protocol_step['step_metadata']['pump_wait']
+        else:
+            pump_wait = 0
         if self.path_mode == 'linear':
             path_edges = self.get_path(fluid, 'waste')
             self.linear_pump_action(path_edges,volume,speed)
@@ -123,7 +127,7 @@ class fluid_control():
         elif self.path_mode == 'bifurcated':
             path_edges = [self.get_path(fluid,'pump1'),
                           self.get_path('pump1','waste')]
-            self.bifurcated_pump_action(path_edges,volume,speed)
+            self.bifurcated_pump_action(path_edges,volume,speed,pump_wait)
                 
     def linear_pump_action(self,path_edges,volume,speed):
         pumps = self.set_path(path_edges)
@@ -134,9 +138,12 @@ class fluid_control():
                 self.hardware[pump].start()
                 loading_bar.loading_bar_wait(60*volume/speed)
                 
-    def bifurcated_pump_action(self,path_edges,volume,speed):
+    def bifurcated_pump_action(self,path_edges,volume,speed,pump_wait):
         pump = 'pump1' # hardcoded for the timebeing
-        switch_latency = 2 # wait for pressure to equalize before switching
+        if pump_wait == 0:
+            switch_latency = 2 # wait for pressure to equalize before switching
+        else:
+            switch_latency = pump_wait
         vol_limit = self.hardware[pump].syringe_limit # this should break the code in case you're doing this with peristaltic...not supported
         vol_limit = float(vol_limit)
         volume = float(volume)

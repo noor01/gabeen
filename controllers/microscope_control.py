@@ -71,7 +71,8 @@ class microscope_control():
         self.microscope = ONI(self.dataset_tag,self.imaging_params,self.system_name)
         self.microscope_initialized = True
         if callib_af == True:
-            self.microscope.callibrate_autofocus()
+            #self.microscope.callibrate_autofocus()
+            pass
             
     def callibrate_autofocus(self):
         self.microscope.callibrate_autofocus()
