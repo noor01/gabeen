@@ -17,6 +17,7 @@ import serial
 from tqdm import tqdm
 import time
 from .pump import Pump
+from ..serial_com import SerialCom
 # ----------------------------------------------------------------------------------------
 # New Era Class Definition
 # ----------------------------------------------------------------------------------------
@@ -37,15 +38,14 @@ class new_era_syringe(Pump):
         self.initialize()
         
     def initialize(self):
-        self.ser = serial.Serial(port = self.serial_port,
+        self.ser = SerialCom(port = self.serial_port,
                                  baudrate = 19200,
                                  timeout = 0.1)
         self.find_pump()
         self.prime_volume = 0.2
     
     def serial_cmd(self,cmd):
-        self.ser.write(cmd.encode('ascii'))
-        output = self.ser.readline()
+        output = self.ser.write(cmd)
         return str(output)
 
     # quick handshake function to aid in autodetection of new era pump

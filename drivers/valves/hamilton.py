@@ -19,13 +19,14 @@
 import serial
 import time
 from .valve import Valve
+from ..serial_com import SerialCom
 # ----------------------------------------------------------------------------------------
 # HamiltonMVP Class Definition
 # ----------------------------------------------------------------------------------------
 class hamilton(Valve):
     def __init__(self,serial_port):
         
-        self.valve = serial.Serial(port = serial_port,
+        self.valve = SerialCom(port = serial_port,
                                 baudrate = 9600,
                                 bytesize = serial.SEVENBITS,
                                 parity = serial.PARITY_ODD,
@@ -40,8 +41,7 @@ class hamilton(Valve):
 
     #quick function for writing comands
     def serial_cmd(self,cmd):
-        self.valve.write(cmd.encode('ascii'))
-        output = self.valve.readline()
+        output = self.valve.write(cmd)
         return output
     # ------------------------------------------------------------------------------------
     # Define Device Addresses: Must be First Command Issued
