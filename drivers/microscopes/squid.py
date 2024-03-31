@@ -33,12 +33,10 @@ from utils import *
 import pprint
 from sklearn.linear_model import LinearRegression
 # Below are imports for Squid
-import control.widgets as widgets
-import control.camera as camera
-import control.core as core
-import control.microcontroller as microcontroller
-from control._def import *
-from squid_control import *
+import octopi_research.software.control.gabeen_control as squid
+from configparser import ConfigParser
+from octopi_research.software.control._def import CACHED_CONFIG_FILE_PATH
+import glob
 
 
 # ----------------------------------------------------------------------------------------
@@ -53,124 +51,127 @@ class Squid(Microscope):
         self.log_info = {}
         self.dataset_tag = dataset_tag
         self.initialize(is_simulation)
-        #self.positions = self.oni_config['xy_positions_mm']
+        #self.positions = self.squid_config['xy_positions_mm']
         self.xy_start = 0
         self.pp = pprint.PrettyPrinter(indent=4)
-        self.control = squid_control()
         
     def initialize(self,is_simulation):
-        # load objects
-        if is_simulation:
-            self.camera = camera.Camera_Simulation(rotate_image_angle=ROTATE_IMAGE_ANGLE,flip_image=FLIP_IMAGE)
-            self.microcontroller = microcontroller.Microcontroller_Simulation()
-        else:
-            try:
-                self.camera = camera.Camera(rotate_image_angle=ROTATE_IMAGE_ANGLE,flip_image=FLIP_IMAGE)
-                self.camera.open()
-            except:
-                self.camera = camera.Camera_Simulation(rotate_image_angle=ROTATE_IMAGE_ANGLE,flip_image=FLIP_IMAGE)
-                self.camera.open()
-                print('! camera not detected, using simulated camera !')
-            try:
-                self.microcontroller = microcontroller.Microcontroller(version=CONTROLLER_VERSION)
-            except:
-                print('! Microcontroller not detected, using simulated microcontroller !')
-                self.microcontroller = microcontroller.Microcontroller_Simulation()
-
-        # reset the MCU
-        self.microcontroller.reset()
-
-        # configure the actuators
-        self.microcontroller.configure_actuators()
-
-        self.objectiveStore = ObjectiveStore()
-        self.configurationManager = ConfigurationManager('./channel_configurations.xml')
-        #self.streamHandler = StreamHandler(display_resolution_scaling=DEFAULT_DISPLAY_CROP/100)
-        self.liveController = LiveController(self.camera,self.microcontroller,self.configurationManager)
-        self.navigationController = NavigationController(self.microcontroller)
-        self.autofocusController = AutoFocusController(self.camera,self.navigationController,self.liveController)
-
-        # set up the camera		
-        # self.camera.set_reverse_x(CAMERA_REVERSE_X) # these are not implemented for the cameras in use
-        # self.camera.set_reverse_y(CAMERA_REVERSE_Y) # these are not implemented for the cameras in use
-        self.camera.set_software_triggered_acquisition() #self.camera.set_continuous_acquisition()
-        self.camera.set_callback(self.streamHandler.on_new_frame)
-        self.camera.enable_callback()
-        if ENABLE_STROBE_OUTPUT:
-            self.camera.set_line3_to_exposure_active()
+        self.squid = squid.OctopiGUI(is_simulation=is_simulation)
+        self.squid.camera.set_pixel_format('MONO16')
+        self.AnalogGain="10"
+        self.set_camera_gain(self.AnalogGain)
+        self.crop_width = self.squid.multiPointController.crop_width
+        self.crop_height = self.squid.multiPointController.crop_height
+        self.AF_crop_width = self.squid.autoFocusController.crop_width
+        self.AF_crop_height = self.squid.autoFocusController.crop_height
+        # prevent joystick actions
+        self.squid.navigationController.enable_joystick_button_action = False
+        self.focus_callib_state == False:
             
-
-        
     def shutdown(self):
-        self.navigationController.home()
-        self.liveController.stop_live()
-        self.camera.close()
-        self.microcontroller.close()
-    
-######################################################
-# Below is from oni.py for templating. Not modified
-######################################################
-    
-    
-    
-    def initialize_crop(self):
-        self.crop_params = self.oni_config['cropping']
-        self.im_dim = (self.crop_params['height']*2,self.crop_params['width']*2)
-
-    def input_params_setup(self,dataset_tag):
-        self.instrument_name = self.oni_config['microscope_name']
-        # save logs in the same folder that the acquisition json file was saved in
-        self.logs_dir = f'../runs/{self.system_name}/{dataset_tag}'
-        self.main_dataset_tag = dataset_tag
-        if not os.path.exists(self.logs_dir):
-            os.makedirs(self.logs_dir)
-        self.log_file_name = os.path.join(self.logs_dir, 'positional_log.csv')
-        if os.path.exists(self.log_file_name):
-            pass
-        else:
-            with open(self.log_file_name,'w+') as log_file:
-                log_file.write('filename, pos, x, y, z\n')        
-        self.start_z = self.oni_config['start_z']
-        self.first_start_z = self.start_z
+        self.squid.closeEvent()
         
-    def position_logger(self,pos, filename):
-        x = self.stage.GetPositionInMicrons(self.stage.Axis.X)
-        y = self.stage.GetPositionInMicrons(self.stage.Axis.Y)
-        z = self.stage.GetPositionInMicrons(self.stage.Axis.Z)
-        with open(self.log_file_name,mode='a') as log_file:
-            log_file.write(filename + ',' + str(pos) + ',' + str(x) + ',' + str(y) + ',' + str(z) + '\n')
-
+    def reboot(self,move_to=None):
+        raise NotImplementedError
+        
+    ######################################################
+    # Stage Control
+    ######################################################
+        
     def get_stage_pos(self):
-        x = self.stage.GetPositionInMicrons(self.stage.Axis.X)
-        y = self.stage.GetPositionInMicrons(self.stage.Axis.X)
-        z = self.stage.GetPositionInMicrons(self.stage.Axis.X)
-        return (x,y,z)
-        
-    def move_xy(self,x,y):
-        self.stage.RequestMoveAbsolute(self.stageX,x)
-        self.stage.RequestMoveAbsolute(self.stageY,y)
-        while self.stage.IsMoving(self.stageX) or self.stage.IsMoving(self.stageY):
-            time.sleep(0.1)
-
-    def move_z(self,z):
-        if z > 1800:
-            z = 1800
-            print("WARNING: Z is too high, setting to 1800")
-        else:
-            pass
-        self.stage.RequestMoveAbsolute(self.stageZ,z)
-        while self.stage.IsMoving(self.stageZ):
-            time.sleep(0.1)
-        #self.current_z = self.get_z()
-        
+        return self.squid.navigationController.get_updated_pos(self.navigationController.microcontroller)
+    
     def get_z(self):
-        return self.stage.GetPositionInMicrons(self.stage.Axis.Z)
+        _,_,z = self.get_stage_pos()
+        return z 
     
-    def get_stage_pos(self):
-        x = self.stage.GetPositionInMicrons(self.stage.Axis.X)
-        y = self.stage.GetPositionInMicrons(self.stage.Axis.Y)
-        z = self.stage.GetPositionInMicrons(self.stage.Axis.Z)
-        return (x,y,z)
+    def wait_till_stage_op_complete(self):
+        while self.squid.navigationController.microcontroller.is_busy():
+            time.sleep(0.1)
+            
+    def move_xy(self,x,y):
+        self.squid.navigationController.move_to(x,y)
+        self.wait_till_stage_op_complete()
+        self.squid.navigationController.update_pos(self.squid.navigationController.microcontroller)
+        
+    def move_z(self,z):
+        self.squid.navigationController.move_z_to(z)
+        self.wait_till_stage_op_complete()
+        self.squid.navigationController.update_pos(self.squid.navigationController.microcontroller)
+    
+    # NOTE: not implemented
+    def move_xy_autofocus(self,x,y):
+        raise NotImplementedError
+        
+    ######################################################
+    # Laser Control
+    ######################################################
+    def activate_light_program(self,lighting,turn_on=True):
+        # lighting is a list length len(lasers) with each element being the intensity of the laser
+        for i, intensity in enumerate(lighting):
+            self.squid.liveController.set_illumination(self.laser_idx_map[i],intensity)
+        if turn_on:
+            self.turn_lights_on()
+    
+    def turn_lights_off(self):
+        self.squid.liveController.turn_off_illumination()
+        
+    def turn_lights_on(self):
+        self.squid.liveController.turn_on_illumination()
+    
+    ######################################################
+    # Camera Control
+    ######################################################
+    def set_camera_exposure(self,exposure):
+        self.squid.camera.set_exposure(exposure) # in milliseconds
+        
+    def set_camera_gain(self,gain):
+        self.squid.camera.set_gain(gain)
+        
+    def camera_snapshot(self):
+        self.squid.camera.send_trigger()
+        image = self.squid.camera.read_frame()
+        image = self.crop_image(image,self.crop_width,self.crop_height)
+        image = self.rotate_and_flip_image(image,
+                                           rotate_image_angle=self.squid.camera.rotate_image_angle,
+                                           flip_image=self.squid.camera.flip_image)
+        return image
+    
+    ######################################################
+    # Autofocus Control
+    ######################################################
+    
+    def focus_cam_snapshot(self):
+        self.squid.camera_fc.send_trigger()
+        image = self.squid.camera_fc.read_frame()
+        image = self.AF_crop_image(image)
+        image = self.rotate_and_flip_image(image,
+                                           rotate_image_angle=self.squid.camera_fc.rotate_image_angle,
+                                           flip_image=self.squid.camera_fc.flip_image)
+        return image
+    
+    def AF_laser_on(self):
+        self.squid.liveController.set_illumination(self.AF_LASER,100)
+        # //TODO: figure out what the self.AF_LASER is supposed to be
+        
+    def AF_laser_off(self):
+        self.squid.liveController.turn_off_illumination()
+        self.squid.liveController.set_illumination(self.AF_LASER,0)
+    
+    def callibrate_autofocus(self):
+        raise NotImplementedError
+    
+    def callibrate_dapi(self):
+        raise NotImplementedError
+    
+    def quick_focus(self):
+        raise NotImplementedError
+    
+    def train_focus_model(self):
+        raise NotImplementedError
+    
+    def coarse_z(self, fast_res, reset_z=True):
+        raise NotImplementedError
     
     def _focus_centerofmass(self,img):
         norm = np.divide(img,np.max(img))
@@ -178,201 +179,11 @@ class Squid(Microscope):
         cm = center_of_mass(bin_img)
         return cm
     
-    def _focus_cam_snapshot(self):
-        return nim_image_to_array(self.focus_cam.GetLatestImage())
-    
-    def coarse_z(self,fast_res,reset_z=True):
-        print("Coarse Z focus")
-        self.lightGlobalOnState = False
-        zs = list(np.arange(self.z_lower_thresh,self.z_upper_thresh,fast_res))
-        af_ints = []
-        for z in tqdm(zs):
-            self.move_z(z)
-            af_ints.append(np.max(self._focus_cam_snapshot()))
-        best_z = zs[af_ints.index(max(af_ints))]
-        best_int = max(af_ints)
-        # double check once more
-        if best_int < self.oni_config['safe_focus']['af_intensity_thresh']:
-            return 0
-        if reset_z == True:
-            self.move_z(best_z)
-        return best_z
-        
-    def train_focus_model(self):
-        # assume you are approx close to perfect z
-        # scan +/- 30 microns at 0.25 micron res
-        curr_z = self.get_z()
-        z_top = curr_z + 30
-        z_bottom = curr_z - 30
-        # move to bottom. scan up
-        z_range = list(np.linspace(z_bottom,z_top,120))
-        cms = []
-        ints = []
-        for z in z_range:
-            self.move_z(z)
-            im = self._focus_cam_snapshot()
-            a = np.max(im)
-            c = self._focus_centerofmass(im)
-            cms.append(c)
-            ints.append(a)
-        # get perfect z from intensity
-        pfs_z = z_range[ints.index(max(ints))]
-        norm_z = [i-pfs_z for i in z_range] # normalize z values in relation to perfect z
-        X = np.asarray(cms)
-        self.z_model = LinearRegression()
-        self.z_model.fit(X,np.asarray(norm_z))
-        
-    def quick_focus(self):
-        im = self._focus_cam_snapshot()
-        cm = self._focus_centerofmass(im)
-        if np.max(im) < 200:
-            # we're way off course. Just do coarse adjustment again
-            #self.coarse_z(5.0,0.1)
-            self.coarse_z(1.0)
-            relative_z = self.z_model.predict(np.asarray([cm]))
-            # for some reason when adjusting from coarse again, it requires doing this twice
-            current_z = self.get_z()
-            pfs_z = current_z - relative_z
-            self.move_z(pfs_z)
-        relative_z = self.z_model.predict(np.asarray([cm]))[0]
-        current_z = self.get_z()
-        pfs_z = current_z - relative_z
-        self.move_z(pfs_z)
-        return pfs_z
-    
-    def callibrate_autofocus(self):
-        #z, _, _ = self.coarse_z(5.0,0.1)
-        z = self.coarse_z(1.0)
-        self.move_z(z)
-        self.train_focus_model()
-        
-    def callibrate_dapi(self):
-        curr_z = self.quick_focus()
-        dapi_program = [self.light_program[0]]
-        z_top = curr_z + 20
-        z_bottom = curr_z - 20
-        zs = list(np.arange(z_bottom,z_top,0.5))
-        dapi_stack_shape = [1,len(zs),self.im_dim[0],self.im_dim[1]]
-        dapi_stack = np.zeros(dapi_stack_shape,dtype=np.uint16)
-        for c, program in enumerate (dapi_program):
-            self.lightGlobalOnState = False
-            exposure = self.exposure_program[c]
-            self.camera.SetTargetExposureMilliseconds(exposure)
-            bool647 = self.activate_light_program(program)
-            if bool647 == True:
-                side = 1
-            else:
-                side = 0
-            self.move_z(zs[0])
-            time.sleep(0.5)
-            for zn, z in tqdm(enumerate(zs),total=len(zs)):
-                self.move_z(z)
-                if zn == 0:
-                    _ = self.camera_snapshot(side,exposure)  # clear buffer
-                dapi_stack[c,zn,:,:] = self.camera_snapshot(side,exposure)
-            self.lightGlobalOnState = False
-        self.move_z(curr_z)
-        stdevs = [np.std(dapi_stack[0,i,:,:]) for i in range(len(zs))]
-        best_dapi_z = zs[stdevs.index(max(stdevs))]
-        self.offset_z = curr_z - best_dapi_z
-        print(f'Offset z: {self.offset_z}')
-             
-    def move_xy_autofocus(self,x,y):
-        self.move_xy(x,y)
-        z = self.quick_focus()
-        return z
-
-    def init_light_program(self):
-        self.light.GloablOnState = False
-        json_light_program = self.oni_config['light_program']
-        exposure = json_light_program[0]['exposure_ms'] # just use whatever exposure is on the first light program
-        self.camera.SetTargetExposureMilliseconds(exposure)
-        self.light_program = []
-        self.exposure_program = []
-        for step in json_light_program:
-            _lasers = []
-            self.exposure_program.append(step['exposure_ms'])
-            for item in step['laser_power']:
-                _lasers.append(item)
-            self.light_program.append(_lasers)
-        self.summed_light_program = list(np.asarray(self.light_program).sum(axis=0))
-        # prime the lasers to be ready to go
-        for n,power in enumerate(self.summed_light_program):
-            self.light[n].PercentPower = power
-            self.light[n].Enabled = False
-    
-    def lasers_off(self):
-        for i in range(4):
-            self.light[i].Enabled = False
-        
-    def lasers_on(self):
-        for i in range(4):
-            self.light[i].Enabled = True
-            
-    def _grab_starting_pos(self):
-        pos = self.oni_config['xy_positions_mm'][0]
-        return pos
-           
-    def _grab_custom_fovs(self):
-        positions = self.oni_config['xy_positions_mm']
-        return positions
-    
-    def _make_tiles(self,starting_pos,n_x,n_y,x_inc_um,y_inc_um):
-        x_start = starting_pos['x']
-        y_start = starting_pos['y']
-        positions = []
-        xs = list(range(0,n_x))
-        ys = list(range(0,n_y))
-        if (len(ys) % 2) == 0:
-            all_xs = (xs + list(reversed(xs)))*floor(len(ys)/2)
-        else:
-            all_xs = (xs + list(reversed(xs)))*floor(len(ys)/2)
-            all_xs += xs
-        all_ys = []
-        for y in ys:
-            all_ys += [y]*len(xs)
-        tmp_positions = list(zip(all_xs,all_ys))
-        positions = []
-        for pos in tmp_positions:
-            positions.append([x_start + (pos[0] * x_inc_um), y_start + (pos[1] * y_inc_um)])
-        return positions
-    
-    def init_xy_pos(self):
-        self.starting_pos = {'x' : self.oni_config['xy_positions_mm'][0][0],
-                                 'y' : self.oni_config['xy_positions_mm'][0][1]}
-        self.positions = self.oni_config['xy_positions_mm']
-                
-    def init_z_pos(self):
-        self.relative_zs = np.asarray(self.oni_config['z_relative_positions_um'])
-        
-    def _generate_real_zs(self,z_start):
-        return list(self.relative_zs + np.array(z_start))
-    
-    def turn_lights_off(self):
-        for light in range(4):
-            self.light[light].Enabled = False
-            
-    def global_on_lights_off(self):
+    ######################################################
+    # Acquisition Control
+    ######################################################
+    def full_acquisition(self, filename, skip_to=0):
         self.turn_lights_off()
-        self.light.GlobalOnState = True
-    
-    def activate_light_program(self,lighting):
-        bool_647 = False
-        self.lightGlobalOnState = False
-        for n,power in enumerate(lighting):
-            if n == 3 and power >0:
-                bool_647 = True
-            self.light[n].PercentPower = power
-            if power > 0:
-                self.light[n].Enabled = True
-            else:
-                self.light[n].Enabled = False
-        self.light.GlobalOnState = True
-        return bool_647
-        # just remember to turn it off after
-
-    def full_acquisition(self,filename,skip_to=0):
-        self.global_on_lights_off()
         try:
             del(self.callib_images) # free up some RAM
             del(self.af_images)
@@ -380,7 +191,7 @@ class Squid(Microscope):
             pass
         total_frames = len(self.positions) * len(self.light_program) * len(self.relative_zs)
         pbar = tqdm(total=total_frames)
-        parent_dir = os.path.join(self.oni_config['save_destination'],self.main_dataset_tag)
+        parent_dir = os.path.join(self.squid_config['save_destination'],self.main_dataset_tag)
         folder = os.path.join(parent_dir,filename)
         # in case this is the first acquisition
         lsm.create_folder_in_drive(folder)
@@ -388,12 +199,11 @@ class Squid(Microscope):
 
         im_shape = (len(self.light_program),
                     len(self.relative_zs),
-                    self.im_dim[0],
-                    self.im_dim[1]
+                    self.crop_height,
+                    self.crop_width
                     )
                     
         self.image_stack = np.zeros(im_shape,dtype=np.uint16)
-        self.light.GlobalOnState = False
         if skip_to > 0:
             positions = self.positions[skip_to:]
             add_to_pos = skip_to
@@ -417,74 +227,140 @@ class Squid(Microscope):
         for pos_n, pos in enumerate(positions):
             pos_n += add_to_pos
             self.acquire_single_position(pos_n,pos,filename,pbar=pbar)
-        self.light.GlobalOnState = False
-        self.lasers_off()
+        self.turn_lights_off()
         pbar.close()
         try:
             slack_notify(f'Finished {filename}')
         except:
             pass
     
-    def camera_snapshot(self,side,exposure):
-        tik = time.time() * 1000 # milliseconds
-        im = np.array(self.camera.GetLatestImage().Pixels,dtype=np.uint16).reshape(2048,2048)
-        im = self.quick_crop(im,side=side)
-        tok = time.time() * 1000
-        time_diff = tok-tik
-        if time_diff < exposure:
-            time.sleep((exposure-time_diff)/1000) # wait approx. till exposure is done.
-        return im
-    
-    def acquire_single_position(self,pos_n,pos,filename,pbar=None):        
+    def acquire_single_position(self, pos_n, pos, filename, pbar=None):
         x = pos[0]
         y = pos[1]
         curr_z = self.move_xy_autofocus(x,y)
-        # log position
-        self.position_logger(self.xy_start + pos_n, filename)
-        #offset_z = curr_z - self.offset_z_diff
         best_bio_z = curr_z - self.offset_z
         zs = self._generate_real_zs(best_bio_z)
-        cam_temp = self.camera.GetSensorTemperatureCelsius()
+        cam_temp = self.squid.camera.get_temperature()
         self.log_info = {'fov': self.xy_start + pos_n, 'x' : x, 'y' : y, 'best_z' : curr_z, 'cam_temp' : cam_temp}
         
         for c, program in enumerate (self.light_program):
-            self.lightGlobalOnState = False
+            self.turn_lights_off()
             exposure = self.exposure_program[c]
-            self.camera.SetTargetExposureMilliseconds(exposure)
-            bool647 = self.activate_light_program(program)
-            if bool647 == True:
-                side = 1
-            else:
-                side = 0
+            self.set_camera_exposure(exposure)
             self.move_z(zs[0])
-            time.sleep(0.5)
+            self.wait_till_stage_op_complete()
+            self.activate_light_program(program)
             for zn, z in enumerate(zs):
                 self.move_z(z)
-                if zn == 0:
-                    _ = self.camera_snapshot(side,exposure)  # clear buffer
-                self.image_stack[c,zn,:,:] = self.camera_snapshot(side,exposure)
+                self.wait_till_stage_op_complete()
+                self.image_stack[c,zn,:,:] = self.camera_snapshot()
                 if pbar is not None:
                     pbar.update(1)
-            self.lightGlobalOnState = False
+            self.turn_lights_off()
         self.move_z(curr_z)
         lsm.save_image_stack(self.image_stack,
                              self.save_dir,
                              str(pos_n))
-         
-    def quick_crop(self,image,side):
-        if side == 0:
-            corner = self.crop_params['top-left']
-        else:
-            corner = self.crop_params['top-right']
-        im = image[corner[0]*2:(corner[0] + self.crop_params['height'])*2,corner[1]*2:(corner[1] + self.crop_params['width'])*2]
-        return im
-        
-    def shutdown(self):
-        self.instrument.Disconnect()
-        
-    def reboot(self,move_to=None):
-        self.shutdown()
-        self.initialize_ONI()
-        if move_to is not None:
-            self.move_xy_autofocus(move_to[0],move_to[1])
-            
+    
+    
+    ######################################################
+    # Acquisition Configuration
+    ######################################################
+    def init_xy_pos(self):
+        self.starting_pos = {'x' : self.squid_config['xy_positions_mm'][0][0],
+                                 'y' : self.squid_config['xy_positions_mm'][0][1]}
+        self.positions = self.squid_config['xy_positions_mm']
+    
+    def init_z_pos(self):
+        self.relative_zs = np.asarray(self.squid_config['z_relative_positions_um'])
+    
+    def init_light_program(self):
+        light_program_dict = self.squid_config['light_program']
+        self.light_program = []
+        self.exposure_program = []
+        for step in light_program_dict:
+            _lasers = []
+            self.exposure_program.append(step['exposure_ms'])
+            for item in step['laser_power']:
+                _lasers.append(item)
+            self.light_program.append(_lasers)
+    
+    def initialize_params(self):
+        raise NotImplementedError
+    
+    ######################################################
+    # Utilities
+    ######################################################
+    
+    def xml_to_dict(file_path):
+        # Parse the XML file and get the root element
+        tree = ET.parse(file_path)
+        root = tree.getroot()
+
+        # List to hold all mode dictionaries
+        modes = []
+
+        # Iterate over each 'mode' element in the root
+        for mode in root.findall('mode'):
+            # Create a dictionary for each 'mode', with attribute names as keys and attribute values as values
+            mode_dict = mode.attrib
+            # Add the dictionary to the list
+            modes.append(mode_dict)
+
+        return modes
+    
+    def read_channel_config(self):
+        config_file = 'octopi_research/software/channel_configurations.xml'
+        channel_config = xml_to_dict(config_file)
+        self.laser_idx_map = {}
+        for mode in channel_config:
+            if 'BF' in mode['name']:
+                pass
+            else:
+                if '405' in mode['name']:
+                    self.laser_idx_map[0] = mode['IlluminationSource']
+                elif '488' in mode['name']:
+                    self.laser_idx_map[1] = mode['IlluminationSource']
+                elif '561' in mode['name']:
+                    self.laser_idx_map[2] = mode['IlluminationSource']
+                elif '638' in mode['name']:
+                    self.laser_idx_map[3] = mode['IlluminationSource']
+                elif '730' in mode['name']:
+                    self.laser_idx_map[4] = mode['IlluminationSource']
+                    
+    def crop_image(self,image,crop_width,crop_height):
+        image_height = image.shape[0]
+        image_width = image.shape[1]
+        roi_left = int(max(image_width/2 - crop_width/2,0))
+        roi_right = int(min(image_width/2 + crop_width/2,image_width))
+        roi_top = int(max(image_height/2 - crop_height/2,0))
+        roi_bottom = int(min(image_height/2 + crop_height/2,image_height))
+        image_cropped = image[roi_top:roi_bottom,roi_left:roi_right]
+        return image_cropped
+    
+    def AF_crop_image(self,image):
+        return self.crop_image(image,self.AF_crop_width,self.AF_crop_height)
+    
+    def rotate_and_flip_image(self,image,rotate_image_angle,flip_image):
+        ret_image = image.copy()
+        if(rotate_image_angle != 0):
+            if(rotate_image_angle == 90):
+                ret_image = cv2.rotate(ret_image,cv2.ROTATE_90_CLOCKWISE)
+            elif(rotate_image_angle == -90):
+                ret_image = cv2.rotate(ret_image,cv2.ROTATE_90_COUNTERCLOCKWISE)
+            elif(rotate_image_angle == 180):
+                ret_image = cv2.rotate(ret_image,cv2.ROTATE_180)
+        if(flip_image is not None):
+            '''
+                flipcode = 0: flip vertically
+                flipcode > 0: flip horizontally
+                flipcode < 0: flip vertically and horizontally
+            '''
+            if(flip_image == 'Vertical'):
+                ret_image = cv2.flip(ret_image, 0)
+            elif(flip_image == 'Horizontal'):
+                ret_image = cv2.flip(ret_image, 1)
+            elif(flip_image == 'Both'):
+                ret_image = cv2.flip(ret_image, -1)
+
+        return ret_image

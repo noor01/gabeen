@@ -182,11 +182,11 @@ class fluid_control():
             self.hardware[pump].start()
             loading_bar.loading_bar_wait(60*volume/speed)
             
-    def quick_run(self,line_num,volume,speed):
+    def quick_run(self,line_num,volume,speed,pump_wait=3):
         if self.path_mode == 'linear':
             pumps = self.quick_valve(line_num)
             self.quick_pump(volume,speed,pumps)
         elif self.path_mode == 'bifurcated':
             path_edges = [self.get_path(str(line_num),'pump1'),
                           self.get_path('pump1','waste')]
-            self.bifurcated_pump_action(path_edges,volume,speed)
+            self.bifurcated_pump_action(path_edges,volume,speed,pump_wait)

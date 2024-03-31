@@ -308,46 +308,6 @@ class ONI(Microscope):
             self.move_z(best_z)
         return best_z
         
-        """z1 = self.z_upper_thresh
-        z2 = self.z_lower_thresh
-        # fast scan till af detection thresh reached
-        move_z = z1
-        while True:
-            self.move_z(move_z)
-            af_im = self._focus_cam_snapshot()
-            if np.max(af_im) > self.oni_config['safe_focus']['af_intensity_thresh']:
-                break
-            else:
-                move_z -= fast_res
-            if move_z < z2:
-                return [0,0,0]
-                #raise Exception("Could not find AF spot in safe range")
-            
-        af_ints = [0]
-        #af_stds = []
-        af_cms = [(0,0)]
-        z = move_z
-        while True:
-            z -= slow_res
-            self.move_z(z)
-            af_im = self._focus_cam_snapshot()
-            af_max = np.max(af_im)
-            if af_max >= af_ints[-1]:
-                af_ints.append(af_max)
-                af_cms.append(self._focus_centerofmass(af_im))
-            else:
-                break
-        best_z = z
-        af_int = af_ints[-1]
-        af_cm = af_cms[-1]
-        if reset_z == True:
-            self.move_z(best_z)
-        
-        # double check once more
-        if af_int < self.oni_config['safe_focus']['af_intensity_thresh']:
-            return [0,0,0]
-        
-        return [best_z, af_int, af_cm]"""
     
     def train_focus_model(self):
         # assume you are approx close to perfect z
@@ -430,6 +390,7 @@ class ONI(Microscope):
              
     def move_xy_autofocus(self,x,y):
         self.move_xy(x,y)
+        z = self.quick_focus()
         z = self.quick_focus()
         return z
 
@@ -584,6 +545,18 @@ class ONI(Microscope):
         time_diff = tok-tik
         if time_diff < exposure:
             time.sleep((exposure-time_diff)/1000) # wait approx. till exposure is done.
+        return im
+    
+    def manual_camera_snapshot(self,light_program,exposure):
+        self.lightGlobalOnState = False
+        self.camera.SetTargetExposureMilliseconds(exposure)
+        bool647 = self.activate_light_program(light_program)
+        if bool647 == True:
+            side = 1
+        else:
+            side = 0
+        im = self.camera_snapshot(side,exposure)
+        self.lightGlobalOnState = False
         return im
     
     def acquire_single_position(self,pos_n,pos,filename,pbar=None):        
