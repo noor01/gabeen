@@ -33,10 +33,8 @@ from utils import *
 import pprint
 from sklearn.linear_model import LinearRegression
 # Below are imports for Squid
-import octopi_research.software.control.gabeen_control as squid
-from configparser import ConfigParser
-from octopi_research.software.control._def import CACHED_CONFIG_FILE_PATH
-import glob
+sys.path.append('../drivers')
+from drivers.microscopes.octopi_research.software.control import gabeen_control as squid
 
 
 # ----------------------------------------------------------------------------------------
@@ -58,15 +56,15 @@ class Squid(Microscope):
     def initialize(self,is_simulation):
         self.squid = squid.OctopiGUI(is_simulation=is_simulation)
         self.squid.camera.set_pixel_format('MONO16')
-        self.AnalogGain="10"
+        self.AnalogGain=10
         self.set_camera_gain(self.AnalogGain)
-        self.crop_width = self.squid.multiPointController.crop_width
-        self.crop_height = self.squid.multiPointController.crop_height
-        self.AF_crop_width = self.squid.autoFocusController.crop_width
-        self.AF_crop_height = self.squid.autoFocusController.crop_height
+        self.crop_width = self.squid.multipointController.crop_width
+        self.crop_height = self.squid.multipointController.crop_height
+        self.AF_crop_width = self.squid.autofocusController.crop_width
+        self.AF_crop_height = self.squid.autofocusController.crop_height
         # prevent joystick actions
         self.squid.navigationController.enable_joystick_button_action = False
-        self.focus_callib_state == False:
+        self.focus_callib_state = False
             
     def shutdown(self):
         self.squid.closeEvent()
@@ -79,15 +77,19 @@ class Squid(Microscope):
     ######################################################
         
     def get_stage_pos(self):
-        return self.squid.navigationController.get_updated_pos(self.navigationController.microcontroller)
+        return self.squid.navigationController.get_updated_pos(self.squid.microcontroller)
     
     def get_z(self):
         _,_,z = self.get_stage_pos()
         return z 
     
-    def wait_till_stage_op_complete(self):
+    def wait_till_stage_op_complete(self,timeout=None):
+        t0 = time.time()
         while self.squid.navigationController.microcontroller.is_busy():
             time.sleep(0.1)
+            t1 = time.time()
+            if timeout is not None and t1 - t0 > timeout:
+                break
             
     def move_xy(self,x,y):
         self.squid.navigationController.move_to(x,y)
@@ -126,7 +128,7 @@ class Squid(Microscope):
         self.squid.camera.set_exposure(exposure) # in milliseconds
         
     def set_camera_gain(self,gain):
-        self.squid.camera.set_gain(gain)
+        self.squid.camera.set_analog_gain(gain)
         
     def camera_snapshot(self):
         self.squid.camera.send_trigger()
@@ -286,6 +288,9 @@ class Squid(Microscope):
             self.light_program.append(_lasers)
     
     def initialize_params(self):
+        raise NotImplementedError
+    
+    def reset_parameters(self):
         raise NotImplementedError
     
     ######################################################
