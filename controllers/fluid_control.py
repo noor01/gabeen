@@ -7,13 +7,25 @@ import time
 
 class fluid_control():
     def __init__(self, hardware, pump_types, system_name, protocol) -> None:
-        self.hardware = hardware # hardware is a dictionary of hardware names and their instantiated objects
+        """
+        Initialize the fluid control class.
+
+        Parameters:
+        - hardware: dictionary of hardware names and their instantiated objects
+        - pump_types: dictionary of pump types
+        - system_name: name of the system
+        - protocol: name of the protocol
+        """
+        self.hardware = hardware
         self.pump_types = pump_types
         self.system_name = system_name
         self.protocol = protocol
         self.graph = self.create_graph()
 
     def read_protocol(self):
+        """
+        Read the protocol files and create the graph.
+        """
         # Define file paths
         experiment_file = f"../protocols/{self.system_name}/{self.protocol}/experiment.json"
         fluids_file = f"../protocols/{self.system_name}/{self.protocol}/fluids.csv"
@@ -65,15 +77,34 @@ class fluid_control():
         
 
     def create_graph(self):
+        """
+        Create the graph by reading the protocol files and adding nodes and edges.
+
+        Returns:
+        - graph: the created graph
+        """
         self.read_protocol()
         return self.graph
 
     def get_path(self, source, target):
+        """
+        Get the shortest path between two nodes in the graph.
+
+        Parameters:
+        - source: the source node
+        - target: the target node
+
+        Returns:
+        - path_edges: a list of edges representing the shortest path
+        """
         path_nodes = nx.shortest_path(self.graph, source, target)
         path_edges = list(zip(path_nodes[:-1], path_nodes[1:]))
         return path_edges
     
     def draw_graph(self):
+        """
+        Draw the graph with labels.
+        """
         color_map = {
             'type1': 'red',
             'type2': 'blue',
@@ -83,6 +114,15 @@ class fluid_control():
         nx.draw(self.graph, with_labels=True)
     
     def set_path(self,path_edges):
+        """
+        Set the path by activating valves and pumps along the edges.
+
+        Parameters:
+        - path_edges: a list of edges representing the path
+
+        Returns:
+        - pumps: a set of pumps activated along the path
+        """
         pumps = []
         for edge in path_edges:
             source = edge[0]
@@ -112,7 +152,15 @@ class fluid_control():
         pumps = set(pumps)
         return pumps
 
-    def run_protocol_step(self,protocol_step):
+    def run_protocol_step(self, protocol_step):
+        """
+        Run a single step of the protocol.
+
+        Parameters:
+        - protocol_step: dictionary containing the step metadata
+
+        This method reads the step metadata and performs the necessary actions based on the protocol mode.
+        """
         fluid = protocol_step['step_metadata']["fluid"]
         volume = float(protocol_step['step_metadata']["volume"])
         speed = float(protocol_step['step_metadata']["speed"])
@@ -122,29 +170,49 @@ class fluid_control():
             pump_wait = 0
         if self.path_mode == 'linear':
             path_edges = self.get_path(fluid, 'waste')
-            self.linear_pump_action(path_edges,volume,speed)
-            
+            self.linear_pump_action(path_edges, volume, speed)
         elif self.path_mode == 'bifurcated':
-            path_edges = [self.get_path(fluid,'pump1'),
-                          self.get_path('pump1','waste')]
-            self.bifurcated_pump_action(path_edges,volume,speed,pump_wait)
-                
-    def linear_pump_action(self,path_edges,volume,speed):
+            path_edges = [self.get_path(fluid, 'pump1'),
+                          self.get_path('pump1', 'waste')]
+            self.bifurcated_pump_action(path_edges, volume, speed, pump_wait)
+
+    def linear_pump_action(self, path_edges, volume, speed):
+        """
+        Perform linear pump action.
+
+        Parameters:
+        - path_edges: list of edges representing the path
+        - volume: volume of fluid to be pumped
+        - speed: speed of pumping
+
+        This method activates valves and pumps along the path and pumps the fluid using linear mode.
+        """
         pumps = self.set_path(path_edges)
         if len(pumps) > 0:
             for pump in pumps:
                 self.hardware[pump].set_rate('INF', speed)
                 self.hardware[pump].set_volume(volume)
                 self.hardware[pump].start()
-                loading_bar.loading_bar_wait(60*volume/speed)
-                
-    def bifurcated_pump_action(self,path_edges,volume,speed,pump_wait):
-        pump = 'pump1' # hardcoded for the timebeing
+                loading_bar.loading_bar_wait(60 * volume / speed)
+
+    def bifurcated_pump_action(self, path_edges, volume, speed, pump_wait):
+        """
+        Perform bifurcated pump action.
+
+        Parameters:
+        - path_edges: list of edges representing the path
+        - volume: volume of fluid to be pumped
+        - speed: speed of pumping
+        - pump_wait: wait time between switching pumps
+
+        This method activates valves and pumps along the path and pumps the fluid using bifurcated mode.
+        """
+        pump = 'pump1'  # hardcoded for the timebeing
         if pump_wait == 0:
-            switch_latency = 2 # wait for pressure to equalize before switching
+            switch_latency = 2  # wait for pressure to equalize before switching
         else:
             switch_latency = pump_wait
-        vol_limit = self.hardware[pump].syringe_limit # this should break the code in case you're doing this with peristaltic...not supported
+        vol_limit = self.hardware[pump].syringe_limit  # this should break the code in case you're doing this with peristaltic...not supported
         vol_limit = float(vol_limit)
         volume = float(volume)
         speed = float(speed)
@@ -156,18 +224,18 @@ class fluid_control():
                 volumes.append(remainder)
         else:
             volumes = [volume]
-            
+
         for vol in volumes:
             _ = self.set_path(path_edges[0])
             self.hardware[pump].set_rate('WDR', speed)
             self.hardware[pump].set_volume(vol)
             self.hardware[pump].start()
-            time.sleep(60*vol/speed + switch_latency) # loading bar would get out of hand
+            time.sleep(60 * vol / speed + switch_latency)  # loading bar would get out of hand
             _ = self.set_path(path_edges[1])
             self.hardware[pump].set_rate('INF', speed)
             self.hardware[pump].set_volume(vol)
             self.hardware[pump].start()
-            time.sleep(60*vol/speed + switch_latency)
+            time.sleep(60 * vol / speed + switch_latency)
         
 
     def quick_valve(self, line_num):

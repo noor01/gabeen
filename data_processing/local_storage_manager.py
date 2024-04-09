@@ -8,6 +8,17 @@ import time
 import tifffile
 
 def map_dir_memory():
+    """
+    Maps the memory usage of each directory in the system.
+
+    Returns:
+        dict: A dictionary containing the memory usage information for each directory.
+              The keys are the mount points of the directories, and the values are
+              dictionaries with the following keys:
+              - "total": the total memory available for the directory
+              - "used": the amount of memory used by the directory
+              - "free": the amount of free memory in the directory
+    """
     memory_dict = {}
     for partition in psutil.disk_partitions():
         memory_info = psutil.disk_usage(partition.mountpoint)
@@ -19,6 +30,15 @@ def map_dir_memory():
     return memory_dict
     
 def get_dir_mem_avail(path):
+    """
+    Get the available memory in bytes for the directory specified by the given path.
+
+    Args:
+        path (str): The path of the directory.
+
+    Returns:
+        int or None: The available memory in bytes for the directory, or None if the path is invalid.
+    """
     memory_dict = map_dir_memory()
     for drive, memory_info in memory_dict.items():
         if path.startswith(drive):
@@ -26,6 +46,17 @@ def get_dir_mem_avail(path):
     return None
 
 def save_image_stack(image_stack, target_dir, file_prefix):
+    """
+    Save an image stack as an OME-TIFF file.
+
+    Args:
+        image_stack (ndarray): The image stack to be saved.
+        target_dir (str): The directory where the file will be saved.
+        file_prefix (str): The prefix for the file name.
+
+    Returns:
+        None
+    """
     # check if target_dir exists
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
@@ -43,9 +74,21 @@ def save_image_stack(image_stack, target_dir, file_prefix):
                             })
 
 def save_image_stack_npy(image_stack, target_dir, file_prefix):
+    """
+    Save a stack of images as a NumPy array in .npy format.
+
+    Args:
+        image_stack (list): A list of images to be saved.
+        target_dir (str): The directory where the .npy file will be saved.
+        file_prefix (str): The prefix to be added to the filename.
+
+    Returns:
+        None
+    """
     # check if target_dir exists
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
+    
     # save image stack
     image_stack_3d = np.stack(image_stack, axis=0)
     np.save(f'{os.path.join(target_dir, str(file_prefix))}.npy', image_stack_3d)
@@ -64,7 +107,20 @@ def create_folder_in_drive(folder_name):
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
 
-def get_save_path(folder_name,num_stacks, stack_dims, dtype=np.uint16,slack=True):
+def get_save_path(folder_name, num_stacks, stack_dims, dtype=np.uint16, slack=True):
+    """
+    Get the save path for storing data.
+
+    Args:
+        folder_name (str): The name of the folder to be created.
+        num_stacks (int): The number of stacks.
+        stack_dims (tuple): The dimensions of the stack.
+        dtype (numpy.dtype, optional): The data type of the stack. Defaults to np.uint16.
+        slack (bool, optional): Whether to send a Slack notification. Defaults to True.
+
+    Returns:
+        str: The path of the created folder.
+    """
     # Estimate memory footprint of the stack
     mem_needed = estimate_mem_footprint(stack_dims, num_stacks, dtype)
     

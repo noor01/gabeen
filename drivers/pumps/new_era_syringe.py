@@ -22,7 +22,31 @@ from ..serial_com import SerialCom
 # New Era Class Definition
 # ----------------------------------------------------------------------------------------
 class new_era_syringe(Pump):
-    def __init__(self,serial_port,diameter='8.585',syringe_limit=3):
+    """
+    A class representing a New Era syringe pump.
+
+    Attributes:
+        serial_port (str): The serial port that the pump is connected to.
+        diameter (str): The diameter of the syringe in millimeters.
+        syringe_limit (int): The maximum volume limit of the syringe in milliliters.
+
+    Methods:
+        __init__(self, serial_port, diameter='8.585', syringe_limit=3): Initializes the new_era_syringe object.
+        initialize(self): Initializes the pump by setting up the serial communication and prime volume.
+        serial_cmd(self, cmd): Sends a command to the pump via serial communication.
+        handshake(self): Performs a quick handshake to aid in autodetection of the pump.
+        find_pump(self): Finds the pump by iterating through possible pump numbers.
+        pause_pump(self): Pauses the pump.
+        stop(self): Stops the pump by pausing it.
+        set_rate(self, direction, rate): Sets the direction and rate of flow for the pump.
+        set_volume(self, volume): Sets the volume for the pump.
+        set_diameter(self, diameter): Sets the diameter of the syringe.
+        get_diameter(self): Retrieves the current diameter of the syringe.
+        start(self): Starts the pump.
+        prime_pump(self): Primes the pump by setting the volume and rate, and then starting it.
+        close(self): Closes the serial communication with the pump.
+    """
+    def __init__(self, serial_port, diameter='8.585', syringe_limit=3):
         #serial port is the serial port that the pump is connected to
         self.serial_port = serial_port
 
@@ -44,7 +68,7 @@ class new_era_syringe(Pump):
         self.find_pump()
         self.prime_volume = 0.2
     
-    def serial_cmd(self,cmd):
+    def serial_cmd(self, cmd):
         output = self.ser.write(cmd)
         return str(output)
 
@@ -81,7 +105,7 @@ class new_era_syringe(Pump):
     def stop(self):
         self.pause_pump()
 
-    def set_rate(self,direction,rate):
+    def set_rate(self, direction, rate):
         #set direction of flow; direction = dispense or withdraw
         # if incorrect direction given, will default to dispense direction
         if direction == 'dispense':
@@ -101,7 +125,7 @@ class new_era_syringe(Pump):
         if '?' in output:
             print(cmd.strip()+' from set_rate not understood')
 
-    def set_volume(self,volume):
+    def set_volume(self, volume):
         #set volume units to ml
         cmd = str(self.pump) + 'VOLML\x0D'
         output = self.serial_cmd(cmd)
@@ -111,7 +135,7 @@ class new_era_syringe(Pump):
         if '?' in output:
             print(cmd.strip()+' from set_volume not understood')
 
-    def set_diameter(self,diameter):
+    def set_diameter(self, diameter):
         cmd = '%iDIA%s\x0D'%(self.pump,diameter)
         output = self.serial_cmd(cmd)
         if '?' in output:

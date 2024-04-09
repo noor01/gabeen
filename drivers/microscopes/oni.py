@@ -39,22 +39,67 @@ from utils import *
 import pprint
 from sklearn.linear_model import LinearRegression
 
-
-
-
 # ----------------------------------------------------------------------------------------
-# ONI Nanoimager ghost class definition
+# ONI Nanoimager class definition
 # ----------------------------------------------------------------------------------------
 class ONI(Microscope):
-    # ----------------------------------------------------------------------------------------
-    # Initialize and read callibration and configuration files
-    # ----------------------------------------------------------------------------------------
-    def __init__(self,dataset_tag,oni_config=None,system_name=None):
+    """
+    This class represents an ONI microscope.
+
+    Attributes:
+        log_info (dict): A dictionary to store log information.
+        camera_attempts (int): The number of camera connection attempts.
+        camera_max_attempts (int): The maximum number of camera connection attempts allowed.
+        dataset_tag (str): The dataset tag.
+        xy_start (int): The starting position for the xy coordinates.
+        pp (pprint.PrettyPrinter): A pretty printer object for pretty printing.
+
+        # dynamic focus parameters
+        step_size (float): The step size for dynamic focus.
+        min_step_size (float): The minimum step size for dynamic focus.
+        max_iterations (int): The maximum number of iterations for dynamic focus.
+        focus_callib_state (bool): The state of the focus calibration.
+
+    Methods:
+        __init__(self, dataset_tag, oni_config=None, system_name=None):
+            Initializes the ONI microscope object.
+        initialize(self, oni_config, system_name, dataset_tag):
+            Initializes and sets up the ONI microscope.
+        initialize_ONI(self, dataset_tag):
+            Initializes the ONI microscope.
+        reset_parameters(self, oni_config, dataset_tag):
+            Resets the parameters of the ONI microscope.
+        initialize_crop(self):
+            Initializes the cropping parameters for the ONI microscope.
+        safe_focus_range(self, desired):
+            Adjusts the desired focus range to be within the safe range.
+        input_params_setup(self, dataset_tag):
+            Sets up the input parameters for the ONI microscope.
+        position_logger(self, pos, filename):
+            Logs the position of the microscope.
+        initialize_nimOS(self):
+            Initializes the NIM OS components of the ONI microscope.
+        select_instrument(self):
+            Selects the instrument for the ONI microscope.
+        cal_ONI_AF(self, start_z=0):
+            Performs autofocus calibration for the ONI microscope.
+        connect_system(self):
+            Connects the ONI microscope to the system.
+        get_stage_pos(self):
+            Gets the current stage position of the ONI microscope.
+        move_xy(self, x, y):
+            Moves the stage of the ONI microscope to the specified xy coordinates.
+        move_z(self, z):
+            Moves the stage of the ONI microscope to the specified z coordinate.
+        get_z(self):
+            Gets the current z coordinate of the ONI microscope.
+    """
+    def __init__(self, dataset_tag, oni_config=None, system_name=None):
         self.log_info = {}
         self.camera_attempts = 0
         self.camera_max_attempts = 5
         self.dataset_tag = dataset_tag
-        self.initialize(oni_config,system_name,dataset_tag)
+        self.initialize(oni_config, system_name, dataset_tag)
         #self.positions = self.oni_config['xy_positions_mm']
         self.xy_start = 0
         self.pp = pprint.PrettyPrinter(indent=4)
@@ -65,7 +110,15 @@ class ONI(Microscope):
         self.max_iterations = 10
         self.focus_callib_state = False
         
-    def initialize(self,oni_config,system_name,dataset_tag):
+    def initialize(self, oni_config, system_name, dataset_tag):
+        """
+        Initializes and sets up the ONI microscope.
+
+        Args:
+            oni_config (dict): The ONI configuration dictionary.
+            system_name (str): The name of the system.
+            dataset_tag (str): The dataset tag.
+        """
         self.oni_config = oni_config
         self.system_name = system_name
         self.initialize_nimOS()
@@ -73,7 +126,13 @@ class ONI(Microscope):
         # drop exposure time on focus cam for 60x objective
         self.focus_cam.SetTargetExposureMilliseconds(9.938)
     
-    def initialize_ONI(self,dataset_tag):
+    def initialize_ONI(self, dataset_tag):
+        """
+        Initializes the ONI microscope.
+
+        Args:
+            dataset_tag (str): The dataset tag.
+        """
         self.input_params_setup(dataset_tag)
         while True:
             connection_status = self.connect_system()
@@ -90,7 +149,7 @@ class ONI(Microscope):
                 self.camera_attempts += 1
                 print(f'Could not connect to camera... trying again. Attempt {self.camera_attempts}')
                 self.shutdown()
-                self.initialize(self.oni_config,self.system_name,self.dataset_tag)
+                self.initialize(self.oni_config, self.system_name, self.dataset_tag)
                 
         self.light.FocusLaser.Enabled = True
         self.turn_lights_off()
@@ -111,8 +170,16 @@ class ONI(Microscope):
             self.camera_attempts += 1
             print(f'Could not connect to camera... trying again. Attempt {self.camera_attempts}')
             self.shutdown()
-            self.initialize(self.oni_config,self.system_name,self.dataset_tag)
-    def reset_parameters(self,oni_config,dataset_tag):
+            self.initialize(self.oni_config, self.system_name, self.dataset_tag)
+    
+    def reset_parameters(self, oni_config, dataset_tag):
+        """
+        Resets the parameters of the ONI microscope.
+
+        Args:
+            oni_config (dict): The ONI configuration dictionary.
+            dataset_tag (str): The dataset tag.
+        """
         self.oni_config = oni_config
         self.xy_start = 0
         self.logs_dir = f'../runs/{self.system_name}/{dataset_tag}'
@@ -139,10 +206,22 @@ class ONI(Microscope):
         self.init_z_pos()
     
     def initialize_crop(self):
+        """
+        Initializes the cropping parameters for the ONI microscope.
+        """
         self.crop_params = self.oni_config['cropping']
         self.im_dim = (self.crop_params['height']*2,self.crop_params['width']*2)
     
-    def safe_focus_range(self,desired):
+    def safe_focus_range(self, desired):
+        """
+        Adjusts the desired focus range to be within the safe range.
+
+        Args:
+            desired (list): The desired focus range.
+
+        Returns:
+            list: The adjusted desired focus range.
+        """
         upper_thresh = self.z_upper_thresh
         lower_thresh = self.z_lower_thresh
         if desired[0] < lower_thresh:
@@ -160,7 +239,13 @@ class ONI(Microscope):
         return desired
             
 
-    def input_params_setup(self,dataset_tag):
+    def input_params_setup(self, dataset_tag):
+        """
+        Sets up the input parameters for the ONI microscope.
+
+        Args:
+            dataset_tag (str): The dataset tag.
+        """
         self.instrument_name = self.oni_config['microscope_name']
         # save logs in the same folder that the acquisition json file was saved in
         self.logs_dir = f'../runs/{self.system_name}/{dataset_tag}'
@@ -176,7 +261,14 @@ class ONI(Microscope):
         self.start_z = self.oni_config['start_z']
         self.first_start_z = self.start_z
         
-    def position_logger(self,pos, filename):
+    def position_logger(self, pos, filename):
+        """
+        Logs the position of the microscope.
+
+        Args:
+            pos (int): The position.
+            filename (str): The filename.
+        """
         x = self.stage.GetPositionInMicrons(self.stage.Axis.X)
         y = self.stage.GetPositionInMicrons(self.stage.Axis.Y)
         z = self.stage.GetPositionInMicrons(self.stage.Axis.Z)
@@ -184,6 +276,9 @@ class ONI(Microscope):
             log_file.write(filename + ',' + str(pos) + ',' + str(x) + ',' + str(y) + ',' + str(z) + '\n')
     
     def initialize_nimOS(self):
+        """
+        Initializes the NIM OS components of the ONI microscope.
+        """
         self.instrument = get_nim_control()
         self.data_manager = get_nim_data_manager()
         self.profiles = get_user_profile_manager()
@@ -203,6 +298,12 @@ class ONI(Microscope):
 
         
     def select_instrument(self):
+        """
+        Selects the instrument for the ONI microscope.
+
+        Returns:
+            bool: True if the instrument is successfully selected, False otherwise.
+        """
         instruments = self.instrument.GetAvailableInstruments()
         for instr in instruments:
             print(instr)
@@ -219,7 +320,13 @@ class ONI(Microscope):
             print('No instrument available')
             return False
         
-    def cal_ONI_AF(self,start_z=0):
+    def cal_ONI_AF(self, start_z=0):
+        """
+        Performs autofocus calibration for the ONI microscope.
+
+        Args:
+            start_z (int): The starting z coordinate for autofocus calibration.
+        """
         self.global_on_lights_off()
         self.move_z(start_z)
         print('autofocusing')
@@ -233,6 +340,12 @@ class ONI(Microscope):
             #print('autofocus complete')
         
     def connect_system(self):
+        """
+        Connects the ONI microscope to the system.
+
+        Returns:
+            bool: True if the microscope is successfully connected, False otherwise.
+        """
         if not self.instrument.IsConnected:
             if not self.select_instrument():
                 print("Could not select instrument")
@@ -247,29 +360,56 @@ class ONI(Microscope):
                 return True
 
     def get_stage_pos(self):
+        """
+        Gets the current stage position of the ONI microscope.
+
+        Returns:
+            tuple: The current stage position in the form of (x, y, z) coordinates.
+        """
         x = self.stage.GetPositionInMicrons(self.stage.Axis.X)
         y = self.stage.GetPositionInMicrons(self.stage.Axis.X)
         z = self.stage.GetPositionInMicrons(self.stage.Axis.X)
-        return (x,y,z)
+        return (x, y, z)
         
-    def move_xy(self,x,y):
-        self.stage.RequestMoveAbsolute(self.stageX,x)
-        self.stage.RequestMoveAbsolute(self.stageY,y)
+    def move_xy(self, x, y):
+        """
+        Moves the stage of the ONI microscope to the specified xy coordinates.
+
+        Args:
+            x (float): The x coordinate.
+            y (float): The y coordinate.
+        """
+        self.stage.RequestMoveAbsolute(self.stageX, x)
+        self.stage.RequestMoveAbsolute(self.stageY, y)
         while self.stage.IsMoving(self.stageX) or self.stage.IsMoving(self.stageY):
             time.sleep(0.1)
 
-    def move_z(self,z):
+    def move_z(self, z):
+        """
+        Moves the stage of the ONI microscope to the specified z coordinate.
+
+        Args:
+            z (float): The z coordinate.
+        """
         if z > 1800:
             z = 1800
             print("WARNING: Z is too high, setting to 1800")
         else:
             pass
-        self.stage.RequestMoveAbsolute(self.stageZ,z)
+        self.stage.RequestMoveAbsolute(self.stageZ, z)
         while self.stage.IsMoving(self.stageZ):
             time.sleep(0.1)
         #self.current_z = self.get_z()
         
     def get_z(self):
+        """
+        Gets the current z coordinate of the ONI microscope.
+
+        Returns:
+            float: The current z coordinate.
+        """
+        # implementation goes here
+        pass
         return self.stage.GetPositionInMicrons(self.stage.Axis.Z)
     
     def get_stage_pos(self):

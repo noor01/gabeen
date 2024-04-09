@@ -4,12 +4,26 @@ from drivers import *
 
 class hardware_control():
     def __init__(self, system_name, protocol, dataset_tag=None) -> None:
+        """
+        Initialize the hardware control object.
+
+        Args:
+            system_name (str): The name of the system.
+            protocol (str): The name of the protocol.
+            dataset_tag (str, optional): The dataset tag. Defaults to None.
+        """
         self.system_name = system_name
         self.protocol = protocol
         self.dataset_tag = dataset_tag
         self.initialize_hardware()
 
     def initialize_hardware(self,delay_microscope_init=False):
+        """
+        Initialize the hardware.
+
+        Args:
+            delay_microscope_init (bool, optional): Whether to delay microscope initialization. Defaults to False.
+        """
         # Define file paths
         experiment_file = f"../protocols/{self.system_name}/{self.protocol}/experiment.json"
         com_file = f"../system-files/{self.system_name}/comports.json"
@@ -64,4 +78,3 @@ class hardware_control():
                 
             else:
                 pass
-        

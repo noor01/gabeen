@@ -6,25 +6,61 @@ import json
 
 metadata = {'apiLevel': '2.5'}
 
-def get_tip_num(experiment,step_num,start_tip,pipet_type):
+def get_tip_num(experiment, step_num, start_tip, pipet_type):
+    """
+    Get the tip number for a given liquid handling step.
+
+    Parameters:
+    experiment (dict): The experiment dictionary containing the liquid handling steps.
+    step_num (int): The step number for which to get the tip number.
+    start_tip (dict): A dictionary containing the starting tip numbers for different pipet types.
+    pipet_type (str): The type of pipet used in the liquid handling step.
+
+    Returns:
+    int: The tip number for the given step.
+
+    Raises:
+    ValueError: If the step number is not found in the liquid handling steps.
+
+    """
     # figure out which steps are liquid handling rounds
     liquid_handling_steps = []
     for step, value in experiment.items():
         if value['step_type'] == 'liquid_handler':
             if value['step_metadata']['info']['hardware'] == pipet_type:
                 liquid_handling_steps.append(step)
-    tip_num = liquid_handling_steps.index(step_num) + start_tip[pipet_type]
-    return tip_num
+    try:
+        tip_num = liquid_handling_steps.index(step_num) + start_tip[pipet_type]
+        return tip_num
+    except ValueError:
+        raise ValueError("Step number not found in liquid handling steps.")
 
-def load_custom_labware(labware_name,location):
-    #parent_path = '/data/labware/v2/custom_definitions/'
+def load_custom_labware(labware_name, location):
+    """
+    Load custom labware from a JSON file.
+
+    Args:
+        labware_name (str): The name of the labware.
+        location (str): The location where the labware will be loaded.
+
+    Returns:
+        well_plate: The loaded labware as a WellPlate object.
+    """
     parent_path = '/data/user_storage/gabeen/custom_labware/'
     with open(f'{parent_path}{labware_name}.json') as labware_file:
         labware_def = json.load(labware_file)
         well_plate = protocol.load_labware_from_definition(labware_def, location)
     return well_plate
 
-def run(protocol: protocol_api.ProtocolContext,step_num,start_tip={'p200':0,'p1000':0}):
+def run(protocol: protocol_api.ProtocolContext, step_num, start_tip={'p200':0,'p1000':0}):
+    """
+    Executes a step in the protocol.
+
+    Args:
+        protocol (protocol_api.ProtocolContext): The protocol context.
+        step_num (int): The step number to execute.
+        start_tip (dict, optional): The starting tip positions for each pipette. Defaults to {'p200':0,'p1000':0}.
+    """
     with open('/data/user_storage/gabeen/ot2_config.json') as f:
         ot2_config = json.load(f)
     with open('/data/user_storage/gabeen/experiment.json') as f:

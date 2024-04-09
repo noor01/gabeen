@@ -6,7 +6,36 @@ from dotenv import load_dotenv
 import platform
 
 class OT2(Handler):
-    def __init__(self,protocol_file, ot2_config_file, *args, **kwargs):
+    """
+    A class representing an OT2 liquid handler.
+
+    Args:
+        protocol_file (str): The path to the protocol file.
+        ot2_config_file (str): The path to the OT2 config file.
+        *args: Variable length argument list.
+        **kwargs: Arbitrary keyword arguments.
+
+    Attributes:
+        protocol_path (str): The path to the protocol file.
+        ot2_config_path (str): The path to the OT2 config file.
+        ROBOT_IP (str): The IP address of the OT2 robot.
+        ROBOT_KEY (str): The key for SSH authentication.
+        ROBOT_USERNAME (str): The username for SSH authentication.
+        ssh_path (str): The path to the SSH executable.
+        scp_path (str): The path to the SCP executable.
+
+    Methods:
+        init_protocol(): Initializes the protocol by uploading the executer script, protocol file, OT2 config file, and custom labware.
+        init_ssh(): Initializes the SSH path.
+        init_scp(): Initializes the SCP path.
+        ssh_command(command: str) -> List[str]: Executes an SSH command on the OT2 robot.
+        upload_file(local_path: str, remote_path: str): Uploads a file from the local path to the remote path on the OT2 robot.
+        remove_remote_file(remote_path: str): Removes a file from the remote path on the OT2 robot.
+        upload_custom_labware(): Uploads custom labware to the OT2 robot.
+        run_protocol_step(step_num: int, tip_num: Dict[str, int]) -> List[str]: Runs a step of the protocol on the OT2 robot.
+    """
+
+    def __init__(self, protocol_file, ot2_config_file, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.protocol_path = protocol_file
         self.ot2_config_path = ot2_config_file
@@ -18,7 +47,7 @@ class OT2(Handler):
         self.init_scp()
         self.init_protocol()   
         self.upload_custom_labware()   
-        
+
     def init_protocol(self):
         parent_dir = executer_path = os.path.abspath("../drivers/liquid_handlers/ot2_templates/")
         # Upload executer script
